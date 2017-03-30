@@ -20,6 +20,9 @@
 	reagent_tag = PROCESS_ORG
 	//Has standard darksight of 2.
 
+	genitals = 1
+	anus = 1
+
 /datum/species/unathi
 	name = "Unathi"
 	name_plural = "Unathi"
@@ -78,6 +81,9 @@
 		"is jamming their claws into their eye sockets!",
 		"is twisting their own neck!",
 		"is holding their breath!")
+
+	genitals = 1
+	anus = 1
 
 /datum/species/unathi/handle_death(var/mob/living/carbon/human/H)
 	H.stop_tail_wagging(1)
@@ -139,6 +145,9 @@
 		"is twisting their own neck!",
 		"is holding their breath!")
 
+	genitals = 1
+	anus = 1
+
 /datum/species/tajaran/handle_death(var/mob/living/carbon/human/H)
 	H.stop_tail_wagging(1)
 
@@ -188,6 +197,9 @@
 		"is jamming their claws into their eye sockets!",
 		"is twisting their own neck!",
 		"is holding their breath!")
+
+	genitals = 1
+	anus = 1
 
 /datum/species/vulpkanin/handle_death(var/mob/living/carbon/human/H)
 	H.stop_tail_wagging(1)
@@ -513,6 +525,8 @@
 		"is jamming their claws into their eye sockets!",
 		"is twisting their own neck!",
 		"is holding their breath!")
+
+	anus = 1
 
 /datum/species/slime
 	name = "Slime People"

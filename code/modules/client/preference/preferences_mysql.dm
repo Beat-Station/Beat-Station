@@ -175,7 +175,8 @@
 					speciesprefs,
 					socks,
 					body_accessory,
-					gear
+					gear,
+					forbidden
 				 	FROM [format_table_name("characters")] WHERE ckey='[C.ckey]' AND slot='[slot]'"})
 	if(!query.Execute())
 		var/err = query.ErrorMsg()
@@ -269,6 +270,10 @@
 		body_accessory = query.item[64]
 		gear = params2list(query.item[65])
 
+		var/forbidden = params2list(query.item[66])
+		virgin = forbidden["virgin"]
+		anal_virgin = forbidden["anal_virgin"]
+
 	//Sanitize
 	var/datum/species/SP = all_species[species]
 	metadata		= sanitize_text(metadata, initial(metadata))
@@ -334,6 +339,9 @@
 	socks			= sanitize_text(socks, initial(socks))
 	body_accessory	= sanitize_text(body_accessory, initial(body_accessory))
 
+	virgin = sanitize_integer(virgin, 0, 1, initial(virgin))
+	anal_virgin = sanitize_integer(anal_virgin, 0, 1, initial(anal_virgin))
+
 //	if(isnull(disabilities)) disabilities = 0
 	if(!player_alt_titles) player_alt_titles = new()
 	if(!organ_data) src.organ_data = list()
@@ -347,6 +355,7 @@
 	var/rlimblist
 	var/playertitlelist
 	var/gearlist
+	var/forbidden = list2params(list("virgin" = virgin, "anal_virgin" = anal_virgin))
 
 	var/markingcolourslist = list2params(m_colours)
 	var/markingstyleslist = list2params(m_styles)
@@ -427,7 +436,8 @@
 												speciesprefs='[speciesprefs]',
 												socks='[socks]',
 												body_accessory='[body_accessory]',
-												gear='[gearlist]'
+												gear='[gearlist]',
+												forbidden='[forbidden]'
 												WHERE ckey='[C.ckey]'
 												AND slot='[default_slot]'"}
 												)
@@ -467,7 +477,7 @@
 											gen_record,
 											player_alt_titles,
 											disabilities, organ_data, rlimb_data, nanotrasen_relation, speciesprefs,
-											socks, body_accessory, gear)
+											socks, body_accessory, gear, forbidden)
 
 					VALUES
 											('[C.ckey]', '[default_slot]', '[sanitizeSQL(metadata)]', '[sanitizeSQL(real_name)]', '[be_random_name]','[gender]',
@@ -497,7 +507,7 @@
 											'[sanitizeSQL(gen_record)]',
 											'[playertitlelist]',
 											'[disabilities]', '[organlist]', '[rlimblist]', '[nanotrasen_relation]', '[speciesprefs]',
-											'[socks]', '[body_accessory]', '[gearlist]')
+											'[socks]', '[body_accessory]', '[gearlist]', '[forbidden]')
 
 "}
 )

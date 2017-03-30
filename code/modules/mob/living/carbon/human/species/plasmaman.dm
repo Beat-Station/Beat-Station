@@ -29,6 +29,8 @@
 		"realizes the existential problem of being made out of plasma!",
 		"shows their true colors, which happens to be the color of plasma!")
 
+	anus = 1
+
 /datum/species/plasmaman/say_filter(mob/M, message, datum/language/speaking)
 	if(copytext(message, 1, 2) != "*")
 		message = replacetext(message, "s", stutter("ss"))

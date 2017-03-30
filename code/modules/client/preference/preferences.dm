@@ -148,6 +148,9 @@ var/global/list/special_role_times = list( //minimum age (in days) for accounts 
 	var/species = "Human"
 	var/language = "None"				//Secondary language
 
+	var/virgin = 1
+	var/anal_virgin = 1
+
 	var/body_accessory = null
 
 	var/speciesprefs = 0//I hate having to do this, I really do (Using this for oldvox code, making names universal I guess
@@ -416,6 +419,10 @@ var/global/list/special_role_times = list( //minimum age (in days) for accounts 
 			dat += "<b>Undershirt:</b> <a href ='?_src_=prefs;preference=undershirt;task=input'>[undershirt]</a><BR>"
 			dat += "<b>Socks:</b> <a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
 			dat += "<b>Backpack Type:</b> <a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><br>"
+
+			dat += "<h2>Forbidden fruits</h2>"
+			dat += "<b>Virgin:</b> <a href ='?_src_=prefs;preference=virgin;task=normal'>[virgin ? "Yes" : "No"]</a><BR>"
+			dat += "<b>Anal Virgin:</b> <a href ='?_src_=prefs;preference=virgin;task=anal'>[anal_virgin ? "Yes" : "No"]</a><BR>"
 
 			dat += "</td></tr></table>"
 
@@ -1109,6 +1116,12 @@ var/global/list/special_role_times = list( //minimum age (in days) for accounts 
 
 				gen_record = genmsg
 				SetRecords(user)
+
+	else if(href_list["preference"] == "virgin")
+		if(href_list["task"] == "normal")
+			virgin = !virgin
+		else if(href_list["task"] == "anal")
+			anal_virgin = !anal_virgin
 
 	if(href_list["preference"] == "gear")
 		if(href_list["toggle_gear"])
@@ -2145,6 +2158,9 @@ var/global/list/special_role_times = list( //minimum age (in days) for accounts 
 		character.body_accessory = body_accessory_by_name["[body_accessory]"]
 
 	character.backbag = backbag
+
+	character.virgin = virgin
+	character.anal_virgin = anal_virgin
 
 	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
 	if(S.has_gender && (character.gender in list(PLURAL, NEUTER)))
