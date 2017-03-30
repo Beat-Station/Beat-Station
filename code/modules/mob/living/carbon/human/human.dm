@@ -37,6 +37,7 @@
 	make_blood()
 
 	martial_art = default_martial_art
+	penis_size = rand(5, 25)
 
 	handcrafting = new()
 
@@ -2088,6 +2089,14 @@
 /mob/living/carbon/human/proc/change_icobase(var/new_icobase, var/new_deform, var/owner_sensitive)
 	for(var/obj/item/organ/external/O in organs)
 		O.change_organ_icobase(new_icobase, new_deform, owner_sensitive) //Change the icobase/deform of all our organs. If owner_sensitive is set, that means the proc won't mess with frankenstein limbs.
+
+/mob/living/carbon/human/get_footprint()//returns the typepath of the footprint/bloodt trail decal that the mob currently uses
+	if(lying)
+		return /obj/effect/decal/cleanable/blood/tracks/trail
+	else if(shoes)
+		return /obj/effect/decal/cleanable/blood/tracks/footprints
+	else
+		return species.footprints
 
 /mob/living/carbon/human/serialize()
 	// Currently: Limbs/organs only

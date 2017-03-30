@@ -61,6 +61,9 @@
 	if(status_flags & GOTTAGOREALLYFAST)
 		tally -= 2
 
+	if(weakened || resting)
+		tally += 30//no crawlrunning
+
 	return (tally + config.human_delay)
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0)

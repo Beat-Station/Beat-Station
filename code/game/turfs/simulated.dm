@@ -67,8 +67,8 @@
 
 		if(ishuman(A))
 			var/mob/living/carbon/human/M = A
-			if(M.lying)
-				return 1
+			/*if(M.lying)
+				return 1*/
 
 			if(M.flying)
 				return ..()
@@ -89,10 +89,10 @@
 					M.track_blood--
 
 			if(bloodDNA)
-				src.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,M.dir,0,bloodcolor) // Coming
-				var/turf/simulated/from = get_step(M,reverse_direction(M.dir))
+				src.AddTracks(M.get_footprint(), bloodDNA, M.dir, 0, bloodcolor) // Coming
+				var/turf/simulated/from = get_step(M, reverse_direction(M.dir))
 				if(istype(from) && from)
-					from.AddTracks(/obj/effect/decal/cleanable/blood/tracks/footprints,bloodDNA,0,M.dir,bloodcolor) // Going
+					from.AddTracks(M.get_footprint(), bloodDNA, 0, M.dir, bloodcolor) // Going
 
 				bloodDNA = null
 

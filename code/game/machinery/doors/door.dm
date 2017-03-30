@@ -42,7 +42,7 @@
 	update_dir()
 	update_freelook_sight()
 	airlocks += src
-	
+
 /obj/machinery/door/setDir(newdir)
 	..()
 	update_dir()
@@ -54,8 +54,8 @@
 			bound_height = world.icon_size
 		else
 			bound_width = world.icon_size
-			bound_height = width * world.icon_size	
-	
+			bound_height = width * world.icon_size
+
 /obj/machinery/door/initialize()
 	air_update_turf(1)
 	..()
@@ -76,7 +76,7 @@
 		var/mob/living/M = AM
 		if(world.time - M.last_bumped <= 10) return	//Can bump-open one airlock per second. This is to prevent shock spam.
 		M.last_bumped = world.time
-		if(!M.restrained() && M.mob_size > MOB_SIZE_SMALL)
+		if(!M.restrained() && M.mob_size > MOB_SIZE_SMALL && !(M.resting || M.weakened))
 			bumpopen(M)
 		return
 
