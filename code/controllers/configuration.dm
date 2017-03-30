@@ -187,8 +187,6 @@
 
 	var/max_loadout_points = 5 // How many points can be spent on extra items in character setup
 
-	var/disable_ooc_emoji = 0 // prevents people from using emoji in OOC
-
 	var/shutdown_on_reboot = 0 // Whether to shut down the world instead of rebooting it
 
 /datum/configuration/New()
@@ -583,9 +581,6 @@
 
 				if("medal_hub_password")
 					global.medal_pass = value
-
-				if("disable_ooc_emoji")
-					config.disable_ooc_emoji = 1
 
 				if("shutdown_on_reboot")
 					config.shutdown_on_reboot = 1

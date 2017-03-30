@@ -1,0 +1,74 @@
+<!--
+Title: Forbidden Fruits
+Used In File(s): /code/modules/mob/living/carbon/human/human.dm
+-->
+
+<div class='item'>
+	 <h3>{{:data.src_name}}</h3>
+</div>
+
+
+<!-- Penis -->
+{{if data.lens.penis_len}}
+	<div class='itemLabel'>
+		Penis: 
+	</div>
+
+	<div class='itemContent'>
+		{{for data.penis_list}}
+			{{:helper.link(value.action_button, data.icon, {'action' : value.name}, value.status)}}
+		{{/for}}
+	</div>
+{{/if}}
+
+<!-- Vagina -->
+{{if data.lens.vagina_len}}
+	<div class='itemLabel'>
+		Vagina: 
+	</div>
+
+	<div class='itemContent'>
+		{{for data.vagina_list}}
+			{{:helper.link(value.action_button, data.icon, {'action' : value.name}, value.status)}}
+		{{/for}}
+	</div>
+{{/if}}
+
+<!-- Mouth -->
+{{if data.lens.mouth_len}}
+	<div class='itemLabel'>
+		Mouth: 
+	</div>
+
+	<div class='itemContent'>
+		{{for data.mouth_list}}
+			{{:helper.link(value.action_button, data.icon, {'action' : value.name}, value.status)}}
+		{{/for}}
+	</div>
+{{/if}}
+
+<!-- Misc -->
+{{if data.lens.misc_len}}
+	<div class='itemLabel'>
+		Misc: 
+	</div>
+
+	<div class='itemContent'>
+		{{for data.misc_list}}
+			{{:helper.link(value.action_button, data.icon, {'action' : value.name}, value.status)}}
+		{{/for}}
+	</div>
+{{/if}}
+
+<!-- Emotes -->
+{{if data.lens.emote_len}}
+	<div class='itemLabel'>
+		Emotes: 
+	</div>
+
+	<div class='itemContent'>
+		{{for data.emote_list}}
+			{{:helper.link(value.action_button, data.icon, {'emote' : value.name}, value.status)}}
+		{{/for}}
+	</div>
+{{/if}}

@@ -32,13 +32,13 @@
 			ui_interact(user)
 	return ..()
 
-/mob/living/carbon/human/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
+/mob/living/carbon/human/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = not_restrained_state)
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "erp.tmpl", "Forbidden Fruits", 450, 550, ignore_status = 1)
+		ui = new(user, src, ui_key, "erp.tmpl", "Forbidden Fruits", 450, 550, state = state)
 		ui.open()
 
-/mob/living/silicon/human/ui_data(mob/living/carbon/human/user, ui_key = "main")
+/mob/living/carbon/human/ui_data(mob/living/carbon/human/user)
 	var/data[0]
 	var/list/penis_actions = list()
 	var/list/vagina_actions = list()

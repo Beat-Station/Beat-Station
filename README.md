@@ -1,20 +1,18 @@
-# Paradise
+# Beat!Station
 
-[Website](http://www.nanotrasen.se/) - [Code](https://github.com/ParadiseSS13/Paradise) - [Discord](https://discordapp.com/invite/gXZMc?utm_source=Discord%20Widget&utm_medium=Connect)
+It's based on [Paradise Station](https://github.com/ParadiseSS13/Paradise) and [Goon Station](https://github.com/goonstation/goonstation-2016) - This is the customized code we use at Brazilian Station server on BYOND. I've made some modifications, so i'm uploading the source. Enjoy.
 
----
+# Information
+This is a code used in a Brazilian server. Everyone is welcome to contribute though.
+I'm currently using music from Kevin MacLeod and SiriusBeat. Licenses are on the bottom of the file.
 
-### GETTING THE CODE
-The simplest way to obtain the code is using the github .zip feature.
-
-Click [here](https://github.com/ParadiseSS13/Paradise/archive/master.zip) to get the latest code as a .zip file, then unzip it to wherever you want.
-
+# Getting the code
 The more complicated and easier to update method is using git.  
 You'll need to download git or some client from [here](http://git-scm.com/).  
 When that's installed, right click in any folder and click on "Git Bash".  
 When that opens, type in:
 
-    git clone https://github.com/ParadiseSS13/Paradise.git
+    git clone https://github.com/nopm/Beat-Station
 
 (hint: hold down ctrl and press insert to paste into git bash)
 
@@ -108,11 +106,11 @@ along with the bot/relay script itself.
 
 ### LICENSE
 
-Paradise is licensed under the GNU Affero General Public License version 3.
+Beat!Station is licensed under the GNU Affero General Public License version 3.
 As of 5th January 2015 any new contributions are licensed under the AGPL as well,
 if you wish to submit code under the GPL v3 then commits and files must be marked as such
 in comments. If you wish to use our code in a closed source manner you may use anything
-before commit 445615b8439bf606ff204a42c8e7b6b69d983255,
+before commit 445615b8439bf606ff204a42c8e7b6b69d983255 on [Paradise](https://github.com/ParadiseSS13/Paradise),
 which is licensed under GPL v3.
 The major change here is that if you host a server using any code licensed under AGPL you
 are required to provide full source code for your servers users as well,
@@ -120,11 +118,8 @@ including addons and modifications you have made.
 
 See [this](https://www.gnu.org/licenses/why-affero-gpl.html) for more information.
 
-Any files located in the
-`Paradise/goon`,
-`Paradise/icons/goonstation`, or
-`Paradise/sound/goonstation`
-directories, or any subdirectories of mentioned directories are licensed under the
+Any files located in the `Paradise/icons/goonstation` and `Paradise/sound/goonstation`
+folders, and any of their subdirectories, are licensed under the
 Creative Commons 3.0 BY-NC-SA license
 (https://creativecommons.org/licenses/by-nc-sa/3.0)
 
@@ -132,5 +127,27 @@ All other assets including icons and sound files are licensed under the
 Creative Commons 3.0 BY-SA license (https://creativecommons.org/licenses/by-sa/3.0/),
 unless otherwise indicated.
 
+Credits for songs used:
 
+Thunderbird Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0 License
+http://creativecommons.org/licenses/by/3.0/
+
+"Floating Cities"
+Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0
+http://creativecommons.org/licenses/by/3.0/
+
+Orion 300XB Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0 License
+http://creativecommons.org/licenses/by/3.0/
+
+Myst on the Moor Kevin MacLeod (incompetech.com)
+Licensed under Creative Commons: By Attribution 3.0 License
+http://creativecommons.org/licenses/by/3.0/
+
+Music by: Sirius Beat - Tronicles
+Link: http://youtu.be/zIRo7NJ4uLE
+
+If any producer or label has an issue with me using your work, please contact me so i can remove it!
 

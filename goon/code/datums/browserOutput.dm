@@ -2,15 +2,13 @@ var/list/chatResources = list(
 	"goon/browserassets/js/jquery.min.js",
 	"goon/browserassets/js/jquery.mark.min.js",
 	"goon/browserassets/js/json2.min.js",
-	"goon/browserassets/js/twemoji.min.js",
 	"goon/browserassets/js/browserOutput.js",
 	"goon/browserassets/css/fonts/fontawesome-webfont.eot",
 	"goon/browserassets/css/fonts/fontawesome-webfont.svg",
 	"goon/browserassets/css/fonts/fontawesome-webfont.ttf",
 	"goon/browserassets/css/fonts/fontawesome-webfont.woff",
 	"goon/browserassets/css/font-awesome.css",
-	"goon/browserassets/css/browserOutput.css",
-	"goon/browserassets/json/unicode_9_annotations.json"
+	"goon/browserassets/css/browserOutput.css"
 )
 
 /var/savefile/iconCache = new /savefile("data/iconCache.sav")
@@ -271,7 +269,7 @@ var/to_chat_src
 				return
 
 		// url_encode it TWICE, this way any UTF-8 characters are able to be decoded by the javascript.
-		var/output_message = "[url_encode(url_encode(message))]"
+		var/output_message = "[url_encode(message)]"
 		if(flag)
 			output_message += "&[url_encode(flag)]"
 
