@@ -6,6 +6,14 @@
 	density = 1
 	anchored = 1
 
+/obj/structure/dresser/attackby(obj/item/I, mob/user, params)
+	if(istype(I, /obj/item/clothing/underwear))
+		user.drop_item()
+		qdel(I)
+		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
+		return
+	..()
+
 /obj/structure/dresser/attack_hand(mob/user as mob)
 	if(!Adjacent(user))//no tele-grooming
 		return
@@ -18,26 +26,16 @@
 			return
 		switch(choice)
 			if("Underwear")
-				var/list/valid_underwear = list()
-				for(var/underwear in underwear_list)
-					var/datum/sprite_accessory/S = underwear_list[underwear]
-					if(!(H.species.name in S.species_allowed))
-						continue
-					valid_underwear[underwear] = underwear_list[underwear]
-				var/new_underwear = input(user, "Choose your underwear:", "Changing") as null|anything in valid_underwear
-				if(new_underwear)
-					H.underwear = new_underwear
+				var/new_undies = input(user, "Select your underwear", "Changing")  as null|anything in underwear_list
+				if(new_undies)
+					var/obj/item/clothing/underwear/underpants/up = underwear_list[new_undies]
+					H.equip_or_collect(new up.type(), slot_underpants)
 
 			if("Undershirt")
-				var/list/valid_undershirts = list()
-				for(var/undershirt in undershirt_list)
-					var/datum/sprite_accessory/S = undershirt_list[undershirt]
-					if(!(H.species.name in S.species_allowed))
-						continue
-					valid_undershirts[undershirt] = undershirt_list[undershirt]
-				var/new_undershirt = input(user, "Choose your undershirt:", "Changing") as null|anything in valid_undershirts
-				if(new_undershirt)
-					H.undershirt = new_undershirt
+				var/new_undies = input(user, "Select your undershirt", "Changing")  as null|anything in undershirt_list
+				if(new_undies)
+					var/obj/item/clothing/underwear/undershirt/up = undershirt_list[new_undies]
+					H.equip_or_collect(new up.type(), slot_undershirt)
 
 			if("Socks")
 				var/list/valid_sockstyles = list()
@@ -51,4 +49,4 @@
 					H.socks = new_socks
 
 		add_fingerprint(H)
-		H.update_body()
+		H.update_inv_underwear()

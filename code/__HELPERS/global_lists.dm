@@ -48,6 +48,9 @@
 		if(S.flags & IS_WHITELISTED)
 			whitelisted_species += S.name
 
+	init_datum_subtypes(/obj/item/clothing/underwear/underpants, underwear_list, list(), "name")
+	init_datum_subtypes(/obj/item/clothing/underwear/undershirt, undershirt_list, list(), "name")
+
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
 
 	all_cults = typesof(/datum/cult_info)

@@ -96,6 +96,26 @@
 	static_inventory += using
 
 	inv_box = new /obj/screen/inventory()
+	inv_box.name = "underpants"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "uniform"
+	inv_box.screen_loc = ui_underpants
+	inv_box.slot_id = slot_underpants
+	inv_box.color = ui_color
+	inv_box.alpha = ui_alpha
+	toggleable_inventory += inv_box
+
+	inv_box = new /obj/screen/inventory()
+	inv_box.name = "undershirt"
+	inv_box.icon = ui_style
+	inv_box.icon_state = "uniform"
+	inv_box.screen_loc = ui_undershirt
+	inv_box.slot_id = slot_undershirt
+	inv_box.color = ui_color
+	inv_box.alpha = ui_alpha
+	toggleable_inventory += inv_box
+
+	inv_box = new /obj/screen/inventory()
 	inv_box.name = "i_clothing"
 	inv_box.icon = ui_style
 	inv_box.slot_id = slot_w_uniform
@@ -375,6 +395,12 @@
 		if(H.glasses)
 			H.glasses.screen_loc = ui_glasses
 			H.client.screen += H.glasses
+		if(H.underpants)
+			H.underpants.screen_loc = ui_underpants
+			H.client.screen += H.underpants
+		if(H.undershirt)
+			H.undershirt.screen_loc = ui_undershirt
+			H.client.screen += H.undershirt
 		if(H.w_uniform)
 			H.w_uniform.screen_loc = ui_iclothing
 			H.client.screen += H.w_uniform
@@ -388,15 +414,17 @@
 			H.head.screen_loc = ui_head
 			H.client.screen += H.head
 	else
-		if(H.shoes)		H.shoes.screen_loc = null
-		if(H.gloves)	H.gloves.screen_loc = null
-		if(H.l_ear)		H.l_ear.screen_loc = null
-		if(H.r_ear)		H.r_ear.screen_loc = null
-		if(H.glasses)	H.glasses.screen_loc = null
-		if(H.w_uniform)	H.w_uniform.screen_loc = null
-		if(H.wear_suit)	H.wear_suit.screen_loc = null
-		if(H.wear_mask)	H.wear_mask.screen_loc = null
-		if(H.head)		H.head.screen_loc = null
+		if(H.shoes)			H.shoes.screen_loc = null
+		if(H.gloves)		H.gloves.screen_loc = null
+		if(H.l_ear)			H.l_ear.screen_loc = null
+		if(H.r_ear)			H.r_ear.screen_loc = null
+		if(H.glasses)		H.glasses.screen_loc = null
+		if(H.underpants)	H.underpants.screen_loc = null
+		if(H.undershirt)	H.undershirt.screen_loc = null
+		if(H.w_uniform)		H.w_uniform.screen_loc = null
+		if(H.wear_suit)		H.wear_suit.screen_loc = null
+		if(H.wear_mask)		H.wear_mask.screen_loc = null
+		if(H.head)			H.head.screen_loc = null
 
 /datum/hud/human/persistant_inventory_update()
 	if(!mymob)

@@ -2065,9 +2065,7 @@
 	data["age"] = age
 
 	// No being naked
-	data["ushirt"] = undershirt
 	data["socks"] = socks
-	data["uwear"] = underwear
 
 	// Limbs
 	for(var/limb in organs_by_name)
