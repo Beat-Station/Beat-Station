@@ -575,6 +575,19 @@
 		else
 			dat += "<tr><td><B>Gloves:</B></td><td><A href='?src=[UID()];item=[slot_gloves]'>[(gloves && !(gloves.flags&ABSTRACT))		? gloves	: "<font color=grey>Empty</font>"]</A></td></tr>"
 
+		if(slot_underpants in obscured)
+			dat += "<tr><td><font color=grey><B>Underpants:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
+			dat += "<tr><td><font color=grey><B>Undershirt:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
+		else
+			dat += "<tr><td><B>Underpants:</B></td><td><A href='?src=[UID()];item=[slot_underpants]'>[underpants ? underpants : "<font color=grey>Empty</font>"]</A>"
+			if(underpants)
+				var/obj/item/clothing/underwear/underpants/up = underpants
+				if(up.adjustable)
+					dat += "&nbsp;<A href='?src=[UID()];pull_underwear_aside=1'>[up.adjusted ?  "Put back in place" : "Pull aside"]</A>"
+			dat += "</td></tr>"
+
+			dat += "<tr><td><B>Undershirt:</B></td><td><A href='?src=[UID()];item=[slot_undershirt]'>[undershirt ? undershirt : "<font color=grey>Empty</font>"]</A></td></tr>"
+
 		if(slot_w_uniform in obscured)
 			dat += "<tr><td><font color=grey><B>Uniform:</B></font></td><td><font color=grey>Obscured</font></td></tr>"
 		else
@@ -1081,6 +1094,17 @@
 									var/mob/living/silicon/robot/U = usr
 									R.fields["comments"] += "Made by [U.name] ([U.modtype] [U.braintype]) on [current_date_string] [worldtime2text()]<BR>[t1]"
 
+	if(href_list["pull_underwear_aside"])
+		var/obj/item/clothing/underwear/underpants/up = underpants
+		if(istype(up))
+			to_chat(src, "<span class='warning'>[usr] is trying to [up.adjusted ? "pull [up] aside" : "put [up] back in place"]!</span>")
+			if(do_after(usr, 30, target=src))
+				up.adjust()
+				if(up.adjusted)
+					visible_message("<span class='notice'>[usr] pulls [src]'s [up] aside.</span>")
+				else
+					visible_message("<span class='notice'>[usr] puts [src]'s [up] back in place.</span>")
+
 	if(href_list["lookitem"])
 		var/obj/item/I = locate(href_list["lookitem"])
 		src.examinate(I)
@@ -1088,6 +1112,13 @@
 	if(href_list["lookmob"])
 		var/mob/M = locate(href_list["lookmob"])
 		src.examinate(M)
+
+	/*              ERP                 */
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		if(process_erp_href(href_list, H))
+			return nanomanager.update_uis(src)
+
 	. = ..()
 
 
@@ -1214,6 +1245,8 @@
 			obscured |= slot_gloves
 		if(wear_suit.flags_inv & HIDEJUMPSUIT)
 			obscured |= slot_w_uniform
+			obscured |= slot_underpants
+			obscured |= slot_undershirt
 		if(wear_suit.flags_inv & HIDESHOES)
 			obscured |= slot_shoes
 
@@ -1225,6 +1258,11 @@
 		if(head.flags_inv & HIDEEARS)
 			obscured |= slot_r_ear
 			obscured |= slot_l_ear
+
+	if(w_uniform)
+		if(!(w_uniform.flags & SHOWUNDERWEAR))
+			obscured |= slot_underpants
+		obscured |= slot_undershirt
 
 	if(obscured.len > 0)
 		return obscured

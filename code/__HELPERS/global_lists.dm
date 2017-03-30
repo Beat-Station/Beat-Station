@@ -30,6 +30,10 @@
 	init_datum_subtypes(/datum/superheroes, all_superheroes, null, "name")
 	init_datum_subtypes(/datum/nations, all_nations, null, "default_name")
 	init_datum_subtypes(/datum/language, all_languages, null, "name")
+	init_datum_subtypes(/obj/item/clothing/underwear/underpants, underwear_list, null, "name")
+	init_datum_subtypes(/obj/item/clothing/underwear/undershirt, undershirt_list, null, "name")
+	init_datum_subtypes(/datum/forbidden/action, forbidden_actions, null, "name")
+	init_datum_subtypes(/datum/forbidden/emote, forbidden_emotes, null, "name")
 
 	for(var/language_name in all_languages)
 		var/datum/language/L = all_languages[language_name]
@@ -47,9 +51,6 @@
 
 		if(S.flags & IS_WHITELISTED)
 			whitelisted_species += S.name
-
-	init_datum_subtypes(/obj/item/clothing/underwear/underpants, underwear_list, list(), "name")
-	init_datum_subtypes(/obj/item/clothing/underwear/undershirt, undershirt_list, list(), "name")
 
 	init_subtypes(/datum/crafting_recipe, crafting_recipes)
 

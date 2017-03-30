@@ -7,9 +7,9 @@
 /mob/living/carbon/human
 	var/pleasure = 0
 
-	var/virgin
-	var/anal_virgin
-	var/penis_size
+	var/virgin = 1
+	var/anal_virgin = 1
+	var/penis_size = 0
 
 	var/mob/living/carbon/human/lastfucked		// Last person you did something
 	var/datum/forbidden/action/lfaction			// Last action you did to someone
@@ -100,28 +100,30 @@
 	return data
 
 /mob/living/carbon/human/proc/process_erp_href(href_list, mob/living/carbon/human/user)
-	if(user.incapacitated())
-		return 0
+	if(user.restrained())
+		return 1
 
 	if(href_list["action"])
 		if(!(href_list["action"] in forbidden_actions))
-			return 0
+			return 1
 
 		var/datum/forbidden/action/A = forbidden_actions[href_list["action"]]
 		if(!A.conditions(user, src))
-			return 0
+			return 1
 
 		user.fuck(src, A)
+		return 1
 
 	if(href_list["emote"])
 		if(!(href_list["emote"] in forbidden_emotes))
-			return 0
+			return 1
 
 		var/datum/forbidden/emote/M = forbidden_emotes[href_list["emote"]]
 		if(!M.conditions(user, src))
-			return 0
+			return 1
 
 		user.actionEmote(src, M)
+		return 1
 
 
 /*
