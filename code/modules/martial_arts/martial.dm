@@ -8,19 +8,31 @@
 	var/deflection_chance = 0 //Chance to deflect projectiles
 	var/help_verb = null
 
-/datum/martial_art/proc/disarm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/proc/disarm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
 
-/datum/martial_art/proc/harm_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/proc/harm_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
 
-/datum/martial_art/proc/grab_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/proc/grab_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
 	return 0
 
-/datum/martial_art/proc/help_act(var/mob/living/carbon/human/A, var/mob/living/carbon/human/D)
+/datum/martial_art/proc/grab_reinforce_act(obj/item/weapon/grab/G, mob/living/carbon/human/A, mob/living/carbon/human/D) //Called on reinforce grab
 	return 0
 
-/datum/martial_art/proc/add_to_streak(var/element,var/mob/living/carbon/human/D)
+/datum/martial_art/proc/grab_attack_act(obj/item/weapon/grab/G, mob/living/carbon/human/A, mob/living/carbon/human/D) //Called on attack with the grab
+	return 0
+
+/datum/martial_art/proc/grab_process(obj/item/weapon/grab/G, mob/living/carbon/human/A, mob/living/carbon/human/D) //Called on grab process. Returning 1 will override it.
+	return 0
+
+/datum/martial_art/proc/help_act(mob/living/carbon/human/A, mob/living/carbon/human/D)
+	return 0
+
+/datum/martial_art/proc/tablepush_act(mob/living/carbon/human/A, mob/living/carbon/human/D) //Called when you tablepush someone
+	return 1
+
+/datum/martial_art/proc/add_to_streak(element, mob/living/carbon/human/D)
 	if(D != current_target)
 		current_target = D
 		streak = ""
@@ -29,7 +41,7 @@
 		streak = copytext(streak,2)
 	return
 
-/datum/martial_art/proc/basic_hit(var/mob/living/carbon/human/A,var/mob/living/carbon/human/D)
+/datum/martial_art/proc/basic_hit(mob/living/carbon/human/A, mob/living/carbon/human/D)
 
 	A.do_attack_animation(D)
 	var/damage = rand(A.species.punchdamagelow, A.species.punchdamagehigh)
@@ -64,7 +76,7 @@
 		D.forcesay(hit_appends)
 	return 1
 
-/datum/martial_art/proc/teach(var/mob/living/carbon/human/H,var/make_temporary=0)
+/datum/martial_art/proc/teach(mob/living/carbon/human/H, make_temporary = 0)
 	if(help_verb)
 		H.verbs += help_verb
 	if(make_temporary)
@@ -76,7 +88,7 @@
 		base = src
 	H.martial_art = src
 
-/datum/martial_art/proc/remove(var/mob/living/carbon/human/H)
+/datum/martial_art/proc/remove(mob/living/carbon/human/H)
 	if(H.martial_art != src)
 		return
 	H.martial_art = base
@@ -133,7 +145,7 @@
 	icon_state ="scroll2"
 	var/used = 0
 
-/obj/item/weapon/plasma_fist_scroll/attack_self(mob/user as mob)
+/obj/item/weapon/plasma_fist_scroll/attack_self(mob/user)
 	if(!ishuman(user))
 		return
 	if(!used)
@@ -152,7 +164,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll2"
 
-/obj/item/weapon/sleeping_carp_scroll/attack_self(mob/living/carbon/human/user as mob)
+/obj/item/weapon/sleeping_carp_scroll/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user)
 		return
 	to_chat(user, "<span class='sciradio'>You have learned the ancient martial art of the Sleeping Carp! \
