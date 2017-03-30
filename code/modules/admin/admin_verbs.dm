@@ -197,13 +197,14 @@ var/list/admin_verbs_mod = list(
 	/client/proc/dsay,
 	/datum/admins/proc/show_player_panel,
 	/client/proc/jobbans,
-	/client/proc/debug_variables		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
+	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
+	/client/proc/cmd_admin_say
 )
 var/list/admin_verbs_mentor = list(
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
-	/client/proc/cmd_admin_pm_by_key_panel	/*admin-pm list by key*/
-	// cmd_mentor_say is added/removed by the toggle_mentor_chat verb
+	/client/proc/cmd_admin_pm_by_key_panel,	/*admin-pm list by key*/
+	/client/proc/cmd_admin_say
 )
 var/list/admin_verbs_proccall = list(
 	/client/proc/callproc,
