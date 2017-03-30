@@ -239,8 +239,8 @@
 				D.apply_damage(9, damtype)
 				D.Weaken(10)
 				A.do_bounce_anim_dir(SOUTH, 2, 2, easeout = BOUNCE_EASING)
-				A.set_dir(EAST) //face the victim
-				D.set_dir(SOUTH) //face up
+				A.setDir(EAST) //face the victim
+				D.setDir(SOUTH) //face up
 				spawn(2)
 					D.do_bounce_anim_dir(NORTH, 3, 4, easeout = BOUNCE_EASING)
 				A.changeNext_move(30) //3 seconds delay before next move
@@ -253,13 +253,13 @@
 			return 0
 
 /datum/martial_art/cqc/proc/Combo(mob/living/carbon/human/A, mob/living/carbon/human/D)
-	A.set_dir(get_dir(A, get_step_away(A, D)))
+	A.setDir(get_dir(A, get_step_away(A, D)))
 	A.SpinAnimation(5,1)
 	D.Stun(2)
 	A.Stun(2)
 	sleep(2)
 	if(!A || !D) return
-	A.set_dir(get_dir(A, D))
+	A.setDir(get_dir(A, D))
 	A.stunned = 0
 	A.update_canmove()
 	playsound(A, get_sfx("punch"), 50, 1, -2)

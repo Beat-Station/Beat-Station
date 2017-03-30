@@ -2104,8 +2104,6 @@
 		name = real_name
 		set_species(dna.species)
 	age = data["age"]
-	undershirt = data["ushirt"]
-	underwear = data["uwear"]
 	socks = data["socks"]
 	for(var/obj/item/organ/internal/iorgan in internal_organs)
 		qdel(iorgan)

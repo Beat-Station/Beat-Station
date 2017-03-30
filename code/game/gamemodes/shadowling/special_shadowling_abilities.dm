@@ -79,10 +79,10 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 					qdel(N)
 				H.visible_message("<span class='warning'>The chrysalis explodes in a shower of purple flesh and fluid!</span>")
 				if(H.underpants)
-					vox.unEquip(H.underpants)
+					H.unEquip(H.underpants)
 					qdel(H.underpants)
 				if(H.undershirt)
-					vox.unEquip(H.undershirt)
+					H.unEquip(H.undershirt)
 					qdel(H.undershirt)
 				H.socks = "None"
 				H.faction |= "faithless"

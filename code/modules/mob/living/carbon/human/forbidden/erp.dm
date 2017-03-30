@@ -314,7 +314,7 @@
 	set category = "IC"
 	set src in view(1)
 
-	if(usr.stat == 1 || usr.restrained() || !isliving(usr))
+	if(usr.stat == 1 || usr.restrained() || !ishuman(usr))
 		return
 
 	ui_interact(usr)
