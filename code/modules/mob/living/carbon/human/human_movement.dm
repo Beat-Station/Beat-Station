@@ -62,7 +62,7 @@
 		tally -= 2
 
 	if(weakened || resting)
-		tally += 30//no crawlrunning
+		tally += 25//no crawlrunning
 
 	return (tally + config.human_delay)
 
