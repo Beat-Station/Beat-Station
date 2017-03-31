@@ -609,7 +609,7 @@ var/global/datum/controller/occupations/job_master
 	if(rank in list("Nanotrasen Navy Officer", "Special Operations Officer"))
 		return 1
 
-	var/list/step_1 = heads_positions + security_positions + supply_positions
+	var/list/step_1 = command_positions + security_positions + supply_positions
 	var/list/step_2 = engineering_positions + medical_positions + science_positions + list("Blueshield", "Nanotrasen Representative")
 
 	if(rank in step_1)

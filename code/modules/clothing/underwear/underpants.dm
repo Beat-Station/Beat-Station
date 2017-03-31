@@ -26,6 +26,7 @@
 		to_chat(H, "<span class='warning'>You can't ajust this underwear.</span>")
 
 /obj/item/clothing/underwear/underpants/dropped(mob/user)
+	..()
 	adjusted = 0
 
 /obj/item/clothing/underwear/underpants/New()
@@ -104,96 +105,96 @@
 	icon_state = "female_red"
 	item_state = "r_shoes"
 	adjustable = 1
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_green
 	name = "Ladies Green"
 	icon_state = "female_green"
 	item_state = "bgloves"
 	adjustable = 1
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_white
 	name = "Ladies White"
 	icon_state = "female_white"
 	item_state = "lgloves"
 	adjustable = 1
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_whiter
 	name = "Ladies Whiter"
 	icon_state = "female_whiter"
 	item_state = "lgloves"
 	adjustable = 1
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_whitealt
 	name = "Ladies White Alt"
 	icon_state = "female_whitealt"
 	item_state = "lgloves"
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_yellow
 	name = "Ladies Yellow"
 	icon_state = "female_yellow"
 	item_state = "o_shoes"
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_blue
 	name = "Ladies Blue"
 	icon_state = "female_blue"
 	item_state = "bgloves"
 	adjustable = 1
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_babyblue
 	name = "Ladies Baby Blue"
 	icon_state = "female_babyblue"
 	item_state = "bgloves"
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_black
 	name = "Ladies Black"
 	icon_state = "female_black"
 	item_state = "bgloves"
 	adjustable = 1
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_blacker
 	name = "Ladies Blacker"
 	icon_state = "female_blacker"
 	adjustable = 1
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_blackalt
 	name = "Ladies Black Alt"
 	icon_state = "female_blackalt"
 	item_state = "bgloves"
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_kinky
 	name = "Ladies Kinky"
 	icon_state = "female_kinky"
 	item_state = "r_shoes"
 	adjustable = 1
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_babydoll
 	name = "Ladies Full Grey"
 	icon_state = "female_babydoll"
 	item_state = "bgloves"
 	adjustable = 1
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_pink
 	name = "Ladies Pink"
 	icon_state = "female_pink"
 	item_state = "r_shoes"
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS
 
 /obj/item/clothing/underwear/underpants/female_thong
 	name = "Ladies Thong"
 	icon_state = "female_thong"
 	item_state = "r_shoes"
 	adjustable = 1
-	flags = HIDEBREASTS
+	flags_inv = HIDEBREASTS

@@ -194,7 +194,7 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 		return 0
 	if(H.w_uniform || H.undershirt)
 		return 0
-	if(H.underpants && H.underpants.flags & HIDEBREASTS)
+	if(H.underpants && H.underpants.flags_inv & HIDEBREASTS)
 		return 0
 
 	return 1
