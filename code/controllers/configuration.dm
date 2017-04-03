@@ -53,8 +53,8 @@
 	var/allow_ai = 1					// allow ai job
 	var/hostedby = null
 	var/respawn = 0
-	var/civilian_allowed = 0
-	var/job_limit = 1
+	var/civilian_allowed = 1
+	var/job_limit = 0
 	var/guest_jobban = 1
 	var/usewhitelist = 0
 	var/mods_are_mentors = 0
@@ -345,10 +345,10 @@
 					config.respawn = 0
 
 				if("civilian_allowed")
-					civilian_allowed = 1
+					config.civilian_allowed = value
 
 				if("job_limit")
-					job_limit = 1
+					config.job_limit = value
 
 				if("servername")
 					config.server_name = value
