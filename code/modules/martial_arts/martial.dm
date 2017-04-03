@@ -30,7 +30,7 @@
 	return 0
 
 /datum/martial_art/proc/tablepush_act(mob/living/carbon/human/A, mob/living/carbon/human/D) //Called when you tablepush someone
-	return 1
+	return 0
 
 /datum/martial_art/proc/add_to_streak(element, mob/living/carbon/human/D)
 	if(D != current_target)
