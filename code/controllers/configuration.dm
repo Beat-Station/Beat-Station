@@ -54,7 +54,7 @@
 	var/hostedby = null
 	var/respawn = 0
 	var/civilian_allowed = 1
-	var/job_limit = 0
+	var/job_limit = 1
 	var/guest_jobban = 1
 	var/usewhitelist = 0
 	var/mods_are_mentors = 0
@@ -348,7 +348,7 @@
 					config.civilian_allowed = value
 
 				if("job_limit")
-					config.job_limit = value
+					config.job_limit = 0
 
 				if("servername")
 					config.server_name = value
