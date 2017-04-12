@@ -345,7 +345,7 @@
 					config.respawn = 0
 
 				if("civilian_allowed")
-					config.civilian_allowed = value
+					config.civilian_allowed = 1
 
 				if("job_limit")
 					config.job_limit = 0
