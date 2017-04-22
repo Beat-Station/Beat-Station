@@ -275,7 +275,6 @@
 		if(total_health <= config.health_threshold_softcrit && !stat)
 			to_chat(src, "<span class='notice'>You're too exhausted to keep going...</span>")
 			Weaken(5)
-			Stun(5)
 			setStaminaLoss(health - 2)
 			return
 		setStaminaLoss(max((staminaloss - 3), 0))
