@@ -485,7 +485,7 @@
 
 /datum/unarmed_attack/claws/armalis
 	attack_verb = list("slash", "claw")
-	damage = 6
+	damage = 0.5
 
 /datum/species/proc/handle_can_equip(obj/item/I, slot, disable_warning = 0, mob/living/carbon/human/user)
 	return 0
