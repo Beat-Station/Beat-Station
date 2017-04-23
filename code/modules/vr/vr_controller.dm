@@ -41,7 +41,7 @@ proc/build_virtual_avatar(mob/living/carbon/human/H, location, datum/map_templat
 	vr_avatar.name = H.name
 	vr_avatar.real_name = H.real_name
 	vr_avatar.undershirt = H.undershirt
-	vr_avatar.underwear = H.underwear
+	vr_avatar.underpants = H.underpants
 	vr_avatar.UpdateAppearance()
 	vr_avatar.equipOutfit(template.outfit)
 	return vr_avatar
