@@ -56,7 +56,7 @@
 	return !(weakened || paralysis || stat || (status_flags & FAKEDEATH))
 
 /mob/living/proc/can_crawl()
-	return !(paralysis || stat || stunned || (status_flags & FAKEDEATH) || buckled)
+	return !(weakened || paralysis || stat || stunned || (status_flags & FAKEDEATH) || buckled)
 
 // Whether the mob is capable of actions or not
 /mob/living/incapacitated(ignore_restraints = 0, ignore_grab = 0, ignore_lying = 0)
