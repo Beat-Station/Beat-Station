@@ -365,6 +365,13 @@ Proc for attack log creation, because really why not
 	if(progress)
 		qdel(progbar)
 
+/proc/is_species(A, species_name)
+	. = FALSE
+	if(ishuman(A))
+		var/mob/living/carbon/human/H = A
+		if(H.get_species() == species_name)
+			. = TRUE
+
 /proc/admin_mob_info(mob/M, mob/user = usr)
 	if(!ismob(M))
 		to_chat(user, "This can only be used on instances of type /mob")
