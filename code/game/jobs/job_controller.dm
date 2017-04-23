@@ -1,4 +1,3 @@
-
 var/global/datum/controller/occupations/job_master
 
 #define GET_RANDOM_JOB 0
@@ -14,7 +13,6 @@ var/global/datum/controller/occupations/job_master
 	var/list/unassigned = list()
 	//Debug info
 	var/list/job_debug = list()
-
 
 /datum/controller/occupations/proc/SetupOccupations(var/list/faction = list("Station"))
 	occupations = list()
@@ -601,7 +599,6 @@ var/global/datum/controller/occupations/job_master
 
 	spawn(0)
 		to_chat(H, "<span class='boldnotice'>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</span>")
-
 
 /datum/controller/occupations/proc/JobLimitConditions(rank)
 	if(rank in nonhuman_positions)

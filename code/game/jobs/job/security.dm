@@ -40,7 +40,7 @@
 		/obj/item/weapon/melee/classic_baton/telescopic = 1
 	)
 
-	implants = list(/obj/item/weapon/implant/loyalty)
+	implants = list(/obj/item/weapon/implant/mindshield)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel_sec
@@ -83,7 +83,7 @@
 		/obj/item/weapon/restraints/handcuffs = 1
 	)
 
-	implants = list(/obj/item/weapon/implant/loyalty)
+	implants = list(/obj/item/weapon/implant/mindshield)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel_sec
@@ -130,7 +130,7 @@
 		/obj/item/weapon/melee/classic_baton/telescopic = 1
 	)
 
-	implants = list(/obj/item/weapon/implant/loyalty)
+	implants = list(/obj/item/weapon/implant/mindshield)
 
 /datum/outfit/job/detective/pre_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	. = ..()
@@ -183,7 +183,7 @@
 		/obj/item/weapon/restraints/handcuffs = 1
 	)
 
-	implants = list(/obj/item/weapon/implant/loyalty)
+	implants = list(/obj/item/weapon/implant/mindshield)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel_sec
@@ -200,7 +200,7 @@
 	is_security = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
-	access = list(access_medical, access_morgue, access_surgery, access_chemistry, access_virology, access_genetics)
+	access = list(access_medical, access_morgue, access_surgery, access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_chemistry, access_virology, access_genetics)
 	minimal_access = list(access_medical, access_morgue, access_surgery, access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
 	outfit = /datum/outfit/job/brigdoc
 
@@ -218,7 +218,7 @@
 	l_hand = /obj/item/weapon/storage/firstaid/adv
 	pda = /obj/item/device/pda/medical
 
-	implants = list(/obj/item/weapon/implant/loyalty)
+	implants = list(/obj/item/weapon/implant/mindshield)
 
 	backpack = /obj/item/weapon/storage/backpack/medic
 	satchel = /obj/item/weapon/storage/backpack/satchel_med
@@ -257,7 +257,7 @@
 		/obj/item/weapon/restraints/handcuffs = 1
 	)
 
-	implants = list(/obj/item/weapon/implant/loyalty)
+	implants = list(/obj/item/weapon/implant/mindshield)
 
 	backpack = /obj/item/weapon/storage/backpack/security
 	satchel = /obj/item/weapon/storage/backpack/satchel_sec
