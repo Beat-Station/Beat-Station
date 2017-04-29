@@ -193,14 +193,7 @@
 
 /obj/structure/closet/crate/attack_hand(mob/user)
 	if(manifest)
-		to_chat(user, "<span class='notice'>You tear the manifest off of the crate.</span>")
-		playsound(src.loc, 'sound/items/poster_ripped.ogg', 75, 1)
-		manifest.forceMove(loc)
-		if(ishuman(user))
-			user.put_in_hands(manifest)
-		manifest = null
-		update_icon()
-		return
+		tear_manifest(user)
 	else
 		if(rigged && locate(/obj/item/device/radio/electropack) in src)
 			if(isliving(user))
@@ -212,6 +205,17 @@
 					return
 		src.add_fingerprint(user)
 		src.toggle(user)
+
+
+/obj/structure/closet/crate/proc/tear_manifest(mob/user)
+	to_chat(user, "<span class='notice'>You tear the manifest off of [src].</span>")
+	playsound(src, 'sound/items/poster_ripped.ogg', 75, 1)
+
+	manifest.forceMove(loc)
+	if(ishuman(user))
+		user.put_in_hands(manifest)
+	manifest = null
+	update_icon()
 
 // Called when a crate is delivered by MULE at a location, for notifying purposes
 /obj/structure/closet/crate/proc/notifyRecipient(var/destination)
@@ -282,13 +286,7 @@
 
 /obj/structure/closet/crate/secure/attack_hand(mob/user)
 	if(manifest)
-		to_chat(user, "<span class='notice'>You tear the manifest off of the crate.</span>")
-		playsound(src.loc, 'sound/items/poster_ripped.ogg', 75, 1)
-		manifest.forceMove(loc)
-		if(ishuman(user))
-			user.put_in_hands(manifest)
-		manifest = null
-		update_icon()
+		tear_manifest(user)
 		return
 	if(locked)
 		src.togglelock(user)

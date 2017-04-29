@@ -13,10 +13,10 @@
 
 /datum/station_goal/station_shield/on_report()
 	//Unlock
-	var/datum/supply_packs/P = shuttle_master.supply_packs["[/datum/supply_packs/misc/shield_sat]"]
+	var/datum/supply_pack/P = shuttle_master.supply_packs["[/datum/supply_pack/misc/shield_sat]"]
 	P.special_enabled = TRUE
 
-	P = shuttle_master.supply_packs["[/datum/supply_packs/misc/shield_sat_control]"]
+	P = shuttle_master.supply_packs["[/datum/supply_pack/misc/shield_sat_control]"]
 	P.special_enabled = TRUE
 
 /datum/station_goal/station_shield/check_completion()
@@ -46,7 +46,7 @@
 	icon_screen = "accelerator"
 	icon_keyboard = "accelerator_key"
 	var/notice
-	
+
 /obj/machinery/computer/sat_control/attack_hand(mob/user)
 	if(..())
 		return 1
@@ -90,7 +90,7 @@
 		data["meteor_shield_coverage_max"] = G.coverage_goal
 		data["meteor_shield_coverage_percentage"] = (G.get_coverage() / G.coverage_goal) * 100
 	return data
-	
+
 /obj/machinery/satellite
 	name = "Defunct Satellite"
 	desc = ""
@@ -106,7 +106,7 @@
 /obj/machinery/satellite/New()
 	..()
 	id = gid++
-	
+
 /obj/machinery/satellite/attack_hand(mob/user)
 	if(..())
 		return 1
