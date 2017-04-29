@@ -78,8 +78,8 @@
 	for (var/thing in atoms)
 		var/atom/A = thing
 		if(typecache[A.type])
-			. += A	
-	
+			. += A
+
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
 /proc/typecacheof(path, ignore_root_path)
 	if(ispath(path))
@@ -177,6 +177,22 @@
 /*
  * Sorting
  */
+
+//replaces reverseList ~Carnie
+/proc/reverseRange(list/L, start=1, end=0)
+	if(L.len)
+		start = start % L.len
+		end = end % (L.len+1)
+		if(start <= 0)
+			start += L.len
+		if(end <= 0)
+			end += L.len + 1
+
+		--end
+		while(start < end)
+			L.Swap(start++,end--)
+
+	return L
 
 //Reverses the order of items in the list
 /proc/reverselist(list/L)
@@ -625,7 +641,7 @@ proc/dd_sortedObjectList(list/incoming)
 
 /datum/alarm/dd_SortValue()
 	return "[sanitize(last_name)]"
-	
+
 //Picks from the list, with some safeties, and returns the "default" arg if it fails
 #define DEFAULTPICK(L, default) ((istype(L, /list) && L:len) ? pick(L) : default)
 

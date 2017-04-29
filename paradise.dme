@@ -1131,6 +1131,8 @@
 #include "code\modules\awaymissions\mission_code\stationCollision.dm"
 #include "code\modules\awaymissions\mission_code\UO71-terrorspiders.dm"
 #include "code\modules\awaymissions\mission_code\wildwest.dm"
+#include "code\modules\cargo\exports\export_scanner.dm"
+#include "code\modules\cargo\exports\exports.dm"
 #include "code\modules\client\asset_cache.dm"
 #include "code\modules\client\client defines.dm"
 #include "code\modules\client\client procs.dm"

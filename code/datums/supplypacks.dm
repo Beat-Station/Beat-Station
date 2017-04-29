@@ -93,7 +93,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas,
 					/obj/item/clothing/mask/gas)
-	cost = 35
+	cost = 3500
 	containertype = /obj/structure/closet/crate/internals
 	containername = "emergency crate"
 	group = supply_emergency
@@ -106,7 +106,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/tank/air,
 					/obj/item/weapon/tank/air,
 					/obj/item/weapon/tank/air)
-	cost = 10
+	cost = 1000
 	containername = "internals crate"
 
 /datum/supply_packs/emergency/firefighting
@@ -123,14 +123,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/extinguisher,
 					/obj/item/clothing/head/hardhat/red,
 					/obj/item/clothing/head/hardhat/red)
-	cost = 10
+	cost = 1000
 	containertype = /obj/structure/closet/crate
 	containername = "firefighting crate"
 
 /datum/supply_packs/emergency/atmostank
 	name = "Firefighting Watertank Crate"
 	contains = list(/obj/item/weapon/watertank/atmos)
-	cost = 10
+	cost = 1000
 	containertype = /obj/structure/closet/crate/secure
 	containername = "firefighting watertank crate"
 	access = access_atmospherics
@@ -141,7 +141,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/mask/gas,
 					/obj/item/weapon/grenade/chem_grenade/antiweed,
 					/obj/item/weapon/grenade/chem_grenade/antiweed)
-	cost = 15
+	cost = 1500
 	containertype = /obj/structure/closet/crate/secure/hydrosec
 	containername = "weed control crate"
 	access = access_hydroponics
@@ -155,7 +155,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/pen/sleepy,
 					/obj/item/weapon/grenade/chem_grenade/incendiary)
-	cost = 20
+	cost = 2000
 	containertype = /obj/structure/closet/crate
 	containername = "special ops crate"
 	hidden = 1
@@ -163,7 +163,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/emergency/syndicate
 	name = "ERROR_NULL_ENTRY"
 	contains = list(/obj/item/weapon/storage/box/syndicate)
-	cost = 140
+	cost = 14000
 	containertype = /obj/structure/closet/crate
 	containername = "crate"
 	hidden = 1
@@ -186,7 +186,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/box/teargas,
 					/obj/item/weapon/storage/box/flashes,
 					/obj/item/weapon/storage/box/handcuffs)
-	cost = 10
+	cost = 1000
 	containername = "security supply crate"
 
 ////// Armor: Basic
@@ -196,7 +196,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/clothing/head/helmet,
 					/obj/item/clothing/head/helmet,
 					/obj/item/clothing/head/helmet)
-	cost = 10
+	cost = 1000
 	containername = "helmet crate"
 
 /datum/supply_packs/security/justiceinbound
@@ -205,7 +205,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/head/helmet/justice,
 					/obj/item/clothing/mask/gas/sechailer,
 					/obj/item/clothing/mask/gas/sechailer)
-	cost = 60 //justice comes at a price. An expensive, noisy price.
+	cost = 6000 //justice comes at a price. An expensive, noisy price.
 	containername = "justice enforcer crate"
 
 /datum/supply_packs/security/armor
@@ -213,7 +213,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/clothing/suit/armor/vest,
 					/obj/item/clothing/suit/armor/vest,
 					/obj/item/clothing/suit/armor/vest)
-	cost = 10
+	cost = 1000
 	containername = "armor crate"
 
 ////// Weapons: Basic
@@ -223,7 +223,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/melee/baton/loaded,
 					/obj/item/weapon/melee/baton/loaded,
 					/obj/item/weapon/melee/baton/loaded)
-	cost = 10
+	cost = 1000
 	containername = "stun baton crate"
 
 /datum/supply_packs/security/laser
@@ -231,7 +231,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser,
 					/obj/item/weapon/gun/energy/laser)
-	cost = 15
+	cost = 1500
 	containername = "laser crate"
 
 /datum/supply_packs/security/taser
@@ -239,7 +239,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/gun/energy/gun/advtaser,
 					/obj/item/weapon/gun/energy/gun/advtaser,
 					/obj/item/weapon/gun/energy/gun/advtaser)
-	cost = 15
+	cost = 1500
 	containername = "stun gun crate"
 
 /datum/supply_packs/security/disabler
@@ -247,7 +247,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/gun/energy/disabler,
 					/obj/item/weapon/gun/energy/disabler,
 					/obj/item/weapon/gun/energy/disabler)
-	cost = 10
+	cost = 1000
 	containername = "disabler crate"
 
 ///// Armory stuff
@@ -265,7 +265,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/clothing/head/helmet/riot,
 					/obj/item/clothing/head/helmet/riot,
 					/obj/item/clothing/head/helmet/riot)
-	cost = 15
+	cost = 1500
 	containername = "riot helmets crate"
 
 /datum/supply_packs/security/armory/riotarmor
@@ -273,7 +273,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/clothing/suit/armor/riot,
 					/obj/item/clothing/suit/armor/riot,
 					/obj/item/clothing/suit/armor/riot)
-	cost = 15
+	cost = 1500
 	containername = "riot armor crate"
 
 /datum/supply_packs/security/armory/riotshields
@@ -281,7 +281,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/shield/riot,
 					/obj/item/weapon/shield/riot,
 					/obj/item/weapon/shield/riot)
-	cost = 20
+	cost = 2000
 	containername = "riot shields crate"
 
 /datum/supply_packs/security/bullethelmets
@@ -289,7 +289,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/clothing/head/helmet/alt,
 					/obj/item/clothing/head/helmet/alt,
 					/obj/item/clothing/head/helmet/alt)
-	cost = 10
+	cost = 1000
 	containername = "bulletproof helmet crate"
 
 /datum/supply_packs/security/armory/bulletarmor
@@ -297,7 +297,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/suit/armor/bulletproof,
 					/obj/item/clothing/suit/armor/bulletproof)
-	cost = 15
+	cost = 1500
 	containername = "tactical armor crate"
 
 /datum/supply_packs/security/armory/swat
@@ -312,14 +312,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/mask/gas/sechailer/swat,
 					/obj/item/weapon/storage/belt/military/assault,
 					/obj/item/weapon/storage/belt/military/assault)
-	cost = 60
+	cost = 6000
 	containername = "assault armor crate"
 
 /datum/supply_packs/security/armory/laserarmor
 	name = "Ablative Armor Crate"
 	contains = list(/obj/item/clothing/suit/armor/laserproof,
 					/obj/item/clothing/suit/armor/laserproof)		// Only two vests to keep costs down for balance
-	cost = 20
+	cost = 2000
 	containertype = /obj/structure/closet/crate/secure/plasma
 	containername = "ablative armor crate"
 
@@ -333,14 +333,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/belt/bandolier,
 					/obj/item/weapon/storage/belt/bandolier,
 					/obj/item/weapon/storage/belt/bandolier)
-	cost = 20
+	cost = 2000
 	containername = "combat shotgun crate"
 
 /datum/supply_packs/security/armory/expenergy
 	name = "Energy Guns Crate"
 	contains = list(/obj/item/weapon/gun/energy/gun,
 					/obj/item/weapon/gun/energy/gun)			// Only two guns to keep costs down
-	cost = 25
+	cost = 2500
 	containertype = /obj/structure/closet/crate/secure/plasma
 	containername = "energy gun crate"
 
@@ -353,7 +353,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/grenade/chem_grenade/incendiary,
 					/obj/item/weapon/grenade/chem_grenade/incendiary,
 					/obj/item/weapon/grenade/chem_grenade/incendiary)
-	cost = 15	// its a fecking flamethrower and some plasma, why the shit did this cost so much before!?
+	cost = 1500	// its a fecking flamethrower and some plasma, why the shit did this cost so much before!?
 	containertype = /obj/structure/closet/crate/secure/plasma
 	containername = "incendiary weapons crate"
 	access = access_heads
@@ -362,7 +362,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "WT-550 Auto Rifle Crate"
 	contains = list(/obj/item/weapon/gun/projectile/automatic/wt550,
 					/obj/item/weapon/gun/projectile/automatic/wt550)
-	cost = 35
+	cost = 3500
 	containername = "auto rifle crate"
 
 /datum/supply_packs/security/armory/wt550ammo
@@ -371,7 +371,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9,
 					/obj/item/ammo_box/magazine/wt550m9,)
-	cost = 30
+	cost = 3000
 	containername = "auto rifle ammo crate"
 
 /////// Implants & etc
@@ -379,25 +379,25 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/security/armory/mindshield
 	name = "Mindshield Implants Crate"
 	contains = list (/obj/item/weapon/storage/lockbox/mindshield)
-	cost = 40
+	cost = 4000
 	containername = "mindshield implant crate"
 
 /datum/supply_packs/security/armory/trackingimp
 	name = "Tracking Implants Crate"
 	contains = list (/obj/item/weapon/storage/box/trackimp)
-	cost = 20
+	cost = 2000
 	containername = "tracking implant crate"
 
 /datum/supply_packs/security/armory/chemimp
 	name = "Chemical Implants Crate"
 	contains = list (/obj/item/weapon/storage/box/chemimp)
-	cost = 20
+	cost = 2000
 	containername = "chemical implant crate"
 
 /datum/supply_packs/security/armory/exileimp
 	name = "Exile Implants Crate"
 	contains = list (/obj/item/weapon/storage/box/exileimp)
-	cost = 30
+	cost = 3000
 	containername = "exile implant crate"
 
 /datum/supply_packs/security/securitybarriers
@@ -406,7 +406,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/machinery/deployable/barrier,
 					/obj/machinery/deployable/barrier,
 					/obj/machinery/deployable/barrier)
-	cost = 20
+	cost = 2000
 	containername = "security barriers crate"
 
 /datum/supply_packs/security/securityclothes
@@ -419,7 +419,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/head/beret/sec/warden,
 					/obj/item/clothing/under/rank/head_of_security/corp,
 					/obj/item/clothing/head/HoS/beret)
-	cost = 30
+	cost = 3000
 	containername = "security clothing crate"
 
 
@@ -437,7 +437,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/engineering/fueltank
 	name = "Fuel Tank Crate"
 	contains = list(/obj/structure/reagent_dispensers/fueltank)
-	cost = 8
+	cost = 800
 	containertype = /obj/structure/largecrate
 	containername = "fuel tank crate"
 
@@ -449,7 +449,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/toolbox/mechanical,
 					/obj/item/weapon/storage/toolbox/mechanical,
 					/obj/item/weapon/storage/toolbox/mechanical)
-	cost = 10
+	cost = 1000
 	containername = "electrical maintenance crate"
 
 /datum/supply_packs/engineering/powergamermitts
@@ -457,7 +457,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/clothing/gloves/color/yellow,
 					/obj/item/clothing/gloves/color/yellow,
 					/obj/item/clothing/gloves/color/yellow)
-	cost = 20	//Made of pure-grade bullshittinium
+	cost = 2000	//Made of pure-grade bullshittinium
 	containername = "insulated gloves crate"
 	containertype = /obj/structure/closet/crate/engineering/electrical
 
@@ -466,7 +466,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/stock_parts/cell/high,		//Changed to an extra high powercell because normal cells are useless
 					/obj/item/weapon/stock_parts/cell/high,
 					/obj/item/weapon/stock_parts/cell/high)
-	cost = 10
+	cost = 1000
 	containername = "electrical maintenance crate"
 	containertype = /obj/structure/closet/crate/engineering/electrical
 
@@ -484,7 +484,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/head/hardhat,
 					/obj/item/clothing/head/hardhat,
 					/obj/item/clothing/head/hardhat)
-	cost = 10
+	cost = 1000
 	containername = "engineering gear crate"
 
 /datum/supply_packs/engineering/solar
@@ -513,7 +513,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/circuitboard/solar_control,
 					/obj/item/weapon/tracker_electronics,
 					/obj/item/weapon/paper/solar)
-	cost = 20
+	cost = 2000
 	containername = "solar pack crate"
 	containertype = /obj/structure/closet/crate/engineering/electrical
 
@@ -521,7 +521,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "Emitter Crate"
 	contains = list(/obj/machinery/power/emitter,
 					/obj/machinery/power/emitter)
-	cost = 10
+	cost = 1000
 	containertype = /obj/structure/closet/crate/secure
 	containername = "emitter crate"
 	access = access_ce
@@ -531,19 +531,19 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "Field Generator Crate"
 	contains = list(/obj/machinery/field/generator,
 					/obj/machinery/field/generator)
-	cost = 10
+	cost = 1000
 	containername = "field generator crate"
 
 /datum/supply_packs/engineering/engine/sing_gen
 	name = "Singularity Generator Crate"
 	contains = list(/obj/machinery/the_singularitygen)
-	cost = 10
+	cost = 1000
 	containername = "singularity generator crate"
 
 /datum/supply_packs/engineering/engine/tesla
 	name = "Energy Ball Generator Crate"
 	contains = list(/obj/machinery/the_singularitygen/tesla)
-	cost = 10
+	cost = 1000
 	containername = "energy ball generator crate"
 
 /datum/supply_packs/engineering/engine/coil
@@ -551,14 +551,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/machinery/power/tesla_coil,
 					/obj/machinery/power/tesla_coil,
 					/obj/machinery/power/tesla_coil)
-	cost = 10
+	cost = 1000
 	containername = "tesla coil crate"
 
 /datum/supply_packs/engineering/engine/grounding
 	name = "Grounding Rod Crate"
 	contains = list(/obj/machinery/power/grounding_rod,
 					/obj/machinery/power/grounding_rod)
-	cost = 10
+	cost = 1000
 	containername = "grounding rod crate"
 
 /datum/supply_packs/engineering/engine/collector
@@ -566,7 +566,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/machinery/power/rad_collector,
 					/obj/machinery/power/rad_collector,
 					/obj/machinery/power/rad_collector)
-	cost = 10
+	cost = 1000
 	containername = "collector crate"
 
 /datum/supply_packs/engineering/engine/PA
@@ -578,7 +578,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/structure/particle_accelerator/particle_emitter/right,
 					/obj/structure/particle_accelerator/power_box,
 					/obj/structure/particle_accelerator/end_cap)
-	cost = 25
+	cost = 2500
 	containername = "particle accelerator crate"
 
 /datum/supply_packs/engineering/engine/spacesuit
@@ -589,7 +589,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/head/helmet/space,
 					/obj/item/clothing/mask/breath,
 					/obj/item/clothing/mask/breath)
-	cost = 30
+	cost = 3000
 	containertype = /obj/structure/closet/crate/secure
 	containername = "space suit crate"
 	access = access_eva
@@ -599,13 +599,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/storage/briefcase/inflatable,
 					/obj/item/weapon/storage/briefcase/inflatable,
 					/obj/item/weapon/storage/briefcase/inflatable)
-	cost = 20
+	cost = 2000
 	containername = "inflatable barrier crate"
 
 /datum/supply_packs/engineering/engine/supermatter_shard
 	name = "Supermatter Shard Crate"
 	contains = list(/obj/machinery/power/supermatter_shard)
-	cost = 50 //So cargo thinks twice before killing themselves with it
+	cost = 5000 //So cargo thinks twice before killing themselves with it
 	containertype = /obj/structure/closet/crate/secure
 	containername = "supermatter shard crate"
 	access = access_ce
@@ -616,7 +616,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 		/obj/machinery/power/generator,
 		/obj/item/pipe/circulator,
 		/obj/item/pipe/circulator)
-	cost = 25
+	cost = 2500
 	containertype = /obj/structure/closet/crate/secure
 	containername = "thermo-electric generator crate"
 	access = access_ce
@@ -632,7 +632,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/conveyor_construct,
 					/obj/item/conveyor_switch_construct,
 					/obj/item/weapon/paper/conveyor)
-	cost = 15
+	cost = 1500
 	containername = "conveyor assembly crate"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -662,7 +662,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/box/beakers,
 					/obj/item/weapon/storage/box/syringes,
 				    /obj/item/weapon/storage/box/bodybags)
-	cost = 20
+	cost = 2000
 	containertype = /obj/structure/closet/crate/medical
 	containername = "medical supplies crate"
 
@@ -672,7 +672,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/firstaid/regular,
 					/obj/item/weapon/storage/firstaid/regular,
 					/obj/item/weapon/storage/firstaid/regular)
-	cost = 10
+	cost = 1000
 	containername = "first aid kits crate"
 
 /datum/supply_packs/medical/firstaidadv
@@ -681,7 +681,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/firstaid/adv,
 					/obj/item/weapon/storage/firstaid/adv,
 					/obj/item/weapon/storage/firstaid/adv)
-	cost = 10
+	cost = 1000
 	containername = "advanced first aid kits crate"
 
 /datum/supply_packs/medical/firstaibrute
@@ -689,7 +689,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/storage/firstaid/brute,
 					/obj/item/weapon/storage/firstaid/brute,
 					/obj/item/weapon/storage/firstaid/brute)
-	cost = 10
+	cost = 1000
 	containername = "brute first aid kits crate"
 
 /datum/supply_packs/medical/firstaidburns
@@ -697,7 +697,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/storage/firstaid/fire,
 					/obj/item/weapon/storage/firstaid/fire,
 					/obj/item/weapon/storage/firstaid/fire)
-	cost = 10
+	cost = 1000
 	containername = "fire first aid kits crate"
 
 /datum/supply_packs/medical/firstaidtoxins
@@ -705,7 +705,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/storage/firstaid/toxin,
 					/obj/item/weapon/storage/firstaid/toxin,
 					/obj/item/weapon/storage/firstaid/toxin)
-	cost = 10
+	cost = 1000
 	containername = "toxin first aid kits crate"
 
 /datum/supply_packs/medical/firstaidoxygen
@@ -713,7 +713,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/storage/firstaid/o2,
 					/obj/item/weapon/storage/firstaid/o2,
 					/obj/item/weapon/storage/firstaid/o2)
-	cost = 10
+	cost = 1000
 	containername = "oxygen first aid kits crate"
 
 /datum/supply_packs/medical/virus
@@ -732,7 +732,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/box/syringes,
 					/obj/item/weapon/storage/box/beakers,
 					/obj/item/weapon/reagent_containers/glass/bottle/mutagen)
-	cost = 25
+	cost = 2500
 	containertype = /obj/structure/closet/crate/secure/plasma
 	containername = "virus crate"
 	access = access_cmo
@@ -749,14 +749,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/reagent_containers/blood/BMinus,
 					/obj/item/weapon/reagent_containers/blood/OPlus,
 					/obj/item/weapon/reagent_containers/blood/OMinus)
-	cost = 35
+	cost = 3500
 	containertype = /obj/structure/closet/crate/freezer
 	containername = "blood pack crate"
 
 /datum/supply_packs/medical/iv_drip
 	name = "IV Drip Crate"
 	contains = list(/obj/machinery/iv_drip)
-	cost = 30
+	cost = 3000
 	containertype = /obj/structure/closet/crate/secure
 	containername = "IV drip crate"
 	access = access_cmo
@@ -774,7 +774,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/retractor,
 					/obj/item/weapon/bonesetter,
 					/obj/item/weapon/circular_saw)
-	cost = 25
+	cost = 2500
 	containertype = /obj/structure/closet/crate/secure
 	containername = "surgery crate"
 	access = access_medical
@@ -799,7 +799,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/box/flashes,
 					/obj/item/weapon/stock_parts/cell/high,
 					/obj/item/weapon/stock_parts/cell/high)
-	cost = 10
+	cost = 1000
 	containertype = /obj/structure/closet/crate/secure/scisec
 	containername = "robotics assembly crate"
 	access = access_robotics
@@ -811,14 +811,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/book/manual/ripley_build_and_repair,
 					/obj/item/weapon/circuitboard/mecha/ripley/main, //TEMPORARY due to lack of circuitboard printer
 					/obj/item/weapon/circuitboard/mecha/ripley/peripherals) //TEMPORARY due to lack of circuitboard printer
-	cost = 30
+	cost = 3000
 	containername = "\improper APLU \"Ripley\" circuit crate"
 
 /datum/supply_packs/science/robotics/mecha_odysseus
 	name = "Circuit Crate (Odysseus)"
 	contains = list(/obj/item/weapon/circuitboard/mecha/odysseus/peripherals, //TEMPORARY due to lack of circuitboard printer
 					/obj/item/weapon/circuitboard/mecha/odysseus/main) //TEMPORARY due to lack of circuitboard printer
-	cost = 25
+	cost = 2500
 	containername = "\improper \"Odysseus\" circuit crate"
 
 /datum/supply_packs/science/plasma
@@ -835,7 +835,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/device/assembly/timer,
 					/obj/item/device/assembly/timer,
 					/obj/item/device/assembly/timer)
-	cost = 10
+	cost = 1000
 	containertype = /obj/structure/closet/crate/secure/plasma
 	containername = "plasma assembly crate"
 	access = access_tox_storage
@@ -847,7 +847,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/machinery/shieldwallgen,
 					/obj/machinery/shieldwallgen,
 					/obj/machinery/shieldwallgen)
-	cost = 20
+	cost = 2000
 	containertype = /obj/structure/closet/crate/secure/scisec
 	containername = "shield generators crate"
 	access = access_teleporter
@@ -857,7 +857,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "Tank Transfer Valves Crate"
 	contains = list(/obj/item/device/transfer_valve,
 					/obj/item/device/transfer_valve)
-	cost = 60
+	cost = 6000
 	containertype = /obj/structure/closet/crate/secure/scisec
 	containername = "tank transfer valves crate"
 	access = access_rd
@@ -888,7 +888,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 					/obj/item/weapon/reagent_containers/food/snacks/grown/banana,
 					/obj/item/weapon/reagent_containers/food/snacks/grown/banana)
-	cost = 10
+	cost = 1000
 	containername = "food crate"
 	announce_beacons = list("Kitchen" = list("Kitchen"))
 
@@ -898,39 +898,39 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/pizzabox/mushroom,
 					/obj/item/pizzabox/meat,
 					/obj/item/pizzabox/vegetable)
-	cost = 60
+	cost = 6000
 	containername = "Pizza crate"
 
 /datum/supply_packs/organic/monkey
 	name = "Monkey Crate"
 	contains = list (/obj/item/weapon/storage/box/monkeycubes)
-	cost = 20
+	cost = 2000
 	containername = "monkey crate"
 
 /datum/supply_packs/organic/farwa
 	name = "Farwa Crate"
 	contains = list (/obj/item/weapon/storage/box/monkeycubes/farwacubes)
-	cost = 20
+	cost = 2000
 	containername = "farwa crate"
 
 
 /datum/supply_packs/organic/wolpin
 	name = "Wolpin Crate"
 	contains = list (/obj/item/weapon/storage/box/monkeycubes/wolpincubes)
-	cost = 20
+	cost = 2000
 	containername = "wolpin crate"
 
 
 /datum/supply_packs/organic/skrell
 	name = "Neaera Crate"
 	contains = list (/obj/item/weapon/storage/box/monkeycubes/neaeracubes)
-	cost = 20
+	cost = 2000
 	containername = "neaera crate"
 
 /datum/supply_packs/organic/stok
 	name = "Stok Crate"
 	contains = list (/obj/item/weapon/storage/box/monkeycubes/stokcubes)
-	cost = 20
+	cost = 2000
 	containername = "stok crate"
 
 /datum/supply_packs/organic/party
@@ -947,73 +947,73 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/reagent_containers/food/drinks/cans/beer,
 					/obj/item/weapon/grenade/confetti,
 					/obj/item/weapon/grenade/confetti)
-	cost = 20
+	cost = 2000
 	containername = "party equipment"
 	announce_beacons = list("Bar" = list("Bar"))
 
 //////// livestock
 /datum/supply_packs/organic/cow
 	name = "Cow Crate"
-	cost = 30
+	cost = 3000
 	containertype = /obj/structure/closet/critter/cow
 	containername = "cow crate"
 
 /datum/supply_packs/organic/goat
 	name = "Goat Crate"
-	cost = 25
+	cost = 2500
 	containertype = /obj/structure/closet/critter/goat
 	containername = "goat crate"
 
 /datum/supply_packs/organic/chicken
 	name = "Chicken Crate"
-	cost = 20
+	cost = 2000
 	containertype = /obj/structure/closet/critter/chick
 	containername = "chicken crate"
 
 /datum/supply_packs/organic/turkey
 	name = "Turkey Crate"
-	cost = 20
+	cost = 2000
 	containertype = /obj/structure/closet/critter/turkey
 	containername = "turkey crate"
 
 /datum/supply_packs/organic/corgi
 	name = "Corgi Crate"
-	cost = 50
+	cost = 5000
 	containertype = /obj/structure/closet/critter/corgi
 	contains = list(/obj/item/clothing/accessory/petcollar)
 	containername = "corgi crate"
 
 /datum/supply_packs/organic/cat
 	name = "Cat Crate"
-	cost = 50 //Cats are worth as much as corgis.
+	cost = 5000 //Cats are worth as much as corgis.
 	containertype = /obj/structure/closet/critter/cat
 	contains = list(/obj/item/clothing/accessory/petcollar)
 	containername = "cat crate"
 
 /datum/supply_packs/organic/pug
 	name = "Pug Crate"
-	cost = 50
+	cost = 5000
 	containertype = /obj/structure/closet/critter/pug
 	contains = list(/obj/item/clothing/accessory/petcollar)
 	containername = "pug crate"
 
 /datum/supply_packs/organic/fox
 	name = "Fox Crate"
-	cost = 55 //Foxes are cool.
+	cost = 5500 //Foxes are cool.
 	containertype = /obj/structure/closet/critter/fox
 	contains = list(/obj/item/clothing/accessory/petcollar)
 	containername = "fox crate"
 
 /datum/supply_packs/organic/butterfly
 	name = "Butterflies Crate"
-	cost = 50
+	cost = 5000
 	containertype = /obj/structure/closet/critter/butterfly
 	containername = "butterflies crate"
 	contraband = 1
 
 /datum/supply_packs/organic/deer
 	name = "Deer Crate"
-	cost = 56 //Deer are best.
+	cost = 5600 //Deer are best.
 	containertype = /obj/structure/closet/critter/deer
 	containername = "deer crate"
 
@@ -1030,7 +1030,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/device/plant_analyzer,
 					/obj/item/clothing/gloves/botanic_leather,
 					/obj/item/clothing/suit/apron) // Updated with new things
-	cost = 15
+	cost = 1500
 	containertype = /obj/structure/closet/crate/hydroponics
 	containername = "hydroponics crate"
 	announce_beacons = list("Hydroponics" = list("Hydroponics"))
@@ -1038,7 +1038,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/misc/hydroponics/hydrotank
 	name = "Hydroponics Watertank Crate"
 	contains = list(/obj/item/weapon/watertank)
-	cost = 10
+	cost = 1000
 	containertype = /obj/structure/closet/crate/secure
 	containername = "hydroponics watertank crate"
 	access = access_hydroponics
@@ -1059,7 +1059,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/seeds/chanter,
 					/obj/item/seeds/potato,
 					/obj/item/seeds/sugarcane)
-	cost = 10
+	cost = 1000
 	containername = "seeds crate"
 
 /datum/supply_packs/organic/hydroponics/exoticseeds
@@ -1079,7 +1079,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/seeds/eggplant/eggy,
 					/obj/item/seeds/random,
 					/obj/item/seeds/random)
-	cost = 15
+	cost = 1500
 	containername = "exotic seeds crate"
 
 /datum/supply_packs/organic/hydroponics/beekeeping_fullkit
@@ -1091,7 +1091,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/queen_bee/bought,
 					/obj/item/clothing/head/beekeeper_head,
 					/obj/item/clothing/suit/beekeeper_suit)
-	cost = 15
+	cost = 1500
 	containername = "beekeeping starter kit"
 
 /datum/supply_packs/organic/hydroponics/beekeeping_suits
@@ -1100,7 +1100,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/suit/beekeeper_suit,
 					/obj/item/clothing/head/beekeeper_head,
 					/obj/item/clothing/suit/beekeeper_suit)
-	cost = 10
+	cost = 1000
 	containername = "beekeeper suits"
 
 //Bottler
@@ -1108,7 +1108,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "Brewing Buddy Bottler Unit"
 	contains = list(/obj/machinery/bottler,
 					/obj/item/weapon/wrench)
-	cost = 35
+	cost = 3500
 	containername = "bottler crate"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1125,49 +1125,49 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "50 Metal Sheets Crate"
 	contains = list(/obj/item/stack/sheet/metal)
 	amount = 50
-	cost = 10
+	cost = 1000
 	containername = "metal sheets crate"
 
 /datum/supply_packs/materials/plasteel20
 	name = "20 Plasteel Sheets Crate"
 	contains = list(/obj/item/stack/sheet/plasteel)
 	amount = 20
-	cost = 30
+	cost = 3000
 	containername = "plasteel sheets crate"
 
 /datum/supply_packs/materials/plasteel50
 	name = "50 Plasteel Sheets Crate"
 	contains = list(/obj/item/stack/sheet/plasteel)
 	amount = 50
-	cost = 50
+	cost = 5000
 	containername = "plasteel sheets crate"
 
 /datum/supply_packs/materials/glass50
 	name = "50 Glass Sheets Crate"
 	contains = list(/obj/item/stack/sheet/glass)
 	amount = 50
-	cost = 10
+	cost = 1000
 	containername = "glass sheets crate"
 
 /datum/supply_packs/materials/wood30
 	name = "30 Wood Planks Crate"
 	contains = list(/obj/item/stack/sheet/wood)
 	amount = 30
-	cost = 15
+	cost = 1500
 	containername = "wood planks crate"
 
 /datum/supply_packs/materials/cardboard50
 	name = "50 Cardboard Sheets Crate"
 	contains = list(/obj/item/stack/sheet/cardboard)
 	amount = 50
-	cost = 10
+	cost = 1000
 	containername = "cardboard sheets crate"
 
 /datum/supply_packs/materials/sandstone30
 	name = "30 Sandstone Blocks Crate"
 	contains = list(/obj/item/stack/sheet/mineral/sandstone)
 	amount = 30
-	cost = 20
+	cost = 2000
 	containername = "sandstone blocks crate"
 
 
@@ -1175,7 +1175,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "30 Plastic Sheets Crate"
 	contains = list(/obj/item/stack/sheet/plastic)
 	amount = 30
-	cost = 25
+	cost = 2500
 	containername = "plastic sheets crate"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1189,21 +1189,21 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_packs/misc/mule
 	name = "MULEbot Crate"
 	contains = list(/mob/living/simple_animal/bot/mulebot)
-	cost = 20
+	cost = 2000
 	containertype = /obj/structure/largecrate/mule
 	containername = "\improper MULEbot crate"
 
 /datum/supply_packs/misc/watertank
 	name = "Water Tank Crate"
 	contains = list(/obj/structure/reagent_dispensers/watertank)
-	cost = 6
+	cost = 600
 	containertype = /obj/structure/largecrate
 	containername = "water tank crate"
 
 /datum/supply_packs/misc/hightank
 	name = "High-Capacity Water Tank Crate"
 	contains = list(/obj/structure/reagent_dispensers/watertank/high)
-	cost = 12
+	cost = 1200
 	containertype = /obj/structure/largecrate
 	containername = "high-capacity water tank crate"
 
@@ -1223,7 +1223,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/suit/bluetag,
 					/obj/item/clothing/head/helmet/redtaghelm,
 					/obj/item/clothing/head/helmet/bluetaghelm)
-	cost = 15
+	cost = 1500
 	containername = "laser tag crate"
 
 /datum/supply_packs/misc/religious_supplies
@@ -1234,7 +1234,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/bible/booze,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie,
 					/obj/item/clothing/suit/hooded/chaplain_hoodie)
-	cost = 40
+	cost = 4000
 	containername = "religious supplies crate"
 
 
@@ -1257,7 +1257,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/folder/yellow,
 					/obj/item/weapon/clipboard,
 					/obj/item/weapon/clipboard)
-	cost = 15
+	cost = 1500
 	containername = "bureaucracy crate"
 
 /datum/supply_packs/misc/toner
@@ -1268,7 +1268,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/device/toner,
 					/obj/item/device/toner,
 					/obj/item/device/toner)
-	cost = 10
+	cost = 1000
 	containername = "toner cartridges crate"
 
 /datum/supply_packs/misc/artscrafts
@@ -1291,7 +1291,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	/obj/item/stack/wrapping_paper,
 	/obj/item/stack/wrapping_paper,
 	/obj/item/stack/wrapping_paper)
-	cost = 10
+	cost = 1000
 	containername = "arts and crafts crate"
 
 /datum/supply_packs/misc/posters
@@ -1301,7 +1301,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/contraband/poster/legit,
 					/obj/item/weapon/contraband/poster/legit,
 					/obj/item/weapon/contraband/poster/legit)
-	cost = 8
+	cost = 800
 	containername = "corporate posters crate"
 
 ///////////// Janitor Supplies
@@ -1321,7 +1321,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner,
 					/obj/item/weapon/grenade/chem_grenade/cleaner)
-	cost = 10
+	cost = 1000
 	containername = "janitorial supplies crate"
 	announce_beacons = list("Janitor" = list("Janitorial"))
 
@@ -1329,14 +1329,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "Janitorial Cart and Galoshes Crate"
 	contains = list(/obj/structure/janitorialcart,
 					/obj/item/clothing/shoes/galoshes)
-	cost = 10
+	cost = 1000
 	containertype = /obj/structure/largecrate
 	containername = "janitorial cart crate"
 
 /datum/supply_packs/misc/janitor/janitank
 	name = "Janitor Watertank Backpack"
 	contains = list(/obj/item/weapon/watertank/janitor)
-	cost = 10
+	cost = 1000
 	containertype = /obj/structure/closet/crate/secure
 	containername = "janitor watertank crate"
 	access = access_janitor
@@ -1346,13 +1346,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/storage/box/lights/mixed,
 					/obj/item/weapon/storage/box/lights/mixed,
 					/obj/item/weapon/storage/box/lights/mixed)
-	cost = 10
+	cost = 1000
 	containername = "replacement lights crate"
 
 /datum/supply_packs/misc/noslipfloor
 	name = "High-traction Floor Tiles"
 	contains = list(/obj/item/stack/tile/noslip/loaded)
-	cost = 20
+	cost = 2000
 	containername = "high-traction floor tiles"
 
 ///////////// Costumes
@@ -1372,7 +1372,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/head/beret,
 					/obj/item/clothing/suit/suspenders,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing)
-	cost = 10
+	cost = 1000
 	containertype = /obj/structure/closet/crate/secure
 	containername = "standard costumes"
 	access = access_theatre
@@ -1383,7 +1383,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/suit/wizrobe/fake,
 					/obj/item/clothing/shoes/sandal,
 					/obj/item/clothing/head/wizard/fake)
-	cost = 20
+	cost = 2000
 	containername = "wizard costume crate"
 
 /datum/supply_packs/misc/mafia
@@ -1401,7 +1401,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/under/mafia/tan,
 					/obj/item/weapon/gun/projectile/shotgun/toy/tommygun,
 					/obj/item/weapon/gun/projectile/shotgun/toy/tommygun)
-	cost = 15
+	cost = 1500
 	containername = "mafia supply crate"
 
 /datum/supply_packs/misc/randomised
@@ -1428,7 +1428,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/head/collectable/xenom,
 					/obj/item/clothing/head/collectable/petehat)
 	name = "Collectible Hats Crate"
-	cost = 200
+	cost = 20000
 	containername = "collectable hats crate! Brought to you by Bass.inc!"
 
 /datum/supply_packs/misc/randomised/New()
@@ -1446,7 +1446,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/gun/projectile/shotgun/toy,
 					/obj/item/weapon/gun/projectile/shotgun/toy,
 					/obj/item/weapon/gun/projectile/shotgun/toy)
-	cost = 10
+	cost = 1000
 	containername = "foam force crate"
 
 /datum/supply_packs/misc/foamforce/bonus
@@ -1455,7 +1455,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/gun/projectile/automatic/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol,
 					/obj/item/ammo_box/magazine/toy/pistol)
-	cost = 40
+	cost = 4000
 	containername = "foam force pistols crate"
 	contraband = 1
 
@@ -1466,7 +1466,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims)
 	name = "Contraband Crate"
-	cost = 30
+	cost = 3000
 	containername = "crate"	//let's keep it subtle, eh?
 	contraband = 1
 
@@ -1499,7 +1499,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/under/suit_jacket/checkered,
 					/obj/item/clothing/under/suit_jacket/tan,
 					/obj/item/weapon/lipstick/random)
-	cost = 30 //Lots of very expensive items. You gotta pay up to look good!
+	cost = 3000 //Lots of very expensive items. You gotta pay up to look good!
 	containername = "formal-wear crate"
 
 /datum/supply_packs/misc/teamcolors		//For team sports like space polo
@@ -1514,7 +1514,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/under/color/blue/jersey,
 					/obj/item/clothing/under/color/blue/jersey,
 					/obj/item/weapon/beach_ball)
-	cost = 15
+	cost = 1500
 	containername = "team jerseys crate"
 
 /datum/supply_packs/misc/polo			//For space polo! Or horsehead Quiditch
@@ -1533,14 +1533,14 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/mask/horsehead,
 					/obj/item/clothing/mask/horsehead,
 					/obj/item/weapon/beach_ball)
-	cost = 20
+	cost = 2000
 	containername = "polo supply crate"
 
 ///////////// Station Goals
 
 /datum/supply_packs/misc/bsa
 	name = "Bluespace Artillery Parts"
-	cost = 150
+	cost = 15000
 	special = TRUE
 	contains = list(/obj/item/weapon/circuitboard/machine/bsa/front,
 					/obj/item/weapon/circuitboard/machine/bsa/middle,
@@ -1551,7 +1551,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/misc/dna_vault
 	name = "DNA Vault Parts"
-	cost = 120
+	cost = 12000
 	special = TRUE
 	contains = list(
 					/obj/item/weapon/circuitboard/machine/dna_vault
@@ -1560,7 +1560,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/misc/dna_probes
 	name = "DNA Vault Samplers"
-	cost = 30
+	cost = 3000
 	special = TRUE
 	contains = list(/obj/item/device/dna_probe,
 					/obj/item/device/dna_probe,
@@ -1573,7 +1573,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/misc/shield_sat
 	name = "Shield Generator Satellite"
-	cost = 30
+	cost = 3000
 	special = TRUE
 	contains = list(
 					/obj/machinery/satellite/meteor_shield,
@@ -1585,7 +1585,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_packs/misc/shield_sat_control
 	name = "Shield System Control Board"
-	cost = 50
+	cost = 5000
 	special = TRUE
 	contains = list(
 					/obj/item/weapon/circuitboard/computer/sat_control
@@ -1604,7 +1604,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	name = "Autodrobe Supply Crate"
 	contains = list(/obj/item/weapon/vending_refill/autodrobe,
 					/obj/item/weapon/vending_refill/autodrobe)
-	cost = 15
+	cost = 1500
 	containername = "autodrobe supply crate"
 
 /datum/supply_packs/vending/clothes
@@ -1613,7 +1613,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/vending_refill/shoedispenser,
 					/obj/item/weapon/vending_refill/hatdispenser,
 					/obj/item/weapon/vending_refill/clothing)
-	cost = 15
+	cost = 1500
 	containername = "clothing supply crate"
 
 /datum/supply_packs/vending/pets
@@ -1621,7 +1621,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/vending_refill/crittercare,
 					/obj/item/weapon/vending_refill/crittercare,
 					/obj/item/weapon/vending_refill/crittercare)
-	cost = 15
+	cost = 1500
 	containername = "pet supply crate"
 
 /datum/supply_packs/vending/bar
@@ -1629,7 +1629,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/vending_refill/boozeomat,
 					/obj/item/weapon/vending_refill/boozeomat,
 					/obj/item/weapon/vending_refill/boozeomat)
-	cost = 15
+	cost = 1500
 	containername = "bar supply crate"
 	announce_beacons = list("Bar" = list("Bar"))
 
@@ -1638,7 +1638,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/vending_refill/coffee,
 					/obj/item/weapon/vending_refill/coffee,
 					/obj/item/weapon/vending_refill/coffee)
-	cost = 15
+	cost = 1500
 	containername = "coffee supply crate"
 
 /datum/supply_packs/vending/snack
@@ -1646,7 +1646,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/vending_refill/snack,
 					/obj/item/weapon/vending_refill/snack,
 					/obj/item/weapon/vending_refill/snack)
-	cost = 15
+	cost = 1500
 	containername = "snacks supply crate"
 
 /datum/supply_packs/vending/chinese
@@ -1654,7 +1654,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/vending_refill/chinese,
 					/obj/item/weapon/vending_refill/chinese,
 					/obj/item/weapon/vending_refill/chinese)
-	cost = 15
+	cost = 1500
 	containername = "chinese supply crate"
 
 /datum/supply_packs/vending/cola
@@ -1662,7 +1662,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/vending_refill/cola,
 					/obj/item/weapon/vending_refill/cola,
 					/obj/item/weapon/vending_refill/cola)
-	cost = 15
+	cost = 1500
 	containername = "softdrinks supply crate"
 
 /datum/supply_packs/vending/cigarette
@@ -1670,5 +1670,5 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/weapon/vending_refill/cigarette,
 					/obj/item/weapon/vending_refill/cigarette,
 					/obj/item/weapon/vending_refill/cigarette)
-	cost = 15
+	cost = 1500
 	containername = "cigarette supply crate"

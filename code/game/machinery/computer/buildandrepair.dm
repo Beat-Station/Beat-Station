@@ -30,14 +30,14 @@
 	var/frame_desc = null
 	var/contain_parts = 1
 	toolspeed = 1
-	usesound = 'sound/items/Deconstruct.ogg' 
+	usesound = 'sound/items/Deconstruct.ogg'
 
 /obj/item/weapon/circuitboard/computer
-	board_type = "computer"	
-	
+	board_type = "computer"
+
 /obj/item/weapon/circuitboard/machine
-	board_type = "machine"	
-	
+	board_type = "machine"
+
 /obj/item/weapon/circuitboard/message_monitor
 	name = "Circuit board (Message Monitor)"
 	build_path = /obj/machinery/computer/message_monitor
@@ -467,7 +467,7 @@
 				if(istype(circuit,/obj/item/weapon/circuitboard/supplycomp))
 					var/obj/machinery/computer/supplycomp/SC = B
 					var/obj/item/weapon/circuitboard/supplycomp/C = circuit
-					SC.can_order_contraband = C.contraband_enabled
+					SC.contraband = C.contraband_enabled
 				qdel(src)
 
 

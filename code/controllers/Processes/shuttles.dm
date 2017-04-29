@@ -19,17 +19,12 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 		//supply shuttle stuff
 	var/obj/docking_port/mobile/supply/supply
 	var/ordernum = 1					//order number given to next order
-	var/points = 50						//number of trade-points we have
-	var/points_per_decisecond = 0.005	//points gained every decisecond
-	var/points_per_slip = 2				//points gained per slip returned
-	var/points_per_crate = 5			//points gained per crate returned
-	var/points_per_intel = 250			//points gained per intel returned
-	var/points_per_plasma = 5			//points gained per plasma returned
-	var/points_per_design = 25			//points gained per max reliability research design returned (only for initilally unreliable designs)
+
+	var/points = 5000						//number of trade-points we have
+
 	var/centcom_message = ""			//Remarks from Centcom on how well you checked the last order.
 	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentComm, associated with their potencies
 	var/list/techLevels = list()
-	var/list/researchDesigns = list()
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/supply_packs = list()
@@ -64,7 +59,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 	initial_move()
 
 /datum/controller/process/shuttle/doWork()
-	points += points_per_decisecond * schedule_interval
 	for(var/thing in mobile)
 		if(thing)
 			var/obj/docking_port/mobile/P = thing

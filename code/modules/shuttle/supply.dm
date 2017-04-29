@@ -9,10 +9,33 @@
 	var/points = 0
 	var/ordernumber = 0
 
+/obj/item/weapon/paper/manifest/proc/is_approved()
+	return stamped && stamped.len && !is_denied()
+
+/obj/item/weapon/paper/manifest/proc/is_denied()
+	return stamped && (/obj/item/weapon/stamp/denied in stamped)
+
+var/list/blacklisted_cargo_types = typecacheof(list(
+		/mob/living,
+		/obj/structure/blob,
+		/obj/structure/spider/spiderling,
+		/obj/item/weapon/disk/nuclear,
+		/obj/machinery/nuclearbomb,
+		/obj/item/device/radio/beacon,
+		/obj/singularity,
+		/obj/machinery/teleport/station,
+		/obj/machinery/teleport/hub,
+		/obj/machinery/telepad,
+		/obj/machinery/clonepod,
+		/obj/effect/hierophant,
+		/obj/item/device/warp_cube,
+		/obj/machinery/quantumpad
+	))
+
 /obj/docking_port/mobile/supply
 	name = "supply shuttle"
 	id = "supply"
-	callTime = 1200
+	callTime = 10
 
 	dir = 8
 	travelDir = 90
@@ -20,6 +43,21 @@
 	dwidth = 5
 	height = 7
 	roundstart_move = "supply_away"
+
+	var/list/storage_objects = list(
+		/obj/structure/closet,
+		/obj/item/weapon/storage,
+		/obj/item/weapon/moneybag,
+		/obj/item/weapon/folder, // Selling a folder of stamped manifests? Sure, why not!
+		/obj/structure/filingcabinet,
+		/obj/structure/ore_box,
+	)
+	var/list/exports = list()
+	var/list/exports_floor = list()
+
+	// When TRUE, these vars allow exporting emagged/contraband items, and add some special interactions to existing exports.
+	var/contraband = FALSE
+	var/emagged = FALSE
 
 /obj/docking_port/mobile/supply/register()
 	if(!..())
@@ -29,7 +67,7 @@
 
 /obj/docking_port/mobile/supply/canMove()
 	if(is_station_level(z))
-		return forbidden_atoms_check(areaInstance)
+		return check_blacklist(areaInstance)
 	return ..()
 
 /obj/docking_port/mobile/supply/request(obj/docking_port/stationary/S)
@@ -43,6 +81,14 @@
 
 	buy()
 	sell()
+
+/obj/docking_port/mobile/supply/proc/check_blacklist(areaInstance)
+	for(var/trf in areaInstance)
+		var/turf/T = trf
+		for(var/a in T.GetAllContents())
+			if(is_type_in_typecache(a, blacklisted_cargo_types))
+				return FALSE
+	return TRUE
 
 /obj/docking_port/mobile/supply/proc/buy()
 	if(!is_station_level(z))		//we only buy when we are -at- the station
@@ -96,169 +142,64 @@
 	if(z != level_name_to_num(CENTCOMM))		//we only sell when we are -at- centcomm
 		return 1
 
-	var/plasma_count = 0
-	var/intel_count = 0
-	var/crate_count = 0
+	if(!exports_list.len) // No exports list? Generate it!
+		setupExports()
 
 	var/msg = ""
-	var/pointsEarned
+	var/sold_atoms = ""
 
-	for(var/atom/movable/MA in areaInstance)
-		if(MA.anchored)	continue
-		shuttle_master.sold_atoms += " [MA.name]"
+	for(var/atom/movable/AM in areaInstance)
+		if(AM.anchored)
+			continue
+		// Sell tech levels
+		if(istype(AM, /obj/item/weapon/disk/tech_disk))
+			var/obj/item/weapon/disk/tech_disk/disk = AM
+			if(!disk.stored)
+				continue
+			var/datum/tech/tech = disk.stored
+			var/cost = tech.getCost(shuttle_master.techLevels[tech.id])
+			if(cost)
+				shuttle_master.techLevels[tech.id] = tech.level
+				for(var/mob/M in player_list)
+					if(M.mind)
+						for(var/datum/job_objective/further_research/objective in M.mind.job_objectives)
+							objective.unit_completed(cost)
+		sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 
-		// Must be in a crate (or a critter crate)!
-		if(istype(MA,/obj/structure/closet/crate) || istype(MA,/obj/structure/closet/critter))
-			shuttle_master.sold_atoms += ":"
-			if(!MA.contents.len)
-				shuttle_master.sold_atoms += " (empty)"
-			++crate_count
+	if(sold_atoms)
+		sold_atoms += "."
 
-			var/find_slip = 1
-			for(var/thing in MA)
-				// Sell manifests
-				shuttle_master.sold_atoms += " [thing:name]"
-				if(find_slip && istype(thing,/obj/item/weapon/paper/manifest))
-					var/obj/item/weapon/paper/manifest/slip = thing
-					// TODO: Check for a signature, too.
-					if(slip.stamped && slip.stamped.len) //yes, the clown stamp will work. clown is the highest authority on the station, it makes sense
-						// Did they mark it as erroneous?
-						var/denied = 0
-						for(var/i=1,i<=slip.stamped.len,i++)
-							if(slip.stamped[i] == /obj/item/weapon/stamp/denied)
-								denied = 1
-						if(slip.erroneous && denied) // Caught a mistake by Centcom (IDEA: maybe Centcom rarely gets offended by this)
-							pointsEarned = slip.points - shuttle_master.points_per_crate
-							shuttle_master.points += pointsEarned // For now, give a full refund for paying attention (minus the crate cost)
-							msg += "<span class='good'>+[pointsEarned]</span>: Station correctly denied package [slip.ordernumber]: "
-							if(slip.erroneous & MANIFEST_ERROR_NAME)
-								msg += "Destination station incorrect. "
-							else if(slip.erroneous & MANIFEST_ERROR_COUNT)
-								msg += "Packages incorrectly counted. "
-							else if(slip.erroneous & MANIFEST_ERROR_ITEM)
-								msg += "Package incomplete. "
-							msg += "Points refunded.<br>"
-						else if(!slip.erroneous && !denied) // Approving a proper order awards the relatively tiny points_per_slip
-							shuttle_master.points += shuttle_master.points_per_slip
-							msg += "<span class='good'>+[shuttle_master.points_per_slip]</span>: Package [slip.ordernumber] accorded.<br>"
-						else // You done goofed.
-							if(slip.erroneous)
-								msg += "<span class='good'>+0</span>: Station approved package [slip.ordernumber] despite error: "
-								if(slip.erroneous & MANIFEST_ERROR_NAME)
-									msg += "Destination station incorrect."
-								else if(slip.erroneous & MANIFEST_ERROR_COUNT)
-									msg += "Packages incorrectly counted."
-								else if(slip.erroneous & MANIFEST_ERROR_ITEM)
-									msg += "We found unshipped items on our dock."
-								msg += "  Be more vigilant.<br>"
-							else
-								pointsEarned = round(shuttle_master.points_per_crate - slip.points)
-								shuttle_master.points += pointsEarned
-								msg += "<span class='bad'>[pointsEarned]</span>: Station denied package [slip.ordernumber]. Our records show no fault on our part.<br>"
-						find_slip = 0
-					continue
+	for(var/a in exports_list)
+		var/datum/export/E = a
+		var/export_text = E.total_printout()
+		if(!export_text)
+			continue
 
-				// Sell plasma
-				if(istype(thing, /obj/item/stack/sheet/mineral/plasma))
-					var/obj/item/stack/sheet/mineral/plasma/P = thing
-					plasma_count += P.amount
-
-				// Sell syndicate intel
-				if(istype(thing, /obj/item/documents/syndicate))
-					++intel_count
-
-				// Sell tech levels
-				if(istype(thing, /obj/item/weapon/disk/tech_disk))
-					var/obj/item/weapon/disk/tech_disk/disk = thing
-					if(!disk.stored) continue
-					var/datum/tech/tech = disk.stored
-
-					var/cost = tech.getCost(shuttle_master.techLevels[tech.id])
-					if(cost)
-						shuttle_master.techLevels[tech.id] = tech.level
-						shuttle_master.points += cost
-						for(var/mob/M in player_list)
-							if(M.mind)
-								for(var/datum/job_objective/further_research/objective in M.mind.job_objectives)
-									objective.unit_completed(cost)
-						msg += "<span class='good'>+[cost]</span>: [tech.name] - new data.<br>"
-
-				// Sell max reliablity designs
-				if(istype(thing, /obj/item/weapon/disk/design_disk))
-					var/obj/item/weapon/disk/design_disk/disk = thing
-					if(!disk.blueprint) continue
-					var/datum/design/design = disk.blueprint
-					if(design.id in shuttle_master.researchDesigns) continue
-
-					if(initial(design.reliability) < 100 && design.reliability >= 100)
-						// Maxed out reliability designs only.
-						shuttle_master.points += shuttle_master.points_per_design
-						shuttle_master.researchDesigns += design.id
-						msg += "<span class='good'>+[shuttle_master.points_per_design]</span>: Reliable [design.name] design.<br>"
-
-				// Sell exotic plants
-				if(istype(thing, /obj/item/seeds))
-					var/obj/item/seeds/S = thing
-					if(S.rarity == 0) // Mundane species
-						msg += "<span class='bad'>+0</span>: We don't need samples of mundane species \"[capitalize(S.species)]\".<br>"
-					else if(shuttle_master.discoveredPlants[S.type]) // This species has already been sent to CentComm
-						var/potDiff = S.potency - shuttle_master.discoveredPlants[S.type] // Compare it to the previous best
-						if(potDiff > 0) // This sample is better
-							shuttle_master.discoveredPlants[S.type] = S.potency
-							msg += "<span class='good'>+[potDiff]</span>: New sample of \"[capitalize(S.species)]\" is superior. Good work.<br>"
-							shuttle_master.points += potDiff
-						else // This sample is worthless
-							msg += "<span class='bad'>+0</span>: New sample of \"[capitalize(S.species)]\" is not more potent than existing sample ([shuttle_master.discoveredPlants[S.type]] potency).<br>"
-					else // This is a new discovery!
-						shuttle_master.discoveredPlants[S.type] = S.potency
-						msg += "<span class='good'>[S.rarity]</span>: New species discovered: \"[capitalize(S.species)]\". Excellent work.<br>"
-						shuttle_master.points += S.rarity // That's right, no bonus for potency.  Send a crappy sample first to "show improvement" later
-		qdel(MA)
-		shuttle_master.sold_atoms += "."
-
-	if(plasma_count > 0)
-		pointsEarned = round(plasma_count * shuttle_master.points_per_plasma)
-		msg += "<span class='good'>+[pointsEarned]</span>: Received [plasma_count] unit(s) of exotic material.<br>"
-		shuttle_master.points += pointsEarned
-
-	if(intel_count > 0)
-		pointsEarned = round(intel_count * shuttle_master.points_per_intel)
-		msg += "<span class='good'>+[pointsEarned]</span>: Received [intel_count] article(s) of enemy intelligence.<br>"
-		shuttle_master.points += pointsEarned
-
-	if(crate_count > 0)
-		pointsEarned = round(crate_count * shuttle_master.points_per_crate)
-		msg += "<span class='good'>+[pointsEarned]</span>: Received [crate_count] crate(s).<br>"
-		shuttle_master.points += pointsEarned
+		msg += export_text + "\n"
+		shuttle_master.points += E.total_cost
+		E.export_end()
 
 	shuttle_master.centcom_message = msg
 
-/proc/forbidden_atoms_check(atom/A)
-	var/list/blacklist = list(
-		/mob/living,
-		/obj/structure/blob,
-		/obj/structure/spider/spiderling,
-		/obj/item/weapon/disk/nuclear,
-		/obj/machinery/nuclearbomb,
-		/obj/item/device/radio/beacon,
-		/obj/machinery/the_singularitygen,
-		/obj/singularity,
-		/obj/machinery/teleport/station,
-		/obj/machinery/teleport/hub,
-		/obj/machinery/telepad,
-		/obj/machinery/clonepod,
-		/obj/effect/hierophant,
-		/obj/item/device/warp_cube,
-		/obj/machinery/quantumpad
-	)
-	if(A)
-		if(is_type_in_list(A, blacklist))
-			return 1
-		for(var/thing in A)
-			if(.(thing))
-				return 1
 
-	return 0
+/obj/docking_port/mobile/supply/proc/recursive_sell(var/obj/O, var/level=0)
+	var/sold_atoms = " [O.name]"
+	var/list/xports = exports
+	if(level == 0)
+		xports = exports_floor // If on the floor level, sell floor exports only
+	level++
+
+	for(var/a in xports)
+		var/datum/export/E = a
+		if(E.applies_to(O, contraband, emagged))
+			E.sell_object(O, contraband, emagged)
+			break
+
+	if(level < 10 && is_type_in_list(O, storage_objects))
+		for(var/obj/thing in O)
+			sold_atoms += recursive_sell(thing, level)
+	qdel(O)
+	return sold_atoms
 
 /********************
     SUPPLY ORDER
@@ -406,8 +347,7 @@
 	circuit = /obj/item/weapon/circuitboard/supplycomp
 	var/temp = null
 	var/reqtime = 0
-	var/hacked = 0
-	var/can_order_contraband = 0
+	var/contraband = FALSE
 	var/last_viewed_group = "categories"
 	var/datum/supply_packs/content_pack
 
@@ -558,10 +498,10 @@
 	nanomanager.update_uis(src)
 	return 1
 
-/obj/machinery/computer/supplycomp/attack_ai(var/mob/user as mob)
+/obj/machinery/computer/supplycomp/attack_ai(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/supplycomp/attack_hand(mob/user)
 	if(!allowed(user) && !isobserver(user))
 		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return 1
@@ -570,11 +510,11 @@
 	ui_interact(user)
 	return
 
-/obj/machinery/computer/supplycomp/emag_act(user as mob)
-	if(!hacked)
+/obj/machinery/computer/supplycomp/emag_act(mob/user)
+	if(!emagged)
 		to_chat(user, "<span class='notice'>Special supplies unlocked.</span>")
-		hacked = 1
-		return
+		emagged = TRUE
+		contraband = TRUE
 
 /obj/machinery/computer/supplycomp/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui)
@@ -595,7 +535,7 @@
 	var/packs_list[0]
 	for(var/set_name in shuttle_master.supply_packs)
 		var/datum/supply_packs/pack = shuttle_master.supply_packs[set_name]
-		if((pack.hidden && hacked) || (pack.contraband && can_order_contraband) || (pack.special && pack.special_enabled) || (!pack.contraband && !pack.hidden && !pack.special))
+		if((pack.hidden && emagged) || (pack.contraband && contraband) || (pack.special && pack.special_enabled) || (!pack.contraband && !pack.hidden && !pack.special))
 			if(pack.group == cat)
 				// 0/1 after the pack name (set_name) is a boolean for ordering multiple crates
 				packs_list.Add(list(list("name" = pack.name, "amount" = pack.amount, "cost" = pack.cost, "command1" = list("doorder" = "[set_name]0"), "command2" = list("doorder" = "[set_name]1"), "command3" = list("contents" = set_name))))
@@ -658,6 +598,8 @@
 		if(shuttle_master.supply.canMove())
 			to_chat(usr, "<span class='warning'>For safety reasons the automated supply shuttle cannot transport live organisms, classified nuclear weaponry or homing beacons.</span>")
 		else if(shuttle_master.supply.getDockedId() == "supply_home")
+			shuttle_master.supply.emagged = emagged
+			shuttle_master.supply.contraband = contraband
 			shuttle_master.toggleShuttle("supply", "supply_home", "supply_away", 1)
 			investigate_log("[key_name(usr)] has sent the supply shuttle away. Remaining points: [shuttle_master.points]. Shuttle contents: [shuttle_master.sold_atoms]", "cargo")
 		else if(!shuttle_master.supply.request(shuttle_master.getDock("supply_home")))
