@@ -26,11 +26,11 @@
 
 /datum/supply_order
 	var/ordernum
-	var/datum/supply_pack/pack = null
 	var/orderer = null
 	var/orderer_rank
 	var/comment = null
 	var/crates
+	var/datum/supply_pack/pack = null
 
 /datum/supply_order/New(datum/supply_pack/pack, orderer, orderer_rank, comment, crates)
 	ordernum = shuttle_master.ordernum++
@@ -79,7 +79,6 @@
 	P.info += "Access Restriction: [pack.access ? get_access_desc(pack.access) : "None"]<br>"
 	P.info += "[packages_amount] PACKAGES IN THIS SHIPMENT<br>"
 	P.info += "CONTENTS:<br><ul>"
-
 	for(var/atom/movable/AM in C.contents - P)
 		if((P.errors & MANIFEST_ERROR_ITEM))
 			if(prob(50))
@@ -87,15 +86,16 @@
 			else
 				continue
 		P.info += "<li>[AM.name]</li>"
-
 	//manifest finalisation
 	P.info += "</ul><br>"
 	P.info += "CHECK CONTENTS AND STAMP BELOW THE LINE TO CONFIRM RECEIPT OF GOODS<hr>" // And now this is actually meaningful.
 	P.loc = C
 
 	C.manifest = P
-	C.update_icon()
 	C.announce_beacons = pack.announce_beacons.Copy()
+
+	C.update_icon()
+	P.update_icon()
 
 	return P
 

@@ -45,7 +45,7 @@
 /datum/export/organ/alien/eggsac
 	cost = 10000 // Even better than a single embryo.
 	unit_name = "alien egg sac"
-	export_types = list(/obj/item/organ/alien/eggsac)
+	export_types = list(/obj/item/organ/internal/xenos/eggsac)
 
 
 // Other alien organs.

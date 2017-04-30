@@ -1,7 +1,10 @@
 /obj/structure/closet/crate/large
 	name = "large crate"
 	desc = "A hefty wooden crate."
+	icon = 'icons/obj/crates.dmi'
 	icon_state = "largecrate"
+	icon_opened = "largecrate"
+	icon_closed = "largecrate"
 	density = 1
 	material_drop = /obj/item/stack/sheet/wood
 
