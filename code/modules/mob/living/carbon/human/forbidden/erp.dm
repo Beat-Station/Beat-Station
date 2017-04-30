@@ -137,44 +137,54 @@
  */
 /mob/living/carbon/human/proc/is_nude()
 	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT)
-		return 0
+		return FALSE
 	if(w_uniform && !(w_uniform.flags & SHOWUNDERWEAR))
-		return 0
+		return FALSE
 	if(underpants)
 		var/obj/item/clothing/underwear/underpants/up = underpants
 		if(!up.adjusted)
-			return 0
+			return FALSE
+	return TRUE
 
-	return 1
+mob/living/carbon/human/proc/breast_nude()
+	if(wear_suit && wear_suit.flags_inv & HIDEJUMPSUIT)
+		return FALSE
+	if(w_uniform || undershirt)
+		return FALSE
+	if(underpants && underpants.flags_inv & HIDEBREASTS)
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/human/proc/is_face_clean()
 	if(((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH))))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 /*
  * HAS HELPERS
  */
 /mob/living/carbon/human/proc/has_penis()
-	return (species.genitals && gender == MALE)
+	var/obj/item/organ/external/G = organs_by_name["groin"]
+	return (species.genitals && gender == MALE && (G && G.is_usable()))
 
 /mob/living/carbon/human/proc/has_vagina()
-	return (species.genitals && gender == FEMALE)
+	var/obj/item/organ/external/G = organs_by_name["groin"]
+	return (species.genitals && gender == FEMALE && (G && G.is_usable()))
 
 /mob/living/carbon/human/proc/has_hands()
-	var/obj/item/organ/external/temp = organs_by_name["r_hand"]
-	var/hashands = (temp && temp.is_usable())
-	if (!hashands)
-		temp = organs_by_name["l_hand"]
-		hashands = (temp && temp.is_usable())
+	var/obj/item/organ/external/H = organs_by_name["r_hand"]
+	var/hashands = (H && H.is_usable())
+	if(!hashands)
+		H = organs_by_name["l_hand"]
+		hashands = (H && H.is_usable())
 	return hashands
 
 /mob/living/carbon/human/proc/has_foots()
-	var/obj/item/organ/external/temp = organs_by_name["r_foot"]
-	var/hashands = (temp && temp.is_usable())
-	if (!hashands)
-		temp = organs_by_name["l_foot"]
-		hashands = (temp && temp.is_usable())
+	var/obj/item/organ/external/F = organs_by_name["r_foot"]
+	var/hashands = (F && F.is_usable())
+	if(!hashands)
+		F = organs_by_name["l_foot"]
+		hashands = (F && F.is_usable())
 	return hashands
 
 /*
@@ -211,7 +221,7 @@
  */
 
 /mob/living/carbon/human/proc/fuck(mob/living/carbon/human/P, datum/forbidden/action/action)
-	if(!istype(P) || !istype(action) || !click_time())
+	if(!istype(P) || !istype(action) || !check_forbidden_cooldown())
 		return 0
 
 	if(!action.conditions(src, P))
@@ -250,8 +260,6 @@
 			visible_message("<span class='erp'><b>[src]</b> twists in orgasm!</span>")
 		if(pleasure >= 30 && prob(12))
 			visible_message("<span class='erp'><b>[src]</b> [gender == FEMALE ? pick("moans in pleasure", "moans") : "moans"].</span>")
-			//if(gender == FEMALE)
-			//	playsound(loc, "sound/forbidden/erp/moan_f[rand(1, 7)].ogg", 50, 1, 0, pitch = get_age_pitch())
 
 /mob/living/carbon/human/proc/cum(mob/living/carbon/human/P, hole = "floor")
 	if(stat == DEAD)
@@ -276,7 +284,6 @@
 		visible_message("<span class='cum'>[src] cums!</span>")
 		var/obj/effect/decal/cleanable/sex/cum = new /obj/effect/decal/cleanable/sex/femjuice(loc)
 		cum.add_blood_list(src)
-		//playsound(loc, "sound/forbidden/erp/final_f[rand(1, 3)].ogg", 50, 1, 0, pitch = get_age_pitch())
 	else
 		visible_message("<span class='cum'>[src] cums!</span>")
 
@@ -284,8 +291,6 @@
 	pleasure = 0
 
 	druggy = 10
-	if(staminaloss > 100)
-		druggy = 20
 
 /mob/living/carbon/human/proc/handle_lust()
 	if(world.time >= remove_CD)
@@ -304,19 +309,20 @@
 	if(pleasure <= 0)
 		pleasure = 0
 
-/mob/living/carbon/human/proc/click_time()
+/mob/living/carbon/human/proc/check_forbidden_cooldown()
 	if(world.time >= click_CD)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 
 /mob/living/carbon/human/verb/interact()
 	set name = "Interact"
-	set desc = "Interaction is good!"
 	set category = "IC"
 	set src in view(1)
 
-	if(usr.stat == 1 || usr.restrained() || !ishuman(usr))
+	if(!ishuman(usr))
+		return
+	if(usr.incapacitated(ignore_lying = TRUE))
 		return
 
 	ui_interact(usr)

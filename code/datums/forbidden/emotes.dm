@@ -12,7 +12,13 @@ var/global/list/forbidden_emotes = list()	// stores /datum/forbidden/action/emot
 	return
 
 /datum/forbidden/emote/proc/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	return -1
+	if(get_dist(H, P) > 1)
+		return -1
+	if(H.incapacitated(ignore_lying = TRUE))
+		return -1
+	if(P == H)
+		return -1
+	return 1
 
 	//	return -1 = button doesn't appears on UI
 	//	return 0 = disabled button
@@ -42,19 +48,12 @@ var/global/list/forbidden_emotes = list()	// stores /datum/forbidden/action/emot
 	return "Kiss [P.gender == FEMALE ? "her" : "his"] lips"
 
 /datum/forbidden/emote/kiss/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) > 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(P == H)
-		return -1
-	if(!H.check_has_mouth() || !P.check_has_mouth())
-		return -1
-
-	if(!H.is_face_clean() || !P.is_face_clean())
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!H.check_has_mouth() || !P.check_has_mouth())
+			. = -1
+		else if(!H.is_face_clean() || !P.is_face_clean())
+			. = 0
 
 /datum/forbidden/emote/kiss/showText(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	H.visible_message("<span class='erp'><b>[H]</b> kisses <b>[P]</b>.</span>")
@@ -81,21 +80,14 @@ var/global/list/forbidden_emotes = list()	// stores /datum/forbidden/action/emot
 	return "Lick [P.gender == FEMALE ? "her" : "his"] lips"
 
 /datum/forbidden/emote/lick/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) > 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(P == H)
-		return -1
-	if(!H.check_has_mouth() || !P.check_has_mouth())
-		return -1
-	if(H.species.name != "Tajaran") // Only tajarans can lick other's lips
-		return -1
-
-	if(!H.is_face_clean() || !P.is_face_clean())
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!H.check_has_mouth() || !P.check_has_mouth())
+			. = -1
+		else if(H.species.name != "Tajaran") // Only tajarans can lick other's lips
+			. = -1
+		else if(!H.is_face_clean() || !P.is_face_clean())
+			. = 0
 
 /datum/forbidden/emote/lick/showText(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	H.visible_message("<span class='erp'><b>[H]</b> licks [P]'s lips.</span>")
@@ -122,19 +114,12 @@ var/global/list/forbidden_emotes = list()	// stores /datum/forbidden/action/emot
 	return "Give [P.gender == FEMALE ? "her" : "him"] a french kiss"
 
 /datum/forbidden/emote/frenchkiss/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) > 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(P == H)
-		return -1
-	if(!H.check_has_mouth() || !P.check_has_mouth())
-		return -1
-
-	if(!H.is_face_clean() || !P.is_face_clean())
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!H.check_has_mouth() || !P.check_has_mouth())
+			. = -1
+		else if(!H.is_face_clean() || !P.is_face_clean())
+			. = 0
 
 /datum/forbidden/emote/frenchkiss/showText(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	H.visible_message("<span class='erp'><b>[H]</b> gives <b>[P]</b> a french kiss.</span>")
@@ -162,19 +147,12 @@ var/global/list/forbidden_emotes = list()	// stores /datum/forbidden/action/emot
 	return "Give [P.gender == FEMALE ? "her" : "him"] a cheek kiss"
 
 /datum/forbidden/emote/cheekkiss/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) > 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(P == H)
-		return -1
-	if(!H.check_has_mouth() || !P.check_has_mouth())
-		return -1
-
-	if(!H.is_face_clean() || !P.is_face_clean())
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!H.check_has_mouth() || !P.check_has_mouth())
+			. = -1
+		else if(!H.is_face_clean() || !P.is_face_clean())
+			. = 0
 
 /datum/forbidden/emote/cheekkiss/showText(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	H.visible_message("<span class='erp'><b>[H]</b> gives <b>[P]</b> a cheek kiss.</span>")
@@ -194,16 +172,10 @@ var/global/list/forbidden_emotes = list()	// stores /datum/forbidden/action/emot
 	return "Slap [P.gender == FEMALE ? "her" : "his"] ass"
 
 /datum/forbidden/emote/assslap/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) > 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(P == H)
-		return -1
-	if(!H.has_hands() || !P.species.anus)
-		return -1
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!H.has_hands() || !P.species.anus)
+			. = -1
 
 /datum/forbidden/emote/assslap/showText(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	H.visible_message("<span class='erp'><b>[H]</b> slaps [P]'s ass.</span>")
@@ -227,16 +199,10 @@ var/global/list/forbidden_emotes = list()	// stores /datum/forbidden/action/emot
 	return "Grab her boobs"
 
 /datum/forbidden/emote/boobgrab/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) > 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(P == H)
-		return -1
-	if(!H.has_hands() || !P.has_vagina())
-		return -1
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!H.has_hands() || !P.has_vagina())
+			. = -1
 
 /datum/forbidden/emote/boobgrab/showText(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	H.visible_message("<span class='erp'><b>[H]</b> grabs [P]'s boobs.</span>")
