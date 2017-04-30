@@ -173,7 +173,9 @@
 #define MAT_BANANIUM		"$bananium"
 #define MAT_TRANQUILLITE	"$tranquillite"
 #define MAT_BIOMASS			"$biomass"
-
+//The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
+#define MINERAL_MATERIAL_AMOUNT 2000
+//The maximum size of a stack object.
 #define MAX_STACK_SIZE 50
 
 //check_target_facings() return defines

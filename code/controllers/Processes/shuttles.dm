@@ -24,7 +24,6 @@ var/const/CALL_SHUTTLE_REASON_LENGTH = 12
 
 	var/centcom_message = ""			//Remarks from Centcom on how well you checked the last order.
 	var/list/discoveredPlants = list()	//Typepaths for unusual plants we've already sent CentComm, associated with their potencies
-	var/list/techLevels = list()
 	var/list/shoppinglist = list()
 	var/list/requestlist = list()
 	var/list/supply_packs = list()

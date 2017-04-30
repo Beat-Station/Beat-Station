@@ -38,7 +38,8 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 	// We go backwards, so it'll be innermost objects sold first
 	for(var/i in reverseRange(contents))
 		var/atom/movable/thing = i
-		for(var/datum/export/E in exports_list)
+		for(var/a in exports_list)
+			var/datum/export/E = exports_list[a]
 			if(!E)
 				continue
 			if(E.applies_to(thing, contraband, emagged))
@@ -136,4 +137,4 @@ var/list/exports_list = list()
 	for(var/subtype in subtypesof(/datum/export))
 		var/datum/export/E = new subtype
 		if(E.export_types && E.export_types.len) // Exports without a type are invalid/base types
-			exports_list += E
+			exports_list[subtype] = E

@@ -80,10 +80,7 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 		if(!empty_turfs.len)
 			break
 		shuttle_master.shoppinglist -= SO
-
 		SO.generate(pick_n_take(empty_turfs))
-
-	shuttle_master.shoppinglist.Cut()
 
 /obj/docking_port/mobile/supply/proc/sell()
 	if(z != level_name_to_num(CENTCOMM))		//we only sell when we are -at- centcomm
@@ -98,26 +95,13 @@ var/list/blacklisted_cargo_types = typecacheof(list(
 	for(var/atom/movable/AM in areaInstance)
 		if(AM.anchored)
 			continue
-		// Sell tech levels
-		if(istype(AM, /obj/item/weapon/disk/tech_disk))
-			var/obj/item/weapon/disk/tech_disk/disk = AM
-			if(!disk.stored)
-				continue
-			var/datum/tech/tech = disk.stored
-			var/cost = tech.getCost(shuttle_master.techLevels[tech.id])
-			if(cost)
-				shuttle_master.techLevels[tech.id] = tech.level
-				for(var/mob/M in player_list)
-					if(M.mind)
-						for(var/datum/job_objective/further_research/objective in M.mind.job_objectives)
-							objective.unit_completed(cost)
 		sold_atoms += export_item_and_contents(AM, contraband, emagged, dry_run = FALSE)
 
 	if(sold_atoms)
 		sold_atoms += "."
 
 	for(var/a in exports_list)
-		var/datum/export/E = a
+		var/datum/export/E = exports_list[a]
 		var/export_text = E.total_printout()
 		if(!export_text)
 			continue
