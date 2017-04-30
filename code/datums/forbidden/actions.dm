@@ -32,10 +32,9 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return
 
 /datum/forbidden/action/proc/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P, text = null)
-	if(text)
-		add_logs(H, P, text)
-	else
-		add_logs(P, P, "fucked")
+	if(!text)
+		text = "fucked"
+	add_logs(H, P, text)
 
 /datum/forbidden/action/proc/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	H.do_fucking_animation(P)

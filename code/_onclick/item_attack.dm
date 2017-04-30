@@ -65,7 +65,7 @@
 	/////////////////////////
 	user.lastattacked = M
 	M.lastattacker = user
-	add_logs(user, M, "attacked", name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])", print_attack_log = (force > 0))//print it if stuff deals damage
+	add_logs(user, M, "attacked", name, "(INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])", admin = 1, print_attack_log = (force > 0))//print it if stuff deals damage
 
 	if(!iscarbon(user))
 		M.LAssailant = null
