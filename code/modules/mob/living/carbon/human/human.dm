@@ -1773,49 +1773,52 @@
 	if(last_special > world.time)
 		return
 
-	if(stat || paralysis || stunned || weakened || lying || restrained() || buckled)
-		to_chat(src, "You cannot leap in your current state.")
+	if(incapacitated())
+		to_chat(src, "<span class='warning'>You cannot leap in your current state!</span>")
 		return
 
 	var/list/choices = list()
-	for(var/mob/living/M in view(6,src))
-		if(!istype(M,/mob/living/silicon))
+	for(var/mob/living/M in view(6, src))
+		if(!istype(M, /mob/living/silicon))
 			choices += M
 	choices -= src
 
-	var/mob/living/T = input(src,"Who do you wish to leap at?") as null|anything in choices
+	var/mob/living/T = input(src, "Who do you wish to leap at?") as null|anything in choices
 
-	if(!T || !src || src.stat) return
+	if(!T || !src || incapacitated())
+		return
 
-	if(get_dist(get_turf(T), get_turf(src)) > 6) return
+	if(get_dist(get_turf(T), get_turf(src)) > 6)
+		return
 
 	if(last_special > world.time)
 		return
 
 	if(!canmove)
-		to_chat(src, "You cannot leap in your current state.")
+		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
 		return
 
 	last_special = world.time + 75
 	status_flags |= LEAPING
 
-	src.visible_message("<span class='warning'><b>\The [src]</b> leaps at [T]!</span>")
-	src.throw_at(get_step(get_turf(T),get_turf(src)), 5, 1, src)
-	playsound(src.loc, 'sound/voice/shriek1.ogg', 50, 1)
+	visible_message("<span class='warning'><b>[src]</b> leaps at [T]!</span>")
+	throw_at(get_step(get_turf(T), get_turf(src)), 5, 1, src)
+	playsound(loc, 'sound/voice/shriek1.ogg', 50, 1)
 
 	sleep(5)
 
-	if(status_flags & LEAPING) status_flags &= ~LEAPING
+	if(status_flags & LEAPING)
+		status_flags &= ~LEAPING
 
-	if(!src.Adjacent(T))
+	if(!Adjacent(T))
 		to_chat(src, "<span class='warning'>You miss!</span>")
 		return
 
 	T.Weaken(5)
 
 	//Only official raider vox get the grab and no self-prone."
-	if(src.mind && src.mind.special_role != "Vox Raider")
-		src.Weaken(5)
+	if(mind && mind.special_role != "Vox Raider")
+		Weaken(5)
 		return
 
 	var/use_hand = "left"
@@ -1826,9 +1829,9 @@
 		else
 			use_hand = "right"
 
-	src.visible_message("<span class='warning'><b>\The [src]</b> seizes [T] aggressively!</span>")
+	visible_message("<span class='warning'><b>[src]</b> seizes [T] aggressively!</span>")
 
-	var/obj/item/weapon/grab/G = new(src,T)
+	var/obj/item/weapon/grab/G = new(src, T)
 	if(use_hand == "left")
 		l_hand = G
 	else
@@ -1859,23 +1862,24 @@
 		to_chat(src, "<span class='warning'>You must have an aggressive grab to gut your prey!</span>")
 		return
 
-	last_special = world.time + 50
+	last_special = world.time + 150
 
-	visible_message("<span class='warning'><b>\The [src]</b> rips viciously at \the [G.affecting]'s body with its claws!</span>")
+	visible_message("<span class='warning'><b>[src]</b> rips viciously at [G.affecting]'s body with its claws!</span>")
 
-	if(istype(G.affecting,/mob/living/carbon/human))
+	if(istype(G.affecting, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = G.affecting
-		H.apply_damage(50,BRUTE)
-		if(H.stat == 2)
+		H.apply_damage(rand(25, 50), BRUTE)
+		if(H.stat == DEAD)
 			H.gib()
 	else
 		var/mob/living/M = G.affecting
-		if(!istype(M)) return //wut
-		M.apply_damage(50,BRUTE)
-		if(M.stat == 2)
+		if(!istype(M))
+			return //wut
+		M.apply_damage(rand(25, 50), BRUTE)
+		if(M.stat == DEAD)
 			M.gib()
 
-/mob/living/carbon/human/assess_threat(var/mob/living/simple_animal/bot/secbot/judgebot, var/lasercolor)
+/mob/living/carbon/human/assess_threat(mob/living/simple_animal/bot/secbot/judgebot, lasercolor)
 	if(judgebot.emagged == 2)
 		return 10 //Everyone is a criminal!
 

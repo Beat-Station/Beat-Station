@@ -451,8 +451,7 @@
 	heat_level_3 = 4000
 	heat_level_3_breathe = 4000
 
-	brute_mod = 0.2
-	burn_mod = 0.2
+	brute_mod = 1.2
 
 	eyes = "blank_eyes"
 	breath_type = "nitrogen"
