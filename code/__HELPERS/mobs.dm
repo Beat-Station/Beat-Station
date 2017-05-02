@@ -260,7 +260,7 @@ Proc for attack log creation, because really why not
 	if(ismob(target))
 		target.create_attack_log("<font color='orange'>Has been [what_done] by [key_name(user)][object ? " with [object]" : " "][addition]</font>")
 	if(admin)
-		log_attack("<font color='red'>[key_name(user)] [what_done] [key_name(target)][object ? " with [object]" : " "][addition]</font>")
+		log_attack("[key_name(user, include_link = FALSE)] [what_done] [key_name(target, include_link = FALSE)][object ? " with [object]" : " "][addition]")
 	if(istype(target) && (target.key))
 		if(what_done in ignore)
 			return

@@ -18,7 +18,11 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return
 
 /datum/forbidden/action/proc/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	return -1
+	if(get_dist(H, P) > 1)
+		return -1
+	if(H.incapacitated(ignore_lying = TRUE))
+		return -1
+	return 1
 
 	//	return -1 = button doesn't appears on UI
 	//	return 0 = disabled button
@@ -28,10 +32,9 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return
 
 /datum/forbidden/action/proc/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P, text = null)
-	if(text)
-		add_logs(P, H, text)
-	else
-		add_logs(P, H, "fucked")
+	if(!text)
+		text = "fucked"
+	add_logs(H, P, text)
 
 /datum/forbidden/action/proc/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	H.do_fucking_animation(P)
@@ -60,6 +63,16 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
  * ORAL ACTIONS
  */
 
+/datum/forbidden/action/oral/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	. = ..(H, P)
+	if(. != -1)
+		if(H == P)
+			. = -1
+		else if(!H.check_has_mouth())
+			. = -1
+		else if(!H.is_face_clean())
+			. = 0
+
 // Cunnilingus
 /datum/forbidden/action/oral/cunnilingus
 	name = "cunnilingus"
@@ -73,21 +86,12 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return "Lick her vagina"
 
 /datum/forbidden/action/oral/cunnilingus/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) > 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(H == P)
-		return -1
-	if(!H.check_has_mouth() || !P.has_vagina())
-		return -1
-
-	if(!H.is_face_clean())
-		return 0
-	if(!P.is_nude())
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!P.has_vagina())
+			. = -1
+		else if(!P.is_nude())
+			. = 0
 
 /datum/forbidden/action/oral/cunnilingus/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(begins)
@@ -116,24 +120,16 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return "Give him a blowjob"
 
 /datum/forbidden/action/oral/blowjob/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) > 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(H == P)
-		return -1
-	if(!H.check_has_mouth() || !P.has_penis())
-		return -1
-	if(isfuck(P.lfaction))
-		return 0
-	if(isvagina(P.lfaction))
-		return 0
-	if(!H.is_face_clean())
-		return 0
-	if(!P.is_nude())
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!P.has_penis())
+			. = -1
+		else if(isfuck(P.lfaction))
+			. = 0
+		else if(isvagina(P.lfaction))
+			. = 0
+		else if(!P.is_nude())
+			. = 0
 
 /datum/forbidden/action/oral/blowjob/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(begins)
@@ -161,21 +157,12 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return "Suck her tits"
 
 /datum/forbidden/action/oral/titsuck/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) > 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(H == P)
-		return -1
-	if(!H.check_has_mouth() || !P.has_vagina())
-		return -1
-
-	if(!H.is_face_clean())
-		return 0
-	if(!breastNude(P))
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!H.check_has_mouth() || !P.has_vagina())
+			. = -1
+		else if(!P.breast_nude())
+			. = 0
 
 /datum/forbidden/action/oral/titsuck/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(begins)
@@ -189,20 +176,20 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 /datum/forbidden/action/oral/titsuck/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	..()
 
-/datum/forbidden/action/oral/titsuck/proc/breastNude(mob/living/carbon/human/H)
-	if(H.wear_suit && H.wear_suit.flags_inv & HIDEJUMPSUIT)
-		return 0
-	if(H.w_uniform || H.undershirt)
-		return 0
-	if(H.underpants && H.underpants.flags_inv & HIDEBREASTS)
-		return 0
-
-	return 1
-
 
 /*
  * FUCK ACTIONS
  */
+
+/datum/forbidden/action/fuck/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	. = ..(H, P)
+	if(. != -1)
+		if(get_dist(H, P) >= 1)
+			. = -1
+		else if(H == P)
+			. = -1
+		else if(P.lastreceived != H && istype(P.lraction, type))
+			. = -1
 
 // Anal
 /datum/forbidden/action/fuck/anal
@@ -217,23 +204,12 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return "Fuck [P.gender == FEMALE ? "her" : "his"] anus"
 
 /datum/forbidden/action/fuck/anal/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(H.incapacitated())
-		return -1
-	if(H == P)
-		return -1
-	if(get_dist(H, P) >= 1)
-		return -1
-	if(P.lastreceived != H && istype(P.lraction, type))
-		return -1
-	if(!P.species.anus || !H.has_penis())
-		return -1
-
-	if(P.lastreceived != H && istype(P.lraction, type))
-		return 0
-	if(!H.is_nude() || !P.is_nude())
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!P.species.anus || !H.has_penis())
+			. = -1
+		else if(!H.is_nude() || !P.is_nude())
+			. = 0
 
 /datum/forbidden/action/fuck/anal/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(begins)
@@ -268,25 +244,16 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return "Fuck her vagina"
 
 /datum/forbidden/action/fuck/vaginal/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(H.incapacitated())
-		return -1
-	if(H == P)
-		return -1
-	if(get_dist(H, P) >= 1)
-		return -1
-	if(!P.has_vagina() || !H.has_penis())
-		return -1
-
-	if(P.lastreceived != H && istype(P.lraction, type))
-		return 0
-	if(H.lastreceived != P && isvagina(H.lraction))
-		return 0
-	if(P.lastfucked != H && isvagina(P.lfaction))
-		return 0
-	if(!H.is_nude() || !P.is_nude())
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!P.has_vagina() || !H.has_penis())
+			. = -1
+		else if(!H.is_nude() || !P.is_nude())
+			. = 0
+		else if(H.lastreceived != P && isvagina(H.lraction))
+			. = 0
+		else if(P.lastfucked != H && isvagina(P.lfaction))
+			. = 0
 
 /datum/forbidden/action/fuck/vaginal/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(begins)
@@ -323,25 +290,16 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return "Fuck [P.gender == FEMALE ? "her" : "his"] mouth"
 
 /datum/forbidden/action/fuck/mouth/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(H.incapacitated())
-		return -1
-	if(H == P)
-		return -1
-	if(get_dist(H, P) >= 1)
-		return -1
-	if(P.lastreceived != H && istype(P.lraction, type))
-		return -1
-	if(!H.has_penis())
-		return -1
-
-	if(!P.is_face_clean() || !H.is_nude())
-		return 0
-	if(H.lastreceived != P && isvagina(H.lraction))
-		return 0
-	if(P.lastfucked != H && isoral(P.lfaction))
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!H.has_penis())
+			. = -1
+		else if(!P.is_face_clean() || !H.is_nude())
+			. = 0
+		else if(H.lastreceived != P && isvagina(H.lraction))
+			. = 0
+		else if(P.lastfucked != H && isoral(P.lfaction))
+			. = 0
 
 /datum/forbidden/action/fuck/mouth/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(begins)
@@ -360,6 +318,18 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
  * MISC ACTIONS
  */
 
+/datum/forbidden/action/vagina/mount/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	. = ..(H, P)
+	if(. != -1)
+		if(get_dist(H, P) >= 1)
+			. = -1
+		else if(!H.has_vagina())
+			. = -1
+		else if(P.lastfucked != H && isfuck(P.lfaction))
+			. = -1
+		else if(H == P)
+			. = -1
+
 // Mount
 /datum/forbidden/action/vagina/mount
 	name = "mount"
@@ -373,25 +343,12 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return "Mount on him"
 
 /datum/forbidden/action/vagina/mount/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(H.incapacitated())
-		return -1
-	if(get_dist(H, P) >= 1)
-		return -1
-	if(P.lastreceived != H && istype(P.lraction, type))
-		return -1
-	if(P.lastfucked != H && isfuck(P.lfaction))
-		return -1
-	if(!P.has_penis() || !H.has_vagina())
-		return -1
-	if(H == P)
-		return -1
-
-	if(!P.lying)
-		return 0
-	if(!H.is_nude() || !P.is_nude())
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!P.lying)
+			. = 0
+		else if(!H.is_nude() || !P.is_nude())
+			. = 0
 
 /datum/forbidden/action/vagina/mount/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(begins)
@@ -411,6 +368,13 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 
 	..()
 
+/datum/forbidden/action/fingering/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
+	. = ..(H, P)
+	if(. != -1)
+		if(get_dist(H, P) > 1)
+			. = -1
+		if(!H.has_hands())
+			. = -1
 
 // Vagina Fingering
 /datum/forbidden/action/fingering/vagina
@@ -425,17 +389,12 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return "Finger [H == P ? "your" : "her"] vagina"
 
 /datum/forbidden/action/fingering/vagina/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) > 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(!P.has_vagina() || !H.has_hands())
-		return -1
-
-	if(!P.is_nude())
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!P.has_vagina())
+			. = -1
+		else if(!P.is_nude())
+			. = 0
 
 /datum/forbidden/action/fingering/vagina/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(H != P)
@@ -466,17 +425,12 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return "Finger [H == P ? "your" : P.gender == FEMALE ? "her" : "his"] anus"
 
 /datum/forbidden/action/fingering/anus/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) > 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(!P.species.anus || !H.has_hands())
-		return -1
-
-	if(!P.is_nude())
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(!P.species.anus)
+			. = -1
+		else if(!P.is_nude())
+			. = 0
 
 /datum/forbidden/action/fingering/anus/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(H != P)
@@ -507,21 +461,18 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return "[H == P ? "Masturbate your penis" : "Give him a handjob"]"
 
 /datum/forbidden/action/handjob/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) > 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(isfuck(P.lfaction))
-		return -1
-	if(!P.has_penis() || !H.has_hands())
-		return -1
-
-	if(!P.is_nude())
-		return 0
-	if(isvagina(P.lraction))
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(get_dist(H, P) > 1)
+			. = -1
+		else if(isfuck(P.lfaction))
+			. = -1
+		else if(!P.has_penis() || !H.has_hands())
+			. = -1
+		else if(!P.is_nude())
+			. = 0
+		else if(isvagina(P.lraction))
+			. = 0
 
 /datum/forbidden/action/handjob/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(H != P)
@@ -552,23 +503,20 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return "Give him a footjob"
 
 /datum/forbidden/action/footjob/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) > 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(H == P)
-		return -1
-	if(isfuck(P.lfaction))
-		return -1
-	if(!P.has_penis() || !H.has_foots())
-		return -1
-
-	if(!P.is_nude())
-		return 0
-	if(isvagina(P.lraction))
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(get_dist(H, P) > 1)
+			. = -1
+		else if(H == P)
+			. = -1
+		else if(isfuck(P.lfaction))
+			. = -1
+		else if(!P.has_penis() || !H.has_foots())
+			. = -1
+		else if(!P.is_nude())
+			. = 0
+		else if(isvagina(P.lraction))
+			. = 0
 
 /datum/forbidden/action/footjob/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(begins)
@@ -596,19 +544,16 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	return "Do scissoring"
 
 /datum/forbidden/action/tribbing/conditions(mob/living/carbon/human/H, mob/living/carbon/human/P)
-	if(get_dist(H, P) >= 1)
-		return -1
-	if(H.incapacitated())
-		return -1
-	if(H == P)
-		return -1
-	if(!P.has_vagina() || !H.has_vagina())
-		return -1
-
-	if(!P.is_nude() || !H.is_nude())
-		return 0
-
-	return 1
+	. = ..(H, P)
+	if(. != -1)
+		if(get_dist(H, P) >= 1)
+			. = -1
+		else if(H == P)
+			. = -1
+		else if(!P.has_vagina() || !H.has_vagina())
+			. = -1
+		else if(!P.is_nude() || !H.is_nude())
+			. = 0
 
 /datum/forbidden/action/tribbing/fuckText(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(begins && !istype(P.lraction, type))
