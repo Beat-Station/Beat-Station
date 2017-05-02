@@ -42,10 +42,10 @@
 	The base vault parts should be available for shipping by your cargo shuttle."}
 
 /datum/station_goal/dna_vault/on_report()
-	var/datum/supply_packs/P = shuttle_master.supply_packs["[/datum/supply_packs/misc/dna_vault]"]
+	var/datum/supply_pack/P = shuttle_master.supply_packs["[/datum/supply_pack/misc/dna_vault]"]
 	P.special_enabled = TRUE
 
-	P = shuttle_master.supply_packs["[/datum/supply_packs/misc/dna_probes]"]
+	P = shuttle_master.supply_packs["[/datum/supply_pack/misc/dna_probes]"]
 	P.special_enabled = TRUE
 
 /datum/station_goal/dna_vault/check_completion()
@@ -131,8 +131,8 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/human/monkey,/
 	var/obj/machinery/parent
 
 /obj/structure/filler/ex_act()
-	return							
-							
+	return
+
 /obj/machinery/dna_vault
 	name = "DNA Vault"
 	desc = "Break glass in case of apocalypse."
@@ -177,7 +177,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/human/monkey,/
 			plants_max = G.plant_count
 			dna_max = G.human_count
 			break
-			
+
 	..()
 
 /obj/machinery/dna_vault/Destroy()
@@ -186,12 +186,12 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/human/monkey,/
 		filler.parent = null
 		qdel(filler)
 	. = ..()
-	
+
 /obj/machinery/dna_vault/attack_ghost(mob/user)
 	if(stat & (BROKEN|MAINT))
 		return
 	return ui_interact(user)
-	
+
 /obj/machinery/dna_vault/attack_hand(mob/user)
 	if(..())
 		return 1
@@ -296,7 +296,7 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/human/monkey,/
 			grant_power(H, JUMPBLOCK, JUMPY)
 			grant_power(H, INCREASERUNBLOCK, RUN)
 	power_lottery[H] = list()
-	
+
 /obj/machinery/dna_vault/proc/grant_power(mob/living/carbon/human/H, block, power)
 	H.dna.SetSEState(block, 1, 1)
 	H.mutations |= power

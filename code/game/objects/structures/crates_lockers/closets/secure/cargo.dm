@@ -40,4 +40,5 @@
 		new /obj/item/clothing/mask/gas(src)
 		new /obj/item/clothing/glasses/meson(src)
 		new /obj/item/clothing/head/soft(src)
+		new /obj/item/device/export_scanner(src)
 		new /obj/item/weapon/door_remote/quartermaster(src)

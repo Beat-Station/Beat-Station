@@ -535,8 +535,10 @@ proc/anim(turf/location as turf,target as mob|obj,a_icon,a_icon_state as text,fl
 	qdel(animation)
 
 //Will return the contents of an atom recursivly to a depth of 'searchDepth'
-/atom/proc/GetAllContents(searchDepth = 5)
+/atom/proc/GetAllContents(searchDepth = 5, return_self = FALSE)
 	var/list/toReturn = list()
+	if(return_self)
+		toReturn += src
 
 	for(var/atom/part in contents)
 		toReturn += part
