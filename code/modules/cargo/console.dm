@@ -58,7 +58,7 @@
 	if(content_pack)
 		var/pack_name = sanitize(content_pack.name)
 		data["contents_name"] = pack_name
-		data["contents"] = content_pack.manifest
+		data["contents"] = content_pack.printout()
 		data["contents_access"] = content_pack.access ? get_access_desc(content_pack.access) : "None"
 
 	var/requests_list[0]
@@ -208,7 +208,7 @@
 	if(content_pack)
 		var/pack_name = sanitize(content_pack.name)
 		data["contents_name"] = pack_name
-		data["contents"] = content_pack.manifest
+		data["contents"] = content_pack.printout()
 		data["contents_access"] = content_pack.access ? get_access_desc(content_pack.access) : "None"
 
 	var/requests_list[0]

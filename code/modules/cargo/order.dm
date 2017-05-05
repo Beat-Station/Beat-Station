@@ -55,7 +55,7 @@
 	P.info += "NUMBER OF CRATES: [crates]<br>"
 	P.info += "ACCESS RESTRICTION: [pack.access ? get_access_desc(pack.access) : "None"]<br>"
 	P.info += "CONTENTS:<br>"
-	P.info += pack.manifest
+	P.info += pack.printout()
 	P.info += "<hr>"
 	P.info += "STAMP BELOW TO APPROVE THIS REQUISITION:<br>"
 
