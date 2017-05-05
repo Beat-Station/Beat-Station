@@ -42,7 +42,6 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_pack
 	var/name = "Crate"
-	var/manifest = ""
 	var/amount = null
 	var/cost = null
 	var/crate_name = "crate"
