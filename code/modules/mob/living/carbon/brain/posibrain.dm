@@ -37,7 +37,20 @@
 		silenced = !silenced
 		to_chat(user, "<span class='notice'>You toggle the speaker [silenced ? "off" : "on"].</span>")
 		if(brainmob && brainmob.key)
-			to_chat(brainmob, "<span class='warning'>Your internal speaker has been toggled [silenced ? "off" : "on"].</span>")		
+			to_chat(brainmob, "<span class='warning'>Your internal speaker has been toggled [silenced ? "off" : "on"].</span>")
+
+/obj/item/device/mmi/posibrain/attackby(var/obj/item/O as obj, var/mob/user as mob, params)
+	if(istype(O, /obj/item/device/multitool ) && brainmob)
+		if(!brainmob.client && brainmob.key)
+			brainmob.ghostize()
+			brainmob.key = null
+			brainmob.ckey = null
+			searching = 0
+			icon_state = "posibrain"
+			to_chat(user, "<span class='notice'>You reset the posibrain's personality.</span>")
+			return
+		else
+			to_chat(user, "<span class='notice'>The posibrain's personality is not dead!</span>")
 
 /obj/item/device/mmi/posibrain/proc/request_player()
 	for(var/mob/dead/observer/O in player_list)
