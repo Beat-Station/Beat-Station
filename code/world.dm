@@ -418,9 +418,12 @@ var/world_topic_spam_protect_time = world.timeofday
 	if(host)
 		features += "hosted by <b>[host]</b>"
 	*/
-
-//	if(!host && config && config.hostedby)
-//		features += "hosted by <b>[config.hostedby]</b>"
+	/*
+	Yeah, there actually is. BYOND only shows "hosted by X" when the host's Dream Daemon is 1. Logged in to BYOND and 2. Running on Windows,
+	since BYOND does not log in on *nix systems.- Nopm
+	*/
+	if(!host && config && config.hostedby)
+		features += "hosted by <b>[config.hostedby]</b>"
 
 	if(features)
 		s += ": [jointext(features, ", ")]"
