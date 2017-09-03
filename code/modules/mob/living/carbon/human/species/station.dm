@@ -256,6 +256,9 @@
 		"makes like a fish and suffocates!",
 		"is strangling themselves with their own tendrils!")
 
+	genitals = 1
+	anus = 1
+
 /datum/species/vox
 	name = "Vox"
 	name_plural = "Vox"
