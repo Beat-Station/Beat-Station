@@ -5,7 +5,7 @@
 #define GC_COLLECTIONS_PER_TICK 150 // Was 100.
 #define GC_COLLECTION_TIMEOUT (30 SECONDS)
 #define GC_FORCE_DEL_PER_TICK 30
-#define GC_DEBUG
+//#define GC_DEBUG
 
 var/list/didntgc = list()   	// list of all types that have failed to GC associated with the number of times that's happened.
 							    // the types are stored as strings
@@ -74,6 +74,10 @@ var/list/noqdelhint = list()    // list of all types that do not return a QDEL_H
 			soft_dels++
 			dels_count++
 		SCHECK
+
+#ifdef GC_DEBUG
+#undef GC_DEBUG
+#endif
 
 #undef GC_FORCE_DEL_PER_TICK
 #undef GC_COLLECTION_TIMEOUT

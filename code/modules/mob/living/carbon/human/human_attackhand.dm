@@ -102,6 +102,9 @@
 		if(INTENT_GRAB)
 			if(attacker_style && attacker_style.grab_act(H, src))
 				return 1
+			else if(src == M)
+				ass_storage(src)
+				return 1
 			else
 				src.grabbedby(M)
 				return 1

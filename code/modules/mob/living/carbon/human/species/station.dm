@@ -34,7 +34,6 @@
 	tail = "sogtail"
 	unarmed_type = /datum/unarmed_attack/claws
 	primitive_form = "Stok"
-	footprints = /obj/effect/decal/cleanable/blood/tracks/footprints/claw
 
 	blurb = "A heavily reptillian species, Unathi (or 'Sinta as they call themselves) hail from the \
 	Uuosa-Eso system, which roughly translates to 'burning mother'.<br/><br/>Coming from a harsh, radioactive \
@@ -99,7 +98,6 @@
 	language = "Siik'tajr"
 	tail = "tajtail"
 	unarmed_type = /datum/unarmed_attack/claws
-	footprints = /obj/effect/decal/cleanable/blood/tracks/footprints/claw
 
 	blurb = "The Tajaran race is a species of feline-like bipeds hailing from the planet of Ahdomai in the \
 	S'randarr system. They have been brought up into the space age by the Humans and Skrell, and have been \
@@ -165,7 +163,6 @@
 	primitive_form = "Wolpin"
 	tail = "vulptail"
 	unarmed_type = /datum/unarmed_attack/claws
-	footprints = /obj/effect/decal/cleanable/blood/tracks/footprints/claw
 
 	blurb = "Vulpkanin are a species of sharp-witted canine-pideds residing on the planet Altam just barely within the \
 	dual-star Vazzend system. Their politically de-centralized society and independent natures have led them to become a species and \
@@ -221,7 +218,6 @@
 	language = "Skrellian"
 	primitive_form = "Neara"
 	unarmed_type = /datum/unarmed_attack/punch
-	footprints = /obj/effect/decal/cleanable/blood/tracks/footprints/claw
 
 	blurb = "An amphibious species, Skrell come from the star system known as Qerr'Vallis, which translates to 'Star of \
 	the royals' or 'Light of the Crown'.<br/><br/>Skrell are a highly advanced and logical race who live under the rule \
@@ -278,7 +274,6 @@
 	speech_sounds = list('sound/voice/shriek1.ogg')
 	speech_chance = 20
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
-	footprints = /obj/effect/decal/cleanable/blood/tracks/footprints/claw
 
 	blurb = "The Vox are the broken remnants of a once-proud race, now reduced to little more than \
 	scavenging vermin who prey on isolated stations, ships or planets to keep their own ancient arkships \
@@ -507,7 +502,6 @@
 	default_language = "Galactic Common"
 	language = "Chittin"
 	unarmed_type = /datum/unarmed_attack/claws
-	footprints = /obj/effect/decal/cleanable/blood/tracks/footprints/claw
 
 	brute_mod = 0.8
 

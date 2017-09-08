@@ -265,7 +265,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 1000
 	crate_name = "disabler crate"
 
-/datum/supply_packs/security/forensics
+/datum/supply_pack/security/forensics
 	name = "Forensics Crate"
 	contains = list(/obj/item/device/detective_scanner,
 					/obj/item/weapon/storage/box/evidence,
@@ -273,8 +273,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/device/taperecorder,
 					/obj/item/toy/crayon/white,
 					/obj/item/clothing/head/det_hat)
-	cost = 20
-	containername = "forensics crate"
+	cost = 2000
+	crate_name = "forensics crate"
 
 ///// Armory stuff
 
@@ -360,7 +360,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/belt/bandolier,
 					/obj/item/weapon/storage/belt/bandolier)
 	cost = 5000
-	containername = "riot shotgun crate"
+	crate_name = "riot shotgun crate"
 
 /datum/supply_pack/security/armory/ballisticauto
 	name = "Combat Shotguns Crate"
@@ -382,7 +382,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/box/buck,
 					/obj/item/weapon/storage/box/buck)
 	cost = 4500
-	containername = "buckshot ammo crate"
+	crate_name = "buckshot ammo crate"
 
 /datum/supply_pack/security/armory/slugammo
 	name = "Slug Ammo Crate"
@@ -393,7 +393,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/box/slug,
 					/obj/item/weapon/storage/box/slug)
 	cost = 4500
-	containername = "slug ammo crate"
+	crate_name = "slug ammo crate"
 
 /datum/supply_pack/security/armory/expenergy
 	name = "Energy Guns Crate"
@@ -921,12 +921,12 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	crate_name = "tank transfer valves crate"
 	access = access_rd
 
-/datum/supply_packs/science/prototype
+/datum/supply_pack/science/prototype
 	name = "Machine Prototype Crate"
 	contains = list(/obj/item/device/machineprototype)
-	cost = 80
-	containertype = /obj/structure/closet/crate/secure/scisec
-	containername = "machine prototype crate"
+	cost = 8000
+	crate_type = /obj/structure/closet/crate/secure/scisec
+	crate_name = "machine prototype crate"
 	access = access_research
 
 //////////////////////////////////////////////////////////////////////////////
@@ -967,7 +967,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/pizzabox/vegetable,
 					/obj/item/pizzabox/hawaiian)
 	cost = 6000
-	containername = "Pizza crate"
+	crate_name = "Pizza crate"
 
 /datum/supply_pack/organic/monkey
 	name = "Monkey Crate"
@@ -1389,7 +1389,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 1000
 	crate_name = "arts and crafts crate"
 
-/datum/supply_packs/misc/posters
+/datum/supply_pack/misc/posters
 	name = "Corporate Posters Crate"
 	contains = list(/obj/item/weapon/poster/random_official,
 					/obj/item/weapon/poster/random_official,
@@ -1397,7 +1397,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/poster/random_official,
 					/obj/item/weapon/poster/random_official)
 	cost = 800
-	containername = "corporate posters crate"
+	crate_name = "corporate posters crate"
 
 ///////////// Janitor Supplies
 
@@ -1452,7 +1452,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 ///////////// Costumes
 
-/datum/supply_packs/misc/costume
+/datum/supply_pack/misc/costume
 	name = "Standard Costume Crate"
 	contains = list(/obj/item/weapon/storage/backpack/clown,
 					/obj/item/clothing/shoes/clown_shoes,
@@ -1470,8 +1470,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofbanana
 					)
 	cost = 1000
-	containertype = /obj/structure/closet/crate/secure
-	containername = "standard costumes"
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "standard costumes"
 	access = access_theatre
 
 /datum/supply_pack/misc/wizard
@@ -1562,7 +1562,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	crate_name = "foam force pistols crate"
 	contraband = 1
 
-/datum/supply_packs/misc/bigband
+/datum/supply_pack/misc/bigband
 	name = "Big band instrument collection"
 	contains = list(/obj/item/device/instrument/violin,
 					/obj/item/device/instrument/guitar,
@@ -1576,9 +1576,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/device/instrument/xylophone,
 					/obj/structure/piano)
 	cost = 5000
-	containername = "Big band musical instruments collection"
+	crate_name = "Big band musical instruments collection"
 
-/datum/supply_packs/misc/randomised/contraband
+/datum/supply_pack/misc/randomised/contraband
 	num_contained = 5
 	contains = list(/obj/item/weapon/storage/pill_bottle/random_drug_bottle,
 					/obj/item/weapon/poster/random_contraband,
@@ -1586,7 +1586,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims)
 	name = "Contraband Crate"
 	cost = 3000
-	containername = "crate"	//let's keep it subtle, eh?
+	crate_name = "crate"	//let's keep it subtle, eh?
 	contraband = 1
 
 /datum/supply_pack/misc/formalwear //This is a very classy crate.
@@ -1784,10 +1784,10 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 1500
 	crate_name = "softdrinks supply crate"
 
-/datum/supply_packs/vending/cigarette
+/datum/supply_pack/vending/cigarette
 	name = "Cigarette Supply Crate"
 	contains = list(/obj/item/weapon/vending_refill/cigarette,
 					/obj/item/weapon/vending_refill/cigarette,
 					/obj/item/weapon/vending_refill/cigarette)
 	cost = 1500
-	containername = "cigarette supply crate"
+	crate_name = "cigarette supply crate"
