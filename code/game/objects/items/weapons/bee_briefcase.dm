@@ -11,12 +11,16 @@
 	force = 10
 	throw_speed = 2
 	throw_range = 4
-	w_class = 4
+	w_class = WEIGHT_CLASS_BULKY
 	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked")
 	var/bees_left = 10
 	var/list/blood_list = list()
 	var/sound_file = 'sound/misc/briefcase_bees.ogg'
 	var/next_sound = 0
+
+/obj/item/weapon/bee_briefcase/Destroy()
+	blood_list.Cut()
+	return ..()
 
 /obj/item/weapon/bee_briefcase/examine(mob/user)
 	..()
@@ -58,18 +62,11 @@
 	else
 		if(world.time >= next_sound)		//This cooldown doesn't prevent us from releasing bees, just stops the sound
 			next_sound = world.time + 90
-			//Play sound through the station intercomms, so everyone knows the doom you have wrought.
-			for(var/O in global_intercoms)
-				var/obj/item/device/radio/intercom/I = O
-				if(!is_station_level(I.z))	//Only broadcast to the station intercoms
-					continue
-				if(!I.on)					//Only broadcast to active intercoms (powered, switched on)
-					continue
-				playsound(I, sound_file, 35)
+			playsound(loc, sound_file, 35)
 
 		//Release up to 5 bees per use. Without using strange reagent, that means two uses. WITH strange reagent, you can get more if you don't release the last bee
 		for(var/bee = min(5, bees_left), bee > 0, bee--)
 			var/mob/living/simple_animal/hostile/poison/bees/syndi/B = new /mob/living/simple_animal/hostile/poison/bees/syndi(null)
-			B.master_and_friends = blood_list	//Doesn't automatically add the person who opens the case, so the bees will attack the user unless they gave their blood
+			B.master_and_friends = blood_list.Copy()	//Doesn't automatically add the person who opens the case, so the bees will attack the user unless they gave their blood
 			B.forceMove(get_turf(user))			//RELEASE THE BEES!
 		bees_left -= 5

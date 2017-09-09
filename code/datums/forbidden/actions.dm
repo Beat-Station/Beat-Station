@@ -39,18 +39,20 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 /datum/forbidden/action/proc/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	H.do_fucking_animation(P)
 
-	if(P != H && HPleasure && PPleasure)
-		H.pleasure += HPleasure * rand(0.9, 1.2)
-		P.pleasure += PPleasure * rand(0.9, 1.2)
+	if(P != H)
+		if(HPleasure)
+			H.pleasure += HPleasure * rand(1, 1.4)
+		if(PPleasure)
+			P.pleasure += PPleasure * rand(1, 1.4)
 
 		if(H.pleasure >= MAX_PLEASURE)
 			H.cum(P, HHole ? HHole : "floor")
-		if(P.pleasure >= MAX_PLEASURE)
-			P.cum(H, PHole ? PHole : "floor")
-	else if(PPleasure)
-		P.pleasure += PPleasure * rand(0.9, 1.2)
-		if(P.pleasure >= MAX_PLEASURE)
-			P.cum(H, PHole ? PHole : "floor")
+	else
+		if(PPleasure)
+			P.pleasure += PPleasure * rand(1, 1.4)
+
+	if(P.pleasure >= MAX_PLEASURE)
+		P.cum(H, PHole ? PHole : "floor")
 
 /*
  *
@@ -110,7 +112,7 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 // Blowjob
 /datum/forbidden/action/oral/blowjob
 	name = "blowjob"
-	HPleasure = 2	// How much pleasure who is giving the action receive
+	HPleasure = 1	// How much pleasure who is giving the action receive
 	PPleasure = 5	// How much pleasure who is receiving the action receive
 
 	HHole = "floor"
@@ -147,7 +149,7 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 // Tit suck
 /datum/forbidden/action/oral/titsuck
 	name = "tit-suck"
-	HPleasure = 2	// How much pleasure who is giving the action receive
+	HPleasure = 1	// How much pleasure who is giving the action receive
 	PPleasure = 5	// How much pleasure who is receiving the action receive
 
 	HHole = "floor"
@@ -270,7 +272,8 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 /datum/forbidden/action/fuck/vaginal/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(P.virgin && !begins)
 		P.emote("scream")
-		new /obj/effect/decal/cleanable/blood(P.loc)
+		if(prob(25))
+			new /obj/effect/decal/cleanable/blood(P.loc)
 		P.virgin = 0
 	P.moan()
 
@@ -309,9 +312,6 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 
 /datum/forbidden/action/fuck/mouth/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	..(H, P, "mouth fucked")
-
-/datum/forbidden/action/fuck/mouth/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
-	..()
 
 
 /*
@@ -362,7 +362,8 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 /datum/forbidden/action/vagina/mount/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	if(H.virgin && !begins)
 		H.emote("scream")
-		new /obj/effect/decal/cleanable/blood(P.loc)
+		if(prob(25))
+			new /obj/effect/decal/cleanable/blood(P.loc)
 		H.virgin = 0
 	H.moan()
 
@@ -379,7 +380,7 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 // Vagina Fingering
 /datum/forbidden/action/fingering/vagina
 	name = "fingering"
-	HPleasure = 1	// How much pleasure who is giving the action receive
+	HPleasure = 0.4	// How much pleasure who is giving the action receive
 	PPleasure = 2	// How much pleasure who is receiving the action receive
 
 	HHole = "floor"
@@ -408,14 +409,11 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 /datum/forbidden/action/fingering/vagina/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	..(H, P, "vagina fingered")
 
-/datum/forbidden/action/fingering/vagina/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
-	..()
-
 
 // Ass Fingering
 /datum/forbidden/action/fingering/anus
 	name = "analfingering"
-	HPleasure = 1	// How much pleasure who is giving the action receive
+	HPleasure = 0.2	// How much pleasure who is giving the action receive
 	PPleasure = 2	// How much pleasure who is receiving the action receive
 
 	HHole = "floor"
@@ -444,14 +442,11 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 /datum/forbidden/action/fingering/anus/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	..(H, P, "ass fingered")
 
-/datum/forbidden/action/fingering/anus/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
-	..()
-
 
 // Handjob
 /datum/forbidden/action/handjob
 	name = "handjob"
-	HPleasure = 1	// How much pleasure who is giving the action receive
+	HPleasure = 0.2	// How much pleasure who is giving the action receive
 	PPleasure = 2	// How much pleasure who is receiving the action receive
 
 	HHole = "floor"
@@ -485,9 +480,6 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 
 /datum/forbidden/action/handjob/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	..(H, P, "handjobed")
-
-/datum/forbidden/action/handjob/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
-	..()
 
 
 // Footjob
@@ -527,9 +519,6 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 /datum/forbidden/action/footjob/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	..(H, P, "footjobed")
 
-/datum/forbidden/action/footjob/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
-	..()
-
 
 // Tribbing
 /datum/forbidden/action/tribbing
@@ -562,6 +551,3 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 		H.visible_message("<span class='erp'><b>[H]</b> rubs her pussy against [P]'s pussy.</span>")
 /datum/forbidden/action/tribbing/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P)
 	..(H, P, "tribbed")
-
-/datum/forbidden/action/tribbing/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
-	..()
