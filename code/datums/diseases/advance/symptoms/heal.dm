@@ -67,8 +67,7 @@ Bonus
 
 /datum/symptom/heal/metabolism/Heal(mob/living/M, datum/disease/advance/A)
 	var/cured = 0
-	for(var/thing in M.viruses)
-		var/datum/disease/D = thing
+	for(var/datum/disease/D in M.viruses)
 		if(D != A)
 			cured = 1
 			cured_diseases += D.GetDiseaseID()

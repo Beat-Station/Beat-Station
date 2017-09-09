@@ -4,7 +4,7 @@
 	name = "blank picket sign"
 	desc = "It's blank"
 	force = 5
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 4
 	attack_verb = list("bashed","smacked")
 	burn_state = FLAMMABLE
 

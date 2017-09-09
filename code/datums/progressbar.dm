@@ -15,7 +15,6 @@
 	if(goal_number)
 		goal = goal_number
 	bar = image('icons/effects/progessbar.dmi', target, "prog_bar_0", HUD_LAYER)
-	bar.alpha = 0
 	bar.plane = HUD_PLANE
 	bar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	user = User
@@ -27,7 +26,7 @@
 	var/list/bars = user.progressbars[bar.loc]
 	bars.Add(src)
 	listindex = bars.len
-	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = 5, easing = SINE_EASING)
+	bar.pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1))
 
 /datum/progressbar/proc/update(progress)
 	if(!user || !user.client)
@@ -47,8 +46,7 @@
 
 /datum/progressbar/proc/shiftDown()
 	--listindex
-	var/shiftheight = bar.pixel_y - PROGRESSBAR_HEIGHT
-	animate(bar, pixel_y = shiftheight, time = 5, easing = SINE_EASING)
+	bar.pixel_y -= PROGRESSBAR_HEIGHT
 
 /datum/progressbar/Destroy()
 	for(var/I in user.progressbars[bar.loc])
@@ -60,11 +58,10 @@
 	bars.Remove(src)
 	if(!bars.len)
 		LAZYREMOVE(user.progressbars, bar.loc)
-	animate(bar, alpha = 0, time = 5)
-	spawn(5)
-		if(client)
-			client.images -= bar
-		qdel(bar)
+
+	if(client)
+		client.images -= bar
+	qdel(bar)
 	. = ..()
 
 #undef PROGRESSBAR_HEIGHT

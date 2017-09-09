@@ -95,11 +95,12 @@
 	prefs.save_preferences(src)
 	if(prefs.sound & SOUND_LOBBY)
 		to_chat(src, "You will now hear music in the game lobby.")
-		if(isnewplayer(usr))
-			usr.client.playtitlemusic()
+		if(istype(mob, /mob/new_player))
+			playtitlemusic()
 	else
 		to_chat(src, "You will no longer hear music in the game lobby.")
-		usr.stop_sound_channel(CHANNEL_LOBBYMUSIC)
+		if(istype(mob, /mob/new_player))
+			src << sound(null, repeat = 0, wait = 0, volume = 85, channel = 1)// stop the jamsz
 
 	feedback_add_details("admin_verb","TLobby") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -112,7 +113,9 @@
 	if(prefs.sound & SOUND_MIDI)
 		to_chat(src, "You will now hear any sounds uploaded by admins.")
 	else
-		usr.stop_sound_channel(CHANNEL_ADMIN)
+		var/sound/break_sound = sound(null, repeat = 0, wait = 0, channel = 777)
+		break_sound.priority = 250
+		src << break_sound //breaks the client's sound output on channel 777
 
 		to_chat(src, "You will no longer hear sounds uploaded by admins; any currently playing midis have been disabled.")
 	feedback_add_details("admin_verb","TMidi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -147,7 +150,7 @@
 		to_chat(src, "You will now hear ambient sounds.")
 	else
 		to_chat(src, "You will no longer hear ambient sounds.")
-		usr.stop_sound_channel(CHANNEL_AMBIENCE)
+		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 1)
 	feedback_add_details("admin_verb","TAmbi") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/verb/Toggle_Buzz() //No more headaches because headphones bump up shipambience.ogg to insanity levels.
@@ -160,7 +163,7 @@
 		to_chat(src, "You will now hear ambient white noise.")
 	else
 		to_chat(src, "You will no longer hear ambient white noise.")
-		usr.stop_sound_channel(CHANNEL_BUZZ)
+		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
 	feedback_add_details("admin_verb","TBuzz") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 
@@ -174,7 +177,8 @@
 		to_chat(src, "You will now hear heartbeat sounds.")
 	else
 		to_chat(src, "You will no longer hear heartbeat sounds.")
-		usr.stop_sound_channel(CHANNEL_HEARTBEAT)
+		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 1)
+		src << sound(null, repeat = 0, wait = 0, volume = 0, channel = 2)
 	feedback_add_details("admin_verb","Thb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 // This needs a toggle because you people are awful and spammed terrible music

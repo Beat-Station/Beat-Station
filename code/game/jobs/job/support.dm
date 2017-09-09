@@ -7,7 +7,6 @@
 	spawn_positions = 1
 	is_service = 1
 	supervisors = "the head of personnel"
-	department_head = list("Head of Personnel")
 	selection_color = "#dddddd"
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue, access_weapons, access_mineral_storeroom)
 	minimal_access = list(access_bar, access_maint_tunnels, access_weapons, access_mineral_storeroom)
@@ -47,7 +46,6 @@
 	spawn_positions = 1
 	is_service = 1
 	supervisors = "the head of personnel"
-	department_head = list("Head of Personnel")
 	selection_color = "#dddddd"
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue)
 	minimal_access = list(access_kitchen, access_maint_tunnels)
@@ -75,7 +73,6 @@
 	spawn_positions = 2
 	is_service = 1
 	supervisors = "the head of personnel"
-	department_head = list("Head of Personnel")
 	selection_color = "#dddddd"
 	access = list(access_hydroponics, access_bar, access_kitchen, access_morgue)
 	minimal_access = list(access_hydroponics, access_morgue, access_maint_tunnels)
@@ -109,7 +106,6 @@
 	spawn_positions = 1
 	is_supply = 1
 	supervisors = "the head of personnel"
-	department_head = list("Head of Personnel")
 	selection_color = "#dddddd"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_mineral_storeroom)
 	minimal_access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_mineral_storeroom)
@@ -137,7 +133,6 @@
 	spawn_positions = 2
 	is_supply = 1
 	supervisors = "the quartermaster"
-	department_head = list("Head of Personnel")
 	selection_color = "#dddddd"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_mineral_storeroom)
 	minimal_access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting, access_mineral_storeroom)
@@ -163,7 +158,6 @@
 	spawn_positions = 3
 	is_supply = 1
 	supervisors = "the quartermaster"
-	department_head = list("Head of Personnel")
 	selection_color = "#dddddd"
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_mineral_storeroom)
 	minimal_access = list(access_mining, access_mint, access_mining_station, access_mailsorting, access_maint_tunnels, access_mineral_storeroom)
@@ -202,7 +196,6 @@
 	spawn_positions = 1
 	is_service = 1
 	supervisors = "the head of personnel"
-	department_head = list("Head of Personnel")
 	selection_color = "#dddddd"
 	access = list(access_clown, access_theatre, access_maint_tunnels)
 	minimal_access = list(access_clown, access_theatre, access_maint_tunnels)
@@ -215,18 +208,16 @@
 	uniform = /obj/item/clothing/under/rank/clown
 	shoes = /obj/item/clothing/shoes/clown_shoes
 	mask = /obj/item/clothing/mask/gas/clown_hat
-	l_pocket = /obj/item/weapon/bikehorn
 	l_ear = /obj/item/device/radio/headset/headset_service
 	id = /obj/item/weapon/card/id/clown
 	pda = /obj/item/device/pda/clown
 	backpack_contents = list(
 		/obj/item/weapon/reagent_containers/food/snacks/grown/banana = 1,
+		/obj/item/weapon/bikehorn = 1,
 		/obj/item/weapon/stamp/clown = 1,
 		/obj/item/toy/crayon/rainbow = 1,
 		/obj/item/weapon/storage/fancy/crayons = 1,
-		/obj/item/weapon/reagent_containers/spray/waterflower = 1,
-		/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofbanana = 1,
-		/obj/item/device/instrument/bikehorn = 1
+		/obj/item/weapon/reagent_containers/spray/waterflower = 1
 	)
 
 	backpack = /obj/item/weapon/storage/backpack/clown
@@ -261,7 +252,6 @@
 	spawn_positions = 1
 	is_service = 1
 	supervisors = "the head of personnel"
-	department_head = list("Head of Personnel")
 	selection_color = "#dddddd"
 	access = list(access_mime, access_theatre, access_maint_tunnels)
 	minimal_access = list(access_mime, access_theatre, access_maint_tunnels)
@@ -313,7 +303,6 @@
 	spawn_positions = 1
 	is_service = 1
 	supervisors = "the head of personnel"
-	department_head = list("Head of Personnel")
 	selection_color = "#dddddd"
 	access = list(access_janitor, access_maint_tunnels)
 	minimal_access = list(access_janitor, access_maint_tunnels)
@@ -339,7 +328,6 @@
 	spawn_positions = 1
 	is_service = 1
 	supervisors = "the head of personnel"
-	department_head = list("Head of Personnel")
 	selection_color = "#dddddd"
 	access = list(access_library, access_maint_tunnels)
 	minimal_access = list(access_library, access_maint_tunnels)
@@ -366,7 +354,6 @@
 	spawn_positions = 1
 	is_service = 1
 	supervisors = "the head of personnel"
-	department_head = list("Head of Personnel")
 	selection_color = "#dddddd"
 	alt_titles = list("Hair Stylist","Beautician")
 	access = list(access_maint_tunnels)

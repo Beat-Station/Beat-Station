@@ -1,13 +1,15 @@
+#define is_cleanable(A) (istype(A, /obj/effect/decal/cleanable) || istype(A, /obj/effect/rune))
+
 /obj/item/weapon/mop
 	desc = "The world of janitalia wouldn't be complete without a mop."
 	name = "mop"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop"
-	force = 3
-	throwforce = 5
+	force = 3.0
+	throwforce = 5.0
 	throw_speed = 3
 	throw_range = 7
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	attack_verb = list("mopped", "bashed", "bludgeoned", "whacked")
 	burn_state = FLAMMABLE
 	var/mopping = 0
@@ -41,25 +43,23 @@
 		to_chat(user, "<span class='warning'>Your mop is dry!</span>")
 		return
 
-	var/turf/simulated/T = get_turf(A)
+	var/turf/simulated/turf = A
+	if(is_cleanable(A))
+		turf = A.loc
+	A = null
 
-	if(istype(A, /obj/item/weapon/reagent_containers/glass/bucket) || istype(A, /obj/structure/janitorialcart))
-		return
+	if(istype(turf))
+		user.visible_message("[user] begins to clean \the [turf] with [src].", "<span class='notice'>You begin to clean \the [turf] with [src]...</span>")
 
-	if(istype(T))
-		user.visible_message("[user] begins to clean [T] with [src].", "<span class='notice'>You begin to clean [T] with [src]...</span>")
-
-		if(do_after(user, src.mopspeed, target = T))
+		if(do_after(user, src.mopspeed, target = turf))
 			to_chat(user, "<span class='notice'>You finish mopping.</span>")
-			clean(T)
+			clean(turf)
 
 
 /obj/effect/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/soap))
 		return
-	else
-		return ..()
-
+	..()
 
 /obj/item/weapon/mop/proc/janicart_insert(mob/user, obj/structure/janitorialcart/J)
 	J.put_in_cart(src, user)
@@ -75,47 +75,21 @@
 /obj/item/weapon/mop/advanced
 	desc = "The most advanced tool in a custodian's arsenal. Just think of all the viscera you will clean up with this!"
 	name = "advanced mop"
-	mopcap = 10
+	mopcap = 15
 	icon_state = "advmop"
-	item_state = "mop"
-	origin_tech = "materials=3;engineering=3"
+	item_state = "mop"	//meh will do for now until TG makes one
 	force = 6
 	throwforce = 8
 	throw_range = 4
-	mopspeed = 20
-	var/refill_enabled = TRUE //Self-refill toggle for when a janitor decides to mop with something other than water.
-	var/refill_rate = 1 //Rate per process() tick mop refills itself
-	var/refill_reagent = "water" //Determins what reagent to use for refilling, just in case someone wanted to make a HOLY MOP OF PURGING
-
-/obj/item/weapon/mop/advanced/New()
-	..()
-	processing_objects.Add(src)
-
-/obj/item/weapon/mop/advanced/attack_self(mob/user)
-	refill_enabled = !refill_enabled
-	if(refill_enabled)
-		processing_objects.Add(src)
-	else
-		processing_objects.Remove(src)
-	to_chat(user, "<span class='notice'>You set the condenser switch to the '[refill_enabled ? "ON" : "OFF"]' position.</span>")
-	playsound(user, 'sound/machines/click.ogg', 30, 1)
-
-/obj/item/weapon/mop/advanced/process()
-
-	if(reagents.total_volume < mopcap)
-		reagents.add_reagent(refill_reagent, refill_rate)
-
-/obj/item/weapon/mop/advanced/examine(mob/user)
-	..()
-	to_chat(user, "<span class='notice'>The condenser switch is set to <b>[refill_enabled ? "ON" : "OFF"]</b>.</span>")
-
-/obj/item/weapon/mop/advanced/Destroy()
-	if(refill_enabled)
-		processing_objects.Remove(src)
-	return ..()
-
+	mopspeed = 10
 
 /obj/item/weapon/mop/advanced/cyborg
+	mopcap = 40
 
-/obj/item/weapon/mop/advanced/cyborg/janicart_insert(mob/user, obj/structure/janitorialcart/J)
-	return
+/obj/item/weapon/mop/advanced/cyborg/New()
+	..()
+	reagents.add_reagent("water", mopcap)
+
+/obj/item/weapon/mop/advanced/cyborg/examine(mob/user)
+	..(user)
+	to_chat(user, "<span class='notice'>The mop's water tank has [round(reagents.get_reagent_amount("water"))] units of water left.</span>")

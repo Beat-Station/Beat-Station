@@ -485,29 +485,29 @@
 	if (!W || !user || !W.type)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	var/damage_to_do = W.force
+	var/force = W.force
 
 	if(istype(W, /obj/item/weapon/scythe))
 		var/obj/item/weapon/scythe/S = W
 		if(S.extend)	//so folded telescythes won't get damage boosts / insta-clears (they instead will instead be treated like non-scythes)
-			damage_to_do *= 4
+			force = force * 4
 			for(var/obj/structure/spacevine/B in range(1,src))
-				if(B.health > damage_to_do)	//this only is going to occur for woodening mutation vines (increased health) or if we nerf scythe damage/multiplier
-					B.health -= damage_to_do
+				if(B.health > force)	//this only is going to occur for woodening mutation vines (increased health) or if we nerf scythe damage/multiplier
+					B.health -= force
 				else
 					B.wither()
 			return
 
 	if(is_sharp(W))
-		damage_to_do *= 4
+		force = force * 4
 
 	if(W && W.damtype == "fire")
-		damage_to_do *= 4
+		force = force * 4
 
 	for(var/datum/spacevine_mutation/SM in mutations)
-		damage_to_do = SM.on_hit(src, user, W, damage_to_do) //on_hit now takes override damage as arg and returns new value for other mutations to permutate further
+		force = SM.on_hit(src, user, W, force) //on_hit now takes override damage as arg and returns new value for other mutations to permutate further
 
-	health -= damage_to_do
+	health -= force
 	if(health < 1)
 		wither()
 

@@ -8,6 +8,7 @@
 	var/throwforce = 1
 	var/list/attack_verb = list() //Used in attackby() to say how something was attacked "[x] has been [z.attack_verb] by [y] with [z]"
 	var/sharp = 0		// whether this object cuts
+	var/edge = 0		// whether this object is more likely to dismember
 	var/in_use = 0 // If we have a user using us, this will be set on. We will check if the user has stopped using us, and thus stop updating and LAGGING EVERYTHING!
 
 	var/damtype = "brute"
@@ -167,7 +168,15 @@
 
 
 /obj/proc/hear_talk(mob/M as mob, text)
-	return
+	if(talking_atom)
+		talking_atom.catchMessage(text, M)
+
+/*
+	var/mob/mo = locate(/mob) in src
+	if(mo)
+		var/rendered = "<span class='game say'><span class='name'>[M.name]: </span> <span class='message'>[text]</span></span>"
+		mo.show_message(rendered, 2)
+*/
 
 /obj/proc/hear_message(mob/M as mob, text)
 
@@ -308,6 +317,3 @@ a {
 		Item.forceMove(new_loc)
 		if(burn)
 			Item.fire_act() //Set them on fire, too
-
-/obj/proc/on_mob_move(dir, mob/user)
-	return

@@ -1,4 +1,3 @@
-
 var/global/datum/controller/occupations/job_master
 
 #define GET_RANDOM_JOB 0
@@ -10,12 +9,10 @@ var/global/datum/controller/occupations/job_master
 	var/list/occupations = list()
 	var/list/name_occupations = list()	//Dict of all jobs, keys are titles
 	var/list/type_occupations = list()	//Dict of all jobs, keys are types
-	var/list/prioritized_jobs = list() // List of jobs set to priority by HoP/Captain
 	//Players who need jobs
 	var/list/unassigned = list()
 	//Debug info
 	var/list/job_debug = list()
-
 
 /datum/controller/occupations/proc/SetupOccupations(var/list/faction = list("Station"))
 	occupations = list()
@@ -587,7 +584,7 @@ var/global/datum/controller/occupations/job_master
 	H.mind.store_memory(remembered_info)
 
 	// If they're head, give them the account info for their department
-	if(job && job.head_position)
+	if(job.head_position)
 		remembered_info = ""
 		var/datum/money_account/department_account = department_accounts[job.department]
 

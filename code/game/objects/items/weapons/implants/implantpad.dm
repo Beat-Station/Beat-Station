@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/item/weapon/implantpad
 	name = "implantpad"
 	desc = "Used to modify implants."
@@ -6,7 +8,7 @@
 	item_state = "electronic"
 	throw_speed = 3
 	throw_range = 5
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	var/obj/item/weapon/implantcase/case = null
 
 /obj/item/weapon/implantpad/Destroy()

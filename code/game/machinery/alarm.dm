@@ -213,10 +213,6 @@
 		radio_controller.remove_object(src, frequency)
 	air_alarm_repository.update_cache(src)
 	QDEL_NULL(wires)
-	if(alarm_area && alarm_area.master_air_alarm == src)
-		alarm_area.master_air_alarm = null
-		elect_master(exclude_self = 1)
-	alarm_area = null
 	return ..()
 
 /obj/machinery/alarm/proc/first_run()
@@ -240,10 +236,8 @@
 	return alarm_area.master_air_alarm && !(alarm_area.master_air_alarm.stat & (NOPOWER|BROKEN))
 
 
-/obj/machinery/alarm/proc/elect_master(exclude_self = 0) //Why is this an alarm and not area proc?
+/obj/machinery/alarm/proc/elect_master()
 	for(var/obj/machinery/alarm/AA in alarm_area)
-		if(exclude_self && AA == src)
-			continue
 		if(!(AA.stat & (NOPOWER|BROKEN)))
 			alarm_area.master_air_alarm = AA
 			return 1
@@ -1070,8 +1064,7 @@ Just an object used in constructing air alarms
 	icon = 'icons/obj/doors/door_assembly.dmi'
 	icon_state = "door_electronics"
 	desc = "Looks like a circuit. Probably is."
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	materials = list(MAT_METAL=50, MAT_GLASS=50)
-	origin_tech = "engineering=2;programming=1"
 	toolspeed = 1
 	usesound = 'sound/items/Deconstruct.ogg'

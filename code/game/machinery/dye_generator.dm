@@ -74,7 +74,7 @@
 	throw_speed = 4
 	throw_range = 7
 	force = 0
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	var/dye_color = "#FFFFFF"
 
 /obj/item/hair_dye_bottle/New()
@@ -88,7 +88,7 @@
 	overlays += I
 
 /obj/item/hair_dye_bottle/attack(mob/living/carbon/M as mob, mob/user as mob)
-	if(user.a_intent != INTENT_HELP)
+	if(user.a_intent != "help")
 		..()
 		return
 	if(!(M in view(1)))

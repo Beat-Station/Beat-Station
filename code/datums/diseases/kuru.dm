@@ -1,5 +1,4 @@
 /datum/disease/kuru
-	form = "Disease"
 	name = "Space Kuru"
 	max_stages = 4
 	stage_prob = 5
@@ -11,7 +10,6 @@
 	desc = "Uncontrollable laughing."
 	severity = BIOHAZARD
 	spread_flags = NON_CONTAGIOUS
-	bypasses_immunity = TRUE //Kuru is a prion disorder, not a virus
 
 /datum/disease/kuru/stage_act()
 	..()

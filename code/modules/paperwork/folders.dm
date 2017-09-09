@@ -3,7 +3,7 @@
 	desc = "A folder."
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "folder"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	pressure_resistance = 2
 	burn_state = FLAMMABLE
 
@@ -121,3 +121,4 @@
 	..()
 	new /obj/item/documents/syndicate/blue(src)
 	update_icon()
+

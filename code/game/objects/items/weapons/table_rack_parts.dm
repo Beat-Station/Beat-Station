@@ -46,18 +46,6 @@
 		/obj/item/stack/sheet/wood,
 		/obj/item/stack/sheet/wood)
 
-/obj/item/weapon/table_parts/wood/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/stack/tile/carpet))
-		var/target = /obj/item/weapon/table_parts/fancy
-		if(istype(W, /obj/item/stack/tile/carpet/black))
-			target = /obj/item/weapon/table_parts/fancy/black
-		var/obj/item/stack/S = W
-		if(S.use(1))
-			new target(get_turf(src))
-			qdel(src)
-	else
-		. = ..()
-
 /obj/item/weapon/table_parts/glass
 	name = "glass table parts"
 	desc = "fragile!"
@@ -68,17 +56,6 @@
 	parts = list(
 		/obj/item/stack/sheet/metal,
 		/obj/item/stack/sheet/metal)
-
-/obj/item/weapon/table_parts/fancy
-	name = "fancy table parts"
-	desc = "Pretty!"
-	icon_state = "fancy_tableparts"
-	result = /obj/structure/table/wood/fancy
-
-/obj/item/weapon/table_parts/fancy/black
-	name = "black fancy table parts"
-	icon_state = "black_fancy_tableparts"
-	result = /obj/structure/table/wood/fancy/black
 
 /obj/item/weapon/rack_parts
 	name = "rack parts"
@@ -111,10 +88,9 @@
 	for(var/obj/structure/table/T in user.loc)
 		to_chat(user, "<span class=warning>You can't build tables on top of tables!</span>")
 		return
-	if(do_after(user, 20, target = loc))
-		new result(user.loc)
-		user.drop_item()
-		qdel(src)
+	new result(user.loc)
+	user.drop_item()
+	qdel(src)
 
 /*
  * Rack Parts
@@ -126,8 +102,7 @@
 		qdel(src)
 
 /obj/item/weapon/rack_parts/attack_self(mob/user as mob)
-	if(do_after(user, 20, target = loc))
-		var/obj/structure/rack/R = new /obj/structure/rack(user.loc)
-		R.add_fingerprint(user)
-		user.drop_item()
-		qdel(src)
+	var/obj/structure/rack/R = new /obj/structure/rack(user.loc)
+	R.add_fingerprint(user)
+	user.drop_item()
+	qdel(src)

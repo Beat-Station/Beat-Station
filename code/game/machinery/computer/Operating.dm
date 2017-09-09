@@ -1,3 +1,4 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 #define OP_COMPUTER_COOLDOWN 60
 
 /obj/machinery/computer/operating
@@ -147,12 +148,13 @@
 		occupantData["btCelsius"] = occupant.bodytemperature - T0C
 		occupantData["btFaren"] = ((occupant.bodytemperature - T0C) * (9.0/5.0))+ 32
 
-		if(ishuman(occupant) && !(NO_BLOOD in occupant.species.species_traits))
+		if(ishuman(occupant) && occupant.vessel && !(occupant.species && occupant.species.flags & NO_BLOOD))
+			var/blood_type = occupant.get_blood_name()
 			occupantData["pulse"] = occupant.get_pulse(GETPULSE_TOOL)
 			occupantData["hasBlood"] = 1
-			occupantData["bloodLevel"] = round(occupant.blood_volume)
+			occupantData["bloodLevel"] = round(occupant.vessel.get_reagent_amount(blood_type))
 			occupantData["bloodMax"] = occupant.max_blood
-			occupantData["bloodPercent"] = round(100*(occupant.blood_volume/occupant.max_blood), 0.01) //copy pasta ends here
+			occupantData["bloodPercent"] = round(100*(occupant.vessel.get_reagent_amount(blood_type)/occupant.max_blood), 0.01) //copy pasta ends here
 
 			occupantData["bloodType"]=occupant.b_type
 		if(occupant.surgeries.len)

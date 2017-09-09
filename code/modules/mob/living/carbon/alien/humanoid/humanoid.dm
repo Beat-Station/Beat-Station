@@ -24,10 +24,44 @@
 	add_language("Hivemind")
 	..()
 
+//This is fine, works the same as a human
+/mob/living/carbon/alien/humanoid/Bump(atom/movable/AM as mob|obj, yes)
+	spawn( 0 )
+		if((!( yes ) || now_pushing))
+			return
+		now_pushing = 0
+		..()
+		if(!istype(AM, /atom/movable))
+			return
+
+		if(ismob(AM))
+			var/mob/tmob = AM
+			tmob.LAssailant = src
+
+		if(!now_pushing)
+			now_pushing = 1
+			if(!AM.anchored)
+				var/t = get_dir(src, AM)
+				if(istype(AM, /obj/structure/window/full))
+					for(var/obj/structure/window/win in get_step(AM,t))
+						now_pushing = 0
+						return
+				step(AM, t)
+			now_pushing = null
+		return
+	return
 
 /mob/living/carbon/alien/humanoid/movement_delay()
-	. = ..()
-	. += move_delay_add + config.alien_delay //move_delay_add is used to slow aliens with stuns
+	var/tally = 0
+	if(istype(src, /mob/living/carbon/alien/humanoid/queen))
+		tally += 4
+	if(istype(src, /mob/living/carbon/alien/humanoid/drone))
+		tally += 0
+	if(istype(src, /mob/living/carbon/alien/humanoid/sentinel))
+		tally += 0
+	if(istype(src, /mob/living/carbon/alien/humanoid/hunter))
+		tally = -2 // hunters go supersuperfast
+	return (tally + move_delay_add + config.alien_delay)
 
 /mob/living/carbon/alien/humanoid/Process_Spacemove(var/check_drift = 0)
 	if(..())
@@ -160,13 +194,13 @@
 
 	switch(M.a_intent)
 
-		if(INTENT_HELP)
+		if(I_HELP)
 			help_shake_act(M)
 
-		if(INTENT_GRAB)
+		if(I_GRAB)
 			grabbedby(M)
 
-		if(INTENT_HARM)
+		if(I_HARM)
 			M.do_attack_animation(src)
 			var/damage = rand(1, 9)
 			if(prob(90))
@@ -191,7 +225,7 @@
 				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
 				visible_message("<span class='danger'>[M] has attempted to punch [src]!</span>")
 
-		if(INTENT_DISARM)
+		if(I_DISARM)
 			if(!lying)
 				if(prob(5))//Very small chance to push an alien down.
 					Paralyse(2)

@@ -64,52 +64,41 @@
 	max_ammo = 14
 
 /obj/item/ammo_box/shotgun
-	name = "Shotgun Speedloader (slug)"
-	icon_state = "slugloader"
+	name = "Ammunition Box (slug)"
+	icon_state = "slugbox"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/shotgun
 	max_ammo = 7
 	materials = list(MAT_METAL=28000)
-	multiple_sprites = 1
 
 /obj/item/ammo_box/shotgun/buck
-	name = "Shotgun Speedloader (buckshot)"
-	icon_state = "buckloader"
+	name = "Ammunition Box (buckshot)"
+	icon_state = "buckshotbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/buckshot
 
-
-/obj/item/ammo_box/shotgun/dragonsbreath
-	name = "Shotgun Speedloader (dragonsbreath)"
-	icon_state = "dragonsbreathloader"
-	ammo_type = /obj/item/ammo_casing/shotgun/incendiary/dragonsbreath
-
-
 /obj/item/ammo_box/shotgun/stun
-	name = "Shotgun Speedloader (stun shells)"
-	icon_state = "stunloader"
+	name = "Ammunition Box (stun shells)"
+	icon_state = "stunbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/stunslug
-
+	materials = list(MAT_METAL=1750)
 
 /obj/item/ammo_box/shotgun/beanbag
-	name = "Shotgun Speedloader (beanbag shells)"
-	icon_state = "beanbagloader"
+	name = "Ammunition Box (beanbag shells)"
+	icon_state = "beanbagbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/beanbag
 	materials = list(MAT_METAL=1750)
 
-
 /obj/item/ammo_box/shotgun/rubbershot
-	name = "Shotgun Speedloader (rubbershot shells)"
-	icon_state = "rubbershotloader"
+	name = "Ammunition Box (rubbershot shells)"
+	icon_state = "rubbershotbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/rubbershot
-	materials = list(MAT_METAL=1750)
-
+	materials = list(MAT_METAL=28000)
 
 /obj/item/ammo_box/shotgun/tranquilizer
-	name = "Shotgun Speedloader (tranquilizer darts)"
-	icon_state = "tranqloader"
+	name = "Ammunition Box (tranquilizer darts)"
+	icon_state = "tranqbox"
 	ammo_type = /obj/item/ammo_casing/shotgun/tranquilizer
 	materials = list(MAT_METAL=1750)
-
 
 //FOAM DARTS
 /obj/item/ammo_box/foambox

@@ -14,7 +14,7 @@
 	playsound(src.loc, 'sound/goonstation/effects/gib.ogg', 50, 1)
 
 	flick("gibbed-a", animation)
-	xgibs(loc)
+	xgibs(loc, viruses)
 	dead_mob_list -= src
 
 	spawn(15)

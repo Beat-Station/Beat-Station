@@ -94,7 +94,8 @@ var/list/image/ghost_darkness_images = list() //this is a list of images for thi
 	following = null
 	if(ghostimage)
 		ghost_darkness_images -= ghostimage
-		QDEL_NULL(ghostimage)
+		qdel(ghostimage)
+		ghostimage = null
 		updateallghostimages()
 	return ..()
 
@@ -641,13 +642,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/proc/can_admin_interact()
 	return FALSE
-
+	
 /mob/proc/can_advanced_admin_interact()
 	return FALSE
 
 /mob/dead/observer/can_admin_interact()
 	return check_rights(R_ADMIN, 0, src)
-
+	
 /mob/dead/observer/can_advanced_admin_interact()
 	if(!can_admin_interact())
 		return FALSE
@@ -656,8 +657,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return TRUE
 
 	return FALSE
-
-/mob/dead/observer/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_lying = FALSE)
+	
+/mob/dead/observer/incapacitated()
 	return TRUE
 
 //this is a mob verb instead of atom for performance reasons

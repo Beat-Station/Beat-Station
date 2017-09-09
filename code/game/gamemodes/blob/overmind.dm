@@ -44,7 +44,8 @@
 /mob/camera/blob/Destroy()
 	if(ghostimage)
 		ghost_darkness_images -= ghostimage
-		QDEL_NULL(ghostimage)
+		qdel(ghostimage)
+		ghostimage = null;
 		updateallghostimages()
 	return ..()
 

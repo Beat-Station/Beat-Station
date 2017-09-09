@@ -26,7 +26,7 @@
 	plane = HUD_PLANE
 	item_state = "nothing"
 	icon = 'icons/mob/screen_gen.dmi'
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 5
 
 
 /obj/item/weapon/grab/New(var/mob/user, var/mob/victim)
@@ -174,11 +174,9 @@
 
 */
 
-	var/breathing_tube = affecting.get_organ_slot("breathing_tube")
-
 	if(state >= GRAB_NECK)
 		affecting.Stun(5)  //It will hamper your voice, being choked and all.
-		if(isliving(affecting) && !breathing_tube)
+		if(isliving(affecting))
 			var/mob/living/L = affecting
 			L.adjustOxyLoss(1)
 
@@ -186,8 +184,7 @@
 		//affecting.apply_effect(STUTTER, 5) //would do this, but affecting isn't declared as mob/living for some stupid reason.
 		affecting.Stuttering(5) //It will hamper your voice, being choked and all.
 		affecting.Weaken(5)	//Should keep you down unless you get help.
-		if(!breathing_tube)
-			affecting.AdjustLoseBreath(2, bound_lower = 0, bound_upper = 3)
+		affecting.AdjustLoseBreath(2, bound_lower = 0, bound_upper = 3)
 
 	adjust_position()
 
@@ -306,8 +303,7 @@
 		msg_admin_attack("[key_name(assailant)] strangled (kill intent) [key_name(affecting)]")
 
 		assailant.next_move = world.time + 10
-		if(!affecting.get_organ_slot("breathing_tube"))
-			affecting.AdjustLoseBreath(1)
+		affecting.AdjustLoseBreath(1)
 		affecting.setDir(WEST)
 	adjust_position()
 
@@ -336,7 +332,7 @@
 			if(attacker_style && attacker_style.grab_attack_act(src, attacker, affected))
 				return 0
 			switch(assailant.a_intent)
-				if(INTENT_HELP)
+				if(I_HELP)
 					/*if(force_down)
 						to_chat(assailant, "<span class='warning'>You no longer pin [affecting] to the ground.</span>")
 						force_down = 0
@@ -344,10 +340,10 @@
 								//This specific example would allow you to stop pinning people to the floor without moving away from them.
 					return
 
-				if(INTENT_GRAB)
+				if(I_GRAB)
 					return
 
-				if(INTENT_HARM) //This checks that the user is on harm intent.
+				if(I_HARM) //This checks that the user is on harm intent.
 					if(last_hit_zone == "head") //This checks the hitzone the user has selected. In this specific case, they have the head selected.
 						if(affecting.lying)
 							return
@@ -372,7 +368,7 @@
 							(affected.glasses && affected.glasses.flags_cover & GLASSESCOVERSEYES))
 							to_chat(assailant, "<span class='danger'>You're going to need to remove the eye covering first.</span>")
 							return
-						if(!affected.internal_bodyparts_by_name["eyes"])
+						if(!affected.internal_organs_by_name["eyes"])
 							to_chat(assailant, "<span class='danger'>You cannot locate any eyes on [affecting]!</span>")
 							return
 						assailant.visible_message("<span class='danger'>[assailant] presses \his fingers into [affecting]'s eyes!</span>")
@@ -388,7 +384,7 @@
 
 															//This specific example would allow you to squish people's eyes with a GRAB_NECK.
 
-				if(INTENT_DISARM) //This checks that the user is on disarm intent.
+				if(I_DISARM) //This checks that the user is on disarm intent.
 				/*	if(state < GRAB_AGGRESSIVE)
 						to_chat(assailant, "<span class='warning'>You require a better grab to do this.</span>")
 						return

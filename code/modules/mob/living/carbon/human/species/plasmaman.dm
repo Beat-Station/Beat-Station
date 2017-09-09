@@ -6,7 +6,7 @@
 	//language = "Clatter"
 	unarmed_type = /datum/unarmed_attack/punch
 
-	species_traits = list(IS_WHITELISTED, NO_BLOOD, NOTRANSSTING)
+	flags = IS_WHITELISTED | NO_BLOOD | NOTRANSSTING
 	dietflags = DIET_OMNI
 	reagent_tag = PROCESS_ORG
 
@@ -51,12 +51,9 @@
 	var/tank_slot_name = "suit storage"
 
 	switch(assigned_role)
-		if("Scientist","Roboticist")
+		if("Scientist","Geneticist","Roboticist")
 			suit=/obj/item/clothing/suit/space/eva/plasmaman/science
 			helm=/obj/item/clothing/head/helmet/space/eva/plasmaman/science
-		if("Geneticist")
-			suit=/obj/item/clothing/suit/space/eva/plasmaman/science/geneticist
-			helm=/obj/item/clothing/head/helmet/space/eva/plasmaman/science/geneticist
 		if("Research Director")
 			suit=/obj/item/clothing/suit/space/eva/plasmaman/science/rd
 			helm=/obj/item/clothing/head/helmet/space/eva/plasmaman/science/rd
@@ -89,13 +86,10 @@
 		if("Captain", "Blueshield")
 			suit=/obj/item/clothing/suit/space/eva/plasmaman/security/captain
 			helm=/obj/item/clothing/head/helmet/space/eva/plasmaman/security/captain
-		if("Head of Personnel")
+		if("Head of Personnel", "Nanotrasen Representative")
 			suit=/obj/item/clothing/suit/space/eva/plasmaman/security/hop
 			helm=/obj/item/clothing/head/helmet/space/eva/plasmaman/security/hop
-		if("Nanotrasen Representative")
-			suit = /obj/item/clothing/suit/space/eva/plasmaman/nt_rep
-			helm = /obj/item/clothing/head/helmet/space/eva/plasmaman/nt_rep
-		if("Medical Doctor","Brig Physician","Virologist")
+		if("Medical Doctor","Brig Physician")
 			suit=/obj/item/clothing/suit/space/eva/plasmaman/medical
 			helm=/obj/item/clothing/head/helmet/space/eva/plasmaman/medical
 			H.equip_or_collect(new /obj/item/device/flashlight/pen(H), slot_in_backpack)
@@ -108,12 +102,6 @@
 		if("Chief Medical Officer")
 			suit=/obj/item/clothing/suit/space/eva/plasmaman/medical/cmo
 			helm=/obj/item/clothing/head/helmet/space/eva/plasmaman/medical/cmo
-		if("Coroner")
-			suit=/obj/item/clothing/suit/space/eva/plasmaman/medical/coroner
-			helm=/obj/item/clothing/head/helmet/space/eva/plasmaman/medical/coroner
-		if("Virologist")
-			suit=/obj/item/clothing/suit/space/eva/plasmaman/medical/virologist
-			helm=/obj/item/clothing/head/helmet/space/eva/plasmaman/medical/virologist
 		if("Bartender", "Chef")
 			suit=/obj/item/clothing/suit/space/eva/plasmaman/service
 			helm=/obj/item/clothing/head/helmet/space/eva/plasmaman/service
@@ -168,7 +156,8 @@
 
 	if(Toxins_pp < safe_plasma_min)
 		if(prob(20))
-			H.emote("gasp")
+			spawn(0)
+				H.emote("gasp")
 		if(Toxins_pp > 0)
 			var/ratio = safe_plasma_min/Toxins_pp
 			H.adjustOxyLoss(min(5*ratio, HUMAN_MAX_OXYLOSS)) // Don't fuck them up too fast (space only does HUMAN_MAX_OXYLOSS after all!)
@@ -199,7 +188,8 @@
 			if(world.time - H.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 				H.adjustOxyLoss(8)
 		if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
-			H.emote("cough")
+			spawn(0)
+				H.emote("cough")
 
 	else
 		H.co2overloadtime = 0
@@ -213,7 +203,8 @@
 					H.AdjustSleeping(8, bound_lower = 0, bound_upper = 10)
 			else if(SA_pp > 0.15)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 				if(prob(20))
-					H.emote(pick("giggle", "laugh"))
+					spawn(0)
+						H.emote(pick("giggle", "laugh"))
 			SA.moles = 0
 
 	if(abs(310.15 - breath.temperature) > 50) // Hot air hurts :(

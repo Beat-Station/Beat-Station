@@ -1,8 +1,11 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /mob/living/carbon/alien/humanoid
 	oxygen_alert = 0
 	toxins_alert = 0
 	fire_alert = 0
 	pass_flags = PASSTABLE
+	var/temperature_alert = 0
 
 
 /mob/living/carbon/alien/humanoid/Life()
@@ -19,13 +22,15 @@
 	if(disabilities & COUGHING)
 		if((prob(5) && paralysis <= 1))
 			drop_item()
-			emote("cough")
-			return
+			spawn( 0 )
+				emote("cough")
+				return
 	if(disabilities & TOURETTES)
 		if((prob(10) && paralysis <= 1))
 			Stun(10)
-			emote("twitch")
-			return
+			spawn( 0 )
+				emote("twitch")
+				return
 	if(disabilities & NERVOUS)
 		if(prob(10))
 			stuttering = max(10, stuttering)
@@ -63,7 +68,8 @@
 		//UNCONSCIOUS. NO-ONE IS HOME
 		if((getOxyLoss() > 50) || (config.health_threshold_crit >= health))
 			if(health <= 20 && prob(1))
-				emote("gasp")
+				spawn(0)
+					emote("gasp")
 			if(!reagents.has_reagent("epinephrine"))
 				adjustOxyLoss(1)
 			Paralyse(3)
@@ -75,7 +81,8 @@
 			blinded = 1
 			stat = UNCONSCIOUS
 			if(prob(10) && health)
-				emote("hiss")
+				spawn(0)
+					emote("hiss")
 		//CONSCIOUS
 		else
 			stat = CONSCIOUS

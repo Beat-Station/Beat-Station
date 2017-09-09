@@ -7,11 +7,17 @@
 
  //No longer needed, but I'll leave it here incase we plan to re-use it.
 /mob/living/silicon/robot/movement_delay()
-	. = ..()
-	. += speed
+	var/tally = 0 //Incase I need to add stuff other than "speed" later
+
+	tally = speed
+
 	if(module_active && istype(module_active,/obj/item/borg/combat/mobility))
-		. -= 3
-	. += config.robot_delay
+		tally-=3
+
+	return tally+config.robot_delay
+
+/mob/living/silicon/robot/Move()
+	..()
 
 /mob/living/silicon/robot/mob_negates_gravity()
 	return magpulse

@@ -37,10 +37,10 @@
 // handles revival through other means than cloning or adminbus (defib, IPC repair)
 /mob/living/proc/update_revive(updating = TRUE)
 	if(stat != DEAD)
-		return 0
+		return
 	if(!can_be_revived())
-		return 0
-	add_logs(src, null, "came back to life at [atom_loc_line(get_turf(src))]", admin=0, print_attack_log = 0)
+		return
+	add_logs(src, null, "came back to life at [atom_loc_line(get_turf(src))]", admin=1, print_attack_log = 0)
 	stat = CONSCIOUS
 	dead_mob_list -= src
 	living_mob_list += src
@@ -49,11 +49,3 @@
 		update_canmove()
 	// update_blind_effects()
 	updatehealth()
-
-	for(var/s in ownedSoullinks)
-		var/datum/soullink/S = s
-		S.ownerRevives(src)
-	for(var/s in sharedSoullinks)
-		var/datum/soullink/S = s
-		S.sharerRevives(src)
-	return 1

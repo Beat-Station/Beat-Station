@@ -9,7 +9,7 @@
 	item_state = "lighter-g"
 	var/icon_on = "lighter-g-on"
 	var/icon_off = "lighter-g"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	throwforce = 4
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
@@ -35,7 +35,7 @@
 	if(user.r_hand == src || user.l_hand == src || isrobot(user))
 		if(!lit)
 			lit = 1
-			w_class = WEIGHT_CLASS_BULKY
+			w_class = 4
 			icon_state = icon_on
 			item_state = icon_on
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
@@ -59,7 +59,7 @@
 			processing_objects.Add(src)
 		else
 			lit = 0
-			w_class = WEIGHT_CLASS_TINY
+			w_class = 1
 			icon_state = icon_off
 			item_state = icon_off
 			if(istype(src, /obj/item/weapon/lighter/zippo) )
@@ -147,7 +147,7 @@
 	icon_state = "match_unlit"
 	var/lit = 0
 	var/smoketime = 5
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	origin_tech = "materials=1"
 	attack_verb = list("burnt", "singed")
 

@@ -43,7 +43,9 @@
 
 
 /mob/living/carbon/human/proc/remake_hud() //used for preference changes mid-round; can't change hud icons without remaking the hud.
-	QDEL_NULL(hud_used)
+	if(hud_used)
+		qdel(hud_used)
+		hud_used = null
 	create_mob_hud()
 	if(hud_used)
 		hud_used.show_hud(hud_used.hud_version)
@@ -58,13 +60,7 @@
 	var/obj/screen/using
 	var/obj/screen/inventory/inv_box
 
-	using = new /obj/screen/craft
-	using.icon = ui_style
-	using.color = ui_color
-	using.alpha = ui_alpha
-	static_inventory += using
-
-	using = new /obj/screen/language_menu
+	using = new /obj/screen/inventory/craft
 	using.icon = ui_style
 	using.color = ui_color
 	using.alpha = ui_alpha
@@ -85,7 +81,7 @@
 
 	using = new /obj/screen/mov_intent()
 	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == MOVE_INTENT_RUN ? "running" : "walking")
+	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
 	using.screen_loc = ui_movi
 	using.color = ui_color
 	using.alpha = ui_alpha

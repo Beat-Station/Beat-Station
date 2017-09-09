@@ -53,21 +53,34 @@
 	if(mymob.hud_used == src)
 		mymob.hud_used = null
 
-	QDEL_NULL(hide_actions_toggle)
+	qdel(hide_actions_toggle)
+	hide_actions_toggle = null
 
 	QDEL_NULL(module_store_icon)
 
-	QDEL_LIST(static_inventory)
+	if(static_inventory.len)
+		for(var/thing in static_inventory)
+			qdel(thing)
+		static_inventory.Cut()
 
 	inv_slots.Cut()
 	action_intent = null
 	move_intent = null
 
-	QDEL_LIST(toggleable_inventory)
+	if(toggleable_inventory.len)
+		for(var/thing in toggleable_inventory)
+			qdel(thing)
+		toggleable_inventory.Cut()
 
-	QDEL_LIST(hotkeybuttons)
+	if(hotkeybuttons.len)
+		for(var/thing in hotkeybuttons)
+			qdel(thing)
+		hotkeybuttons.Cut()
 
-	QDEL_LIST(infodisplay)
+	if(infodisplay.len)
+		for(var/thing in infodisplay)
+			qdel(thing)
+		infodisplay.Cut()
 
 	//clear mob refs to screen objects
 	mymob.throw_icon = null
@@ -101,15 +114,6 @@
 		display_hud_version = hud_version + 1
 	if(display_hud_version > HUD_VERSIONS)	//If the requested version number is greater than the available versions, reset back to the first version
 		display_hud_version = 1
-
-	if(mymob.client.view < world.view)
-		if(mymob.client.view < ARBITRARY_VIEWRANGE_NOHUD)
-			to_chat(mymob, "<span class='notice'>HUD is unavailable with this view range.</span>")
-			display_hud_version = HUD_STYLE_NOHUD
-		else
-			if(display_hud_version == HUD_STYLE_STANDARD)
-				to_chat(mymob, "<span class='notice'>Standard HUD mode is unavailable with a smaller-than-normal view range.</span>")
-				display_hud_version = HUD_STYLE_REDUCED
 
 	switch(display_hud_version)
 		if(HUD_STYLE_STANDARD)	//Default HUD

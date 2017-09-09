@@ -22,6 +22,7 @@
 /obj/structure/transit_tube_pod/Destroy()
 	for(var/atom/movable/AM in contents)
 		AM.forceMove(get_turf(src))
+
 	return ..()
 
 /obj/structure/transit_tube_pod/Process_Spacemove()

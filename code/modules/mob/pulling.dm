@@ -15,11 +15,7 @@
 				return
 			stop_pulling()
 
-		if(AM.pulledby)
-			visible_message("<span class='danger'>[src] has pulled [AM] from [AM.pulledby]'s grip.</span>")
-			AM.pulledby.stop_pulling() //an object can't be pulled by two mobs at once.
-
-		pulling = AM
+		src.pulling = AM
 		AM.pulledby = src
 		if(pullin)
 			pullin.update_icon(src)

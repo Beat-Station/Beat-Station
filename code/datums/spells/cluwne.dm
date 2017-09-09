@@ -13,11 +13,7 @@
 
 /mob/living/carbon/human/proc/makeCluwne()
 	to_chat(src, "<span class='danger'>You feel funny.</span>")
-	if(!get_int_organ(/obj/item/organ/internal/brain/cluwne))
-		var/obj/item/organ/internal/brain/cluwne/idiot_brain = new
-		idiot_brain.insert(src, make_cluwne = 0)
-		idiot_brain.dna = dna.Clone()
-	setBrainLoss(80)
+	adjustBrainLoss(80)
 	nutrition = 9000
 	overeatduration = 9000
 	Confused(30)
@@ -29,7 +25,8 @@
 	mutations.Add(NERVOUS)
 	dna.SetSEState(NERVOUSBLOCK, 1, 1)
 	genemutcheck(src, NERVOUSBLOCK, null, MUTCHK_FORCED)
-	rename_character(real_name, "cluwne")
+
+	animate_clownspell(src)
 
 	unEquip(w_uniform, 1)
 	unEquip(shoes, 1)
@@ -40,6 +37,7 @@
 	equip_to_slot_if_possible(new /obj/item/clothing/gloves/cursedclown, slot_gloves, 1, 1, 1)
 	equip_to_slot_if_possible(new /obj/item/clothing/mask/cursedclown, slot_wear_mask, 1, 1, 1)
 	equip_to_slot_if_possible(new /obj/item/clothing/shoes/cursedclown, slot_shoes, 1, 1, 1)
+	real_name = "cluwne"
 
 /mob/living/carbon/human/proc/makeAntiCluwne()
 	to_chat(src, "<span class='danger'>You don't feel very funny.</span>")
@@ -53,7 +51,8 @@
 
 	var/obj/item/organ/internal/honktumor/cursed/tumor = get_int_organ(/obj/item/organ/internal/honktumor/cursed)
 	if(tumor)
-		tumor.remove(src)
+		tumor.remove(src, clean_remove = 1)
+		qdel(tumor)
 	else
 		mutations.Remove(CLUMSY)
 		mutations.Remove(COMICBLOCK)
@@ -64,6 +63,8 @@
 	mutations.Remove(NERVOUS)
 	dna.SetSEState(NERVOUSBLOCK, 0)
 	genemutcheck(src, NERVOUSBLOCK, null, MUTCHK_FORCED)
+
+	animate_clownspell(src)
 
 	var/obj/item/clothing/under/U = w_uniform
 	unEquip(w_uniform, 1)

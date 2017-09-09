@@ -9,18 +9,14 @@
 	var/atom/attached_to
 	color = "#ff0000"
 	var/text_size = 4
-	var/started = FALSE
+	var/started = 0
 	invisibility = INVISIBILITY_OBSERVER
-	anchored = TRUE
-	layer = GHOST_LAYER
+	anchored = 1
+	layer = 5
 
 /obj/effect/countdown/New(atom/A)
 	. = ..()
 	attach(A)
-
-/obj/effect/countdown/examine(mob/user)
-	. = ..()
-	to_chat(user, "This countdown is displaying: [displayed_text]")
 
 /obj/effect/countdown/proc/attach(atom/A)
 	attached_to = A
@@ -29,13 +25,13 @@
 /obj/effect/countdown/proc/start()
 	if(!started)
 		fast_processing += src
-		started = TRUE
+		started = 1
 
 /obj/effect/countdown/proc/stop()
 	if(started)
 		maptext = null
 		fast_processing -= src
-		started = FALSE
+		started = 0
 
 /obj/effect/countdown/proc/get_value()
 	// Get the value from our atom
@@ -59,19 +55,6 @@
 	attached_to = null
 	fast_processing -= src
 	return ..()
-
-/obj/effect/countdown/ex_act(severity) //immune to explosions
-	return
-
-/obj/effect/countdown/syndicatebomb
-	name = "syndicate bomb countdown"
-
-/obj/effect/countdown/syndicatebomb/get_value()
-	var/obj/machinery/syndicatebomb/S = attached_to
-	if(!istype(S))
-		return
-	else if(S.active)
-		return S.seconds_remaining()
 
 /obj/effect/countdown/clonepod
 	name = "cloning pod countdown"

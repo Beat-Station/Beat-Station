@@ -167,8 +167,9 @@
 	mode = BOT_CLEANING
 	spawn(50)
 		if(mode == BOT_CLEANING)
-			QDEL_NULL(target)
+			qdel(target)
 			anchored = 0
+			target = null
 		mode = BOT_IDLE
 		icon_state = "cleanbot[on]"
 

@@ -16,7 +16,7 @@
 	animation.master = src
 
 //	flick("gibbed-m", animation)
-	gibs(loc, dna)
+	gibs(loc, viruses, dna)
 	dead_mob_list -= src
 	if(client)
 		respawnable_list += src

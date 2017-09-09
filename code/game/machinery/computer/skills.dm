@@ -111,7 +111,8 @@
 					for(var/datum/data/record/R in data_core.medical)
 						if(R.fields["name"] == active1.fields["name"] && R.fields["id"] == active1.fields["id"])
 							qdel(R)
-					QDEL_NULL(active1)
+					qdel(active1)
+					active1 = null
 				screen = SKILL_DATA_R_LIST
 			if("rank")
 				if(active1)

@@ -42,7 +42,9 @@
 
 	H.set_species(H.species.primitive_form)
 
-	QDEL_NULL(H.hud_used)
+	if(H.hud_used)
+		qdel(H.hud_used)
+		H.hud_used = null
 
 	if(H.client)
 		H.hud_used = new /datum/hud/monkey(H, ui_style2icon(H.client.prefs.UI_style), H.client.prefs.UI_style_color, H.client.prefs.UI_style_alpha)
@@ -87,7 +89,9 @@
 	H.real_name = H.dna.real_name
 	H.name = H.real_name
 
-	QDEL_NULL(H.hud_used)
+	if(H.hud_used)
+		qdel(H.hud_used)
+		H.hud_used = null
 
 	if(H.client)
 		H.hud_used = new /datum/hud/human(H, ui_style2icon(H.client.prefs.UI_style), H.client.prefs.UI_style_color, H.client.prefs.UI_style_alpha)

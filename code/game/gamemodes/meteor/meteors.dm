@@ -171,18 +171,14 @@
 
 /obj/effect/meteor/proc/meteor_effect(var/sound=1)
 	if(sound)
-		var/sound/meteor_sound = sound(meteorsound)
-		var/random_frequency = get_rand_frequency()
-
-		for(var/P in player_list)
-			var/mob/M = P
+		for(var/mob/M in player_list)
 			var/turf/T = get_turf(M)
 			if(!T || T.z != src.z)
 				continue
 			var/dist = get_dist(M.loc, src.loc)
 			if(prob(50))
 				shake_camera(M, dist > 20 ? 3 : 5, dist > 20 ? 1 : 3)
-			M.playsound_local(src.loc, null, 50, 1, random_frequency, 10, S = meteor_sound)
+			M.playsound_local(src.loc, meteorsound, 50, 1, get_rand_frequency(), 10)
 
 ///////////////////////
 //Meteor types

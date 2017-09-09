@@ -4,7 +4,7 @@
 	icon_state = "muzzle"
 	item_state = "muzzle"
 	flags_cover = MASKCOVERSMOUTH
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	gas_transfer_coefficient = 0.90
 	put_on_delay = 20
 	var/resist_time = 0 //deciseconds of how long you need to gnaw to get rid of the gag, 0 to make it impossible to remove
@@ -24,27 +24,28 @@
 	name = "gag"
 	desc = "Stick this in their mouth to stop the noise."
 	icon_state = "gag"
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 
 /obj/item/clothing/mask/muzzle/tapegag
 	name = "tape gag"
 	desc = "MHPMHHH!"
 	icon_state = "tapegag"
 	item_state = null
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	resist_time = 150
 	mute = 0
-	species_fit = list("Vox", "Unathi", "Tajaran", "Vulpkanin", "Grey")
+	species_fit = list("Vox", "Unathi", "Tajaran", "Vulpkanin")
 	sprite_sheets = list(
 		"Vox" = 'icons/mob/species/vox/mask.dmi',
 		"Unathi" = 'icons/mob/species/unathi/mask.dmi',
 		"Tajaran" = 'icons/mob/species/tajaran/mask.dmi',
-		"Vulpkanin" = 'icons/mob/species/vulpkanin/mask.dmi',
-		"Grey" = 'icons/mob/species/grey/mask.dmi'
+		"Vulpkanin" = 'icons/mob/species/vulpkanin/mask.dmi'
 		)
 
 /obj/item/clothing/mask/muzzle/tapegag/dropped(mob/living/carbon/human/user)
 	var/atom/movable/R = new /obj/item/trash/tapetrash
+	if(user.species.bodyflags & HAS_FUR)
+		R.desc += " Is that...fur?"
 	var/turf/T = get_turf(src)
 	R.loc = T
 	transfer_fingerprints_to(R)
@@ -58,19 +59,18 @@
 	desc = "A sterile mask designed to help prevent the spread of diseases."
 	icon_state = "sterile"
 	item_state = "sterile"
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	flags_cover = MASKCOVERSMOUTH
 	gas_transfer_coefficient = 0.90
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 25, rad = 0)
 	actions_types = list(/datum/action/item_action/adjust)
-	species_fit = list("Vox", "Unathi", "Tajaran", "Vulpkanin", "Grey")
+	species_fit = list("Vox", "Unathi", "Tajaran", "Vulpkanin")
 	sprite_sheets = list(
 		"Vox" = 'icons/mob/species/vox/mask.dmi',
 		"Unathi" = 'icons/mob/species/unathi/mask.dmi',
 		"Tajaran" = 'icons/mob/species/tajaran/mask.dmi',
-		"Vulpkanin" = 'icons/mob/species/vulpkanin/mask.dmi',
-		"Grey" = 'icons/mob/species/grey/mask.dmi'
+		"Vulpkanin" = 'icons/mob/species/vulpkanin/mask.dmi'
 		)
 
 
@@ -83,13 +83,12 @@
 	icon_state = "fake-moustache"
 	flags_inv = HIDEFACE
 	actions_types = list(/datum/action/item_action/pontificate)
-	species_fit = list("Vox", "Unathi", "Tajaran", "Vulpkanin", "Grey")
+	species_fit = list("Vox", "Unathi", "Tajaran", "Vulpkanin")
 	sprite_sheets = list(
 		"Vox" = 'icons/mob/species/vox/mask.dmi',
 		"Unathi" = 'icons/mob/species/unathi/mask.dmi',
 		"Tajaran" = 'icons/mob/species/tajaran/mask.dmi',
-		"Vulpkanin" = 'icons/mob/species/vulpkanin/mask.dmi',
-		"Grey" = 'icons/mob/species/grey/mask.dmi'
+		"Vulpkanin" = 'icons/mob/species/vulpkanin/mask.dmi'
 		)
 
 /obj/item/clothing/mask/fakemoustache/attack_self(mob/user)
@@ -110,7 +109,7 @@
 	icon_state = "blueneckscarf"
 	item_state = "blueneckscarf"
 	flags_cover = MASKCOVERSMOUTH
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	gas_transfer_coefficient = 0.90
 
 /obj/item/clothing/mask/redscarf
@@ -119,7 +118,7 @@
 	icon_state = "redwhite_scarf"
 	item_state = "redwhite_scarf"
 	flags_cover = MASKCOVERSMOUTH
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	gas_transfer_coefficient = 0.90
 
 /obj/item/clothing/mask/greenscarf
@@ -128,7 +127,7 @@
 	icon_state = "green_scarf"
 	item_state = "green_scarf"
 	flags_cover = MASKCOVERSMOUTH
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	gas_transfer_coefficient = 0.90
 
 /obj/item/clothing/mask/ninjascarf
@@ -137,7 +136,7 @@
 	icon_state = "ninja_scarf"
 	item_state = "ninja_scarf"
 	flags_cover = MASKCOVERSMOUTH
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	gas_transfer_coefficient = 0.90
 
 
@@ -148,7 +147,7 @@
 	item_state = "pig"
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 
 
 /obj/item/clothing/mask/horsehead
@@ -158,7 +157,7 @@
 	item_state = "horsehead"
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	var/voicechange = 0
 	var/temporaryname = " the Horse"
 	var/originalname = ""
@@ -248,7 +247,7 @@
 	icon_state = "fawkes"
 	item_state = "fawkes"
 	flags_inv = HIDEFACE
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 
 /obj/item/clothing/mask/gas/clown_hat/pennywise
 	name = "Pennywise Mask"
@@ -264,17 +263,16 @@
 	desc = "A colorful bandana."
 	flags_inv = HIDEFACE
 	flags_cover = MASKCOVERSMOUTH
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	slot_flags = SLOT_MASK
 	adjusted_flags = SLOT_HEAD
 	icon_state = "bandbotany"
-	species_fit = list("Vox", "Unathi", "Tajaran", "Vulpkanin", "Grey")
+	species_fit = list("Vox", "Unathi", "Tajaran", "Vulpkanin")
 	sprite_sheets = list(
 		"Vox" = 'icons/mob/species/vox/mask.dmi',
 		"Unathi" = 'icons/mob/species/unathi/mask.dmi',
 		"Tajaran" = 'icons/mob/species/tajaran/mask.dmi',
-		"Vulpkanin" = 'icons/mob/species/vulpkanin/mask.dmi',
-		"Grey" = 'icons/mob/species/grey/mask.dmi'
+		"Vulpkanin" = 'icons/mob/species/vulpkanin/mask.dmi'
 		)
 	actions_types = list(/datum/action/item_action/adjust)
 
@@ -339,7 +337,6 @@
 	icon = 'icons/goonstation/objects/clothing/mask.dmi'
 	icon_state = "cursedclown"
 	item_state = "cclown_hat"
-	unacidable = 1 // HUNKE
 	icon_override = 'icons/goonstation/mob/clothing/mask.dmi'
 	lefthand_file = 'icons/goonstation/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/goonstation/mob/inhands/clothing_righthand.dmi'

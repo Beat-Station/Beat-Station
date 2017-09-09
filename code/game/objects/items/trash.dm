@@ -4,7 +4,7 @@
 //Added by Jack Rost
 /obj/item/trash
 	icon = 'icons/obj/trash.dmi'
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	desc = "This is rubbish."
 	burn_state = FLAMMABLE
 

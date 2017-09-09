@@ -39,6 +39,7 @@
 	var/allow_Metadata = 0				// Metadata is supported.
 	var/popup_admin_pm = 0				//adminPMs to non-admins show in a pop-up 'reply' window when set to 1.
 	var/Ticklag = 0.5
+	var/Tickcomp = 0
 	var/socket_talk	= 0					// use socket_talk to communicate with other processes
 	var/list/resource_urls = null
 	var/antag_hud_allowed = 0      // Ghosts can turn on Antagovision to see a HUD of who is the bad guys this round.
@@ -65,8 +66,6 @@
 	var/round_abandon_penalty_period = 30 MINUTES // Time from round start during which ghosting out is penalized
 
 	var/reactionary_explosions = 0 //If we use reactionary explosions, explosions that react to walls and doors
-
-	var/disable_ooc_emoji = 1
 
 	var/assistantlimit = 0 //enables assistant limiting
 	var/assistantratio = 2 //how many assistants to security members
@@ -100,7 +99,11 @@
 	var/health_threshold_crit = 0
 	var/health_threshold_dead = -100
 
+	var/organ_health_multiplier = 1
+	var/organ_regeneration_multiplier = 1
+
 	var/bones_can_break = 1
+	var/limbs_can_break = 1
 
 	var/revival_pod_plants = 1
 	var/revival_cloning = 1
@@ -146,6 +149,7 @@
 	var/admin_irc = ""
 	var/admin_notify_irc = ""
 	var/cidrandomizer_irc = ""
+	var/python_path = "" //Path to the python executable.  Defaults to "python" on windows and "/usr/bin/env python2" on unix
 
 	var/default_laws = 0 //Controls what laws the AI spawns with.
 
@@ -186,8 +190,6 @@
 	var/max_loadout_points = 5 // How many points can be spent on extra items in character setup
 
 	var/shutdown_on_reboot = 0 // Whether to shut down the world instead of rebooting it
-
-	var/disable_karma = 0 // Disable all karma functions and unlock karma jobs by default
 
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
@@ -447,6 +449,9 @@
 				if("socket_talk")
 					socket_talk = text2num(value)
 
+				if("tickcomp")
+					Tickcomp = 1
+
 				if("allow_antag_hud")
 					config.antag_hud_allowed = 1
 
@@ -501,12 +506,12 @@
 
 				if("python_path")
 					if(value)
-						python_path = value
+						config.python_path = value
 					else
 						if(world.system_type == UNIX)
-							python_path = "/usr/bin/env python2"
+							config.python_path = "/usr/bin/env python2"
 						else //probably windows, if not this should work anyway
-							python_path = "pythonw"
+							config.python_path = "pythonw"
 
 				if("assistant_limit")
 					config.assistantlimit = 1
@@ -591,9 +596,6 @@
 				if("shutdown_shell_command")
 					shutdown_shell_command = value
 
-				if("disable_karma")
-					disable_karma = 1
-
 				else
 					diary << "Unknown setting in configuration: '[name]'"
 
@@ -632,8 +634,14 @@
 					config.slime_delay = value
 				if("animal_delay")
 					config.animal_delay = value
+				if("organ_health_multiplier")
+					config.organ_health_multiplier = value / 100
+				if("organ_regeneration_multiplier")
+					config.organ_regeneration_multiplier = value / 100
 				if("bones_can_break")
 					config.bones_can_break = value
+				if("limbs_can_break")
+					config.limbs_can_break = value
 				if("shuttle_refuel_delay")
 					config.shuttle_refuel_delay     = text2num(value)
 				if("traitor_objectives_amount")
@@ -661,7 +669,6 @@
 
 /datum/configuration/proc/loadsql(filename)  // -- TLE
 	var/list/Lines = file2list(filename)
-	var/db_version = 0
 	for(var/t in Lines)
 		if(!t)	continue
 
@@ -699,18 +706,8 @@
 				sqlfdbkpass = value
 			if("feedback_tableprefix")
 				sqlfdbktableprefix = value
-			if("db_version")
-				db_version = text2num(value)
 			else
 				diary << "Unknown setting in configuration: '[name]'"
-	if(config.sql_enabled && db_version != SQL_VERSION)
-		config.sql_enabled = 0
-		diary << "WARNING: DB_CONFIG DEFINITION MISMATCH!"
-		spawn(60)
-			if(ticker.current_state == GAME_STATE_PREGAME)
-				going = 0
-				spawn(600)
-					to_chat(world, "<span class='alert'>DB_CONFIG MISMATCH, ROUND START DELAYED. <BR>Please check database version for recent upstream changes!</span>")
 
 /datum/configuration/proc/loadoverflowwhitelist(filename)
 	var/list/Lines = file2list(filename)

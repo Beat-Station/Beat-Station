@@ -15,21 +15,19 @@
 	blinded = null
 
 	if(stat != DEAD)
-		//Chemicals in the body
-		handle_chemicals_in_body()
+		//Breathing, if applicable
+		handle_breathing()
 
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
-		//Breathing, if applicable
-		handle_breathing()
+		//Chemicals in the body
+		handle_chemicals_in_body()
 
 		//Random events (vomiting etc)
 		handle_random_events()
 
 		. = 1
-
-	handle_diseases()
 
 	//Handle temperature/pressure differences between body and environment
 	if(environment)
@@ -69,9 +67,6 @@
 	return
 
 /mob/living/proc/handle_chemicals_in_body()
-	return
-
-/mob/living/proc/handle_diseases()
 	return
 
 /mob/living/proc/handle_random_events()

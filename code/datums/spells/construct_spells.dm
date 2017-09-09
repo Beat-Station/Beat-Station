@@ -6,7 +6,7 @@
 	action_background_icon_state = "bg_cult"
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/floor
-	name = "Summon Cult Floor"
+	name = "Floor Construction"
 	desc = "This spell constructs a cult floor"
 	action_icon_state = "floorconstruct"
 	action_background_icon_state = "bg_cult"
@@ -20,7 +20,7 @@
 	centcom_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall
-	name = "Summon Cult Wall"
+	name = "Lesser Construction"
 	desc = "This spell constructs a cult wall"
 	action_icon_state = "lesserconstruct"
 	action_background_icon_state = "bg_cult"
@@ -30,7 +30,7 @@
 	invocation = "none"
 	invocation_type = "none"
 	range = 0
-	summon_type = list(/turf/simulated/wall/cult/artificer) //we don't want artificer-based runed metal farms
+	summon_type = list(/turf/simulated/wall/cult)
 	centcom_cancast = 0 //Stop crashing the server by spawning turfs on transit tiles
 
 /obj/effect/proc_holder/spell/aoe_turf/conjure/wall/reinforced

@@ -51,7 +51,7 @@
 	desc = "This is a one-use permit that allows the user to officially declare a built room as new addition to the station."
 	fluffnotice = "Nanotrasen Engineering requires all on-station construction projects to be approved by a head of staff, as detailed in Nanotrasen Company Regulation 512-C (Mid-Shift Modifications to Company Property). \
 						By submitting this form, you accept any fines, fees, or personal injury/death that may occur during construction."
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 
 /obj/item/areaeditor/permit/attack_self(mob/user)
 	. = ..()
@@ -76,7 +76,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "blueprints"
 	fluffnotice = "Property of Nanotrasen. For heads of staff only. Store in high-secure storage."
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	var/list/showing = list()
 	var/client/viewing
 

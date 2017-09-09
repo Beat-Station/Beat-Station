@@ -9,6 +9,9 @@ var/global/datum/controller/process/npcai/npcai_master
 	schedule_interval = 20 // every 2 seconds
 	start_delay = 16
 	log_startup_progress("NPC ticker starting up.")
+	if(npcai_master)
+		qdel(npcai_master) //only one mob master
+	npcai_master = src
 
 /datum/controller/process/npcai/started()
 	..()
@@ -56,6 +59,3 @@ var/global/datum/controller/process/npcai/npcai_master
 			snpc_list -= M
 
 	current_cycle++
-
-
-DECLARE_GLOBAL_CONTROLLER(npcai, npcai_master)

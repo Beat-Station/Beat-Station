@@ -1,3 +1,4 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 #define DOOR_OPEN_LAYER 2.7		//Under all objects if opened. 2.7 due to tables being at 2.6
 #define DOOR_CLOSED_LAYER 3.1	//Above most items if closed
 
@@ -277,9 +278,9 @@
 			L.Weaken(5)
 		else //for simple_animals & borgs
 			L.adjustBruteLoss(DOOR_CRUSH_DAMAGE)
-		var/turf/location = get_turf(src)
-		L.add_splatter_floor(location)
-
+		var/turf/simulated/location = loc
+		if(istype(location, /turf/simulated)) //add_blood doesn't work for borgs/xenos, but add_blood_floor does.
+			location.add_blood_floor(L)
 
 /obj/machinery/door/proc/requiresID()
 	return 1

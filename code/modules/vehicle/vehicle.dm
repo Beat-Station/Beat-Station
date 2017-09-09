@@ -61,7 +61,7 @@
 	desc = "A small grey key."
 	icon = 'icons/obj/vehicles.dmi'
 	icon_state = "key"
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 
 
 //BUCKLE HOOKS

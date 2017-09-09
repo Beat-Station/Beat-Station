@@ -15,7 +15,7 @@
 	name = "card"
 	desc = "A card."
 	icon = 'icons/obj/card.dmi'
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	var/associated_account_number = 0
 
 	var/list/files = list(  )
@@ -299,7 +299,7 @@
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
 	var/list/initial_access = list(access_maint_tunnels, access_syndicate, access_external_airlocks)
-	origin_tech = "syndicate=1"
+	origin_tech = "syndicate=3"
 	var/registered_user = null
 	untrackable = 1
 
@@ -605,12 +605,6 @@
 /obj/item/weapon/card/id/prisoner/seven
 	name = "Prisoner #13-007"
 	registered_name = "Prisoner #13-007"
-
-/obj/item/weapon/card/id/prisoner/random
-/obj/item/weapon/card/id/prisoner/random/New()
-	var/random_number = "#[rand(0, 99)]-[rand(0, 999)]"
-	name = "Prisoner [random_number]"
-	registered_name = name
 
 /obj/item/weapon/card/id/salvage_captain
 	name = "Captain's ID"

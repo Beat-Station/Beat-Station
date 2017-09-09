@@ -82,8 +82,9 @@
 	playsound(loc, 'sound/effects/splat.ogg', 25, 1)
 	H.forceMove(loc)
 	H.emote("scream")
-	if(ishuman(H))
-		H.add_splatter_floor()
+	if(istype(H, /mob/living/carbon/human)) //So you don't get human blood when you spike a giant spidere
+		var/turf/simulated/pos = get_turf(H)
+		pos.add_blood_floor(H)
 	H.adjustBruteLoss(30)
 	H.buckled = src
 	H.dir = 2

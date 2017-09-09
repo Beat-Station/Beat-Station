@@ -46,6 +46,13 @@ var/list/advance_cures = 	list(
  */
 
 /datum/disease/advance/New(var/process = 1, var/datum/disease/advance/D)
+
+	// Setup our dictionary if it hasn't already.
+	if(!dictionary_symptoms.len)
+		for(var/symp in list_symptoms)
+			var/datum/symptom/S = new symp
+			dictionary_symptoms[S.id] = symp
+
 	if(!istype(D))
 		D = null
 	// Generate symptoms if we weren't given any.
@@ -89,7 +96,7 @@ var/list/advance_cures = 	list(
 	if(!(istype(D, /datum/disease/advance)))
 		return 0
 
-	if(GetDiseaseID() != D.GetDiseaseID())
+	if(src.GetDiseaseID() != D.GetDiseaseID())
 		return 0
 	return 1
 
@@ -114,7 +121,7 @@ var/list/advance_cures = 	list(
 
 // Mix the symptoms of two diseases (the src and the argument)
 /datum/disease/advance/proc/Mix(datum/disease/advance/D)
-	if(!(IsSame(D)))
+	if(!(src.IsSame(D)))
 		var/list/possible_symptoms = shuffle(D.symptoms)
 		for(var/datum/symptom/S in possible_symptoms)
 			AddSymptom(new S.type)
@@ -154,6 +161,7 @@ var/list/advance_cures = 	list(
 	return generated
 
 /datum/disease/advance/proc/Refresh(new_name = 0)
+//	to_chat(world, "[src.name] \ref[src] - REFRESH!")
 	var/list/properties = GenerateProperties()
 	AssignProperties(properties)
 	id = null
@@ -394,7 +402,7 @@ var/list/advance_cures = 	list(
 		D.AssignName(new_name)
 		D.Refresh()
 
-		for(var/datum/disease/advance/AD in active_diseases)
+		for(var/datum/disease/advance/AD in disease_master.processing)
 			AD.Refresh()
 
 		for(var/mob/living/carbon/human/H in shuffle(living_mob_list))
@@ -409,6 +417,12 @@ var/list/advance_cures = 	list(
 			name_symptoms += S.name
 		message_admins("[key_name_admin(user)] has triggered a custom virus outbreak of [D.name]! It has these symptoms: [english_list(name_symptoms)]")
 
+/*
+/mob/verb/test()
+
+	for(var/datum/disease/D in disease_master.processing)
+		to_chat(src, "<a href='?_src_=vars;Vars=[D.UID()]'>[D.name] - [D.holder]</a>")
+*/
 
 
 /datum/disease/advance/proc/totalStageSpeed()

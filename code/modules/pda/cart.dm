@@ -4,7 +4,7 @@
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "cart"
 	item_state = "electronic"
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 
 	var/obj/item/radio/integrated/radio = null
 
@@ -25,8 +25,12 @@
 
 /obj/item/weapon/cartridge/Destroy()
 	QDEL_NULL(radio)
-	QDEL_LIST(programs)
-	QDEL_LIST(messenger_plugins)
+	for(var/A in programs)
+		qdel(A)
+	programs.Cut()
+	for(var/A in messenger_plugins)
+		qdel(A)
+	messenger_plugins.Cut()
 	return ..()
 
 /obj/item/weapon/cartridge/proc/update_programs(obj/item/device/pda/pda)

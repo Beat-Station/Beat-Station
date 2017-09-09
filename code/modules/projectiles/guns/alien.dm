@@ -3,7 +3,7 @@
 	desc = "A vicious alien projectile weapon. Parts of it quiver gelatinously, as though the thing is insectile and alive."
 	icon_state = "spikethrower"
 	item_state = "spikethrower"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	fire_sound_text = "a strange noise"
 	mag_type = /obj/item/ammo_box/magazine/internal/spikethrower
 	burst_size = 2
@@ -49,8 +49,10 @@
 	name = "alloy spike"
 	desc = "A broadhead spike made out of a weird silvery metal."
 	projectile_type = /obj/item/projectile/bullet/spike
+	sharp = 1
+	edge = 0
 	throwforce = 5
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	caliber = "spike"
 	icon_state = "bolt"
 	fire_sound = 'sound/weapons/bladeslice.ogg'
@@ -66,7 +68,7 @@
 /obj/item/projectile/bullet/spike/on_hit(atom/target, blocked = 0)
 	if((blocked != 100) && istype(target, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = target
-		H.bleed(50)
+		H.drip(500)
 	..()
 
 //This gun only functions for armalis. The on-sprite is too huge to render properly on other sprites.
@@ -99,5 +101,6 @@
 	flag = "bullet"
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 
+	embed = 0
 	weaken = 5
 	stun = 5

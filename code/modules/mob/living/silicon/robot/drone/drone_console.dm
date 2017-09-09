@@ -53,7 +53,7 @@
 	if(..())
 		return
 
-	if(!allowed(usr) && !usr.can_admin_interact())
+	if(!allowed(usr))
 		to_chat(usr, "<span class='warning'>Access denied.</span>")
 		return
 

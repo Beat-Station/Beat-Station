@@ -440,7 +440,8 @@ steam.start() -- spawns the effect
 	var/obj/chemholder
 
 	Destroy()
-		QDEL_NULL(chemholder)
+		qdel(chemholder)
+		chemholder = null
 		return ..()
 
 	New()

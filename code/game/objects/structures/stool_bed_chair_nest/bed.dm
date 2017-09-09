@@ -17,7 +17,6 @@
 	burntime = 30
 	buildstackamount = 2
 	var/movable = 0 // For mobility checks
-	buckle_offset = -6
 
 /obj/structure/stool/bed/MouseDrop(atom/over_object)
 	..(over_object, skip_fucking_stool_shit = 1)
@@ -37,7 +36,6 @@
 	anchored = 0
 	buildstackamount = 10
 	buildstacktype = /obj/item/stack/sheet/wood
-	buckle_offset = 0
 
 /obj/structure/stool/bed/dogbed/ian
 	name = "Ian's bed"
@@ -95,7 +93,7 @@
 	desc = "A collapsed roller bed that can be carried around."
 	icon = 'icons/obj/rollerbed.dmi'
 	icon_state = "folded"
-	w_class = WEIGHT_CLASS_BULKY // Can't be put in backpacks.
+	w_class = 4 // Can't be put in backpacks.
 
 /obj/item/roller/attack_self(mob/user)
 	var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
@@ -141,4 +139,5 @@
 	to_chat(user, "<span class='notice'>You deploy the roller bed.</span>")
 	var/obj/structure/stool/bed/roller/R = new /obj/structure/stool/bed/roller(user.loc)
 	R.add_fingerprint(user)
-	QDEL_NULL(held)
+	qdel(held)
+	held = null

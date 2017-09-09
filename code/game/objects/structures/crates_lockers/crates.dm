@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+
 /obj/structure/closet/crate
 	name = "crate"
 	desc = "A rectangular steel crate."
@@ -100,9 +102,6 @@
 							L[tmpname] = R
 					var/desc = input("Please select a telepad.", "RCS") in L
 					E.pad = L[desc]
-					if(!Adjacent(user))
-						to_chat(user, "<span class='notice'>Unable to teleport, too far from crate.</span>")
-						return
 					playsound(E.loc, E.usesound, 50, 1)
 					to_chat(user, "<span class='notice'>Teleporting [src.name]...</span>")
 					E.teleporting = 1
@@ -110,23 +109,17 @@
 						E.teleporting = 0
 						return
 					E.teleporting = 0
-					if(!(E.rcell && E.rcell.use(E.chargecost)))
-						to_chat(user, "<span class='notice'>Unable to teleport, insufficient charge.</span>")
-						return
 					var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 					s.set_up(5, 1, src)
 					s.start()
 					do_teleport(src, E.pad, 0)
+					E.rcell.use(E.chargecost)
 					to_chat(user, "<span class='notice'>Teleport successful. [round(E.rcell.charge/E.chargecost)] charge\s left.</span>")
 					return
-
 			else
 				E.rand_x = rand(50,200)
 				E.rand_y = rand(50,200)
 				var/L = locate(E.rand_x, E.rand_y, 6)
-				if(!Adjacent(user))
-					to_chat(user, "<span class='notice'>Unable to teleport, too far from crate.</span>")
-					return
 				playsound(E.loc, E.usesound, 50, 1)
 				to_chat(user, "<span class='notice'>Teleporting [src.name]...</span>")
 				E.teleporting = 1
@@ -134,13 +127,11 @@
 					E.teleporting = 0
 					return
 				E.teleporting = 0
-				if(!(E.rcell && E.rcell.use(E.chargecost)))
-					to_chat(user, "<span class='notice'>Unable to teleport, insufficient charge.</span>")
-					return
 				var/datum/effect/system/spark_spread/s = new /datum/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
 				do_teleport(src, L)
+				E.rcell.use(E.chargecost)
 				to_chat(user, "<span class='notice'>Teleport successful. [round(E.rcell.charge/E.chargecost)] charge\s left.</span>")
 				return
 		else
@@ -430,41 +421,12 @@
 		return newgas
 
 
-/obj/structure/closet/crate/can
-	desc = "A large can, looks like a bin to me."
-	name = "garbage can"
+/obj/structure/closet/crate/bin
+	desc = "A large bin."
+	name = "large bin"
 	icon_state = "largebin"
 	icon_opened = "largebinopen"
 	icon_closed = "largebin"
-	anchored = TRUE
-
-/obj/structure/closet/crate/can/attackby(obj/item/weapon/W, mob/living/user, params)
-	add_fingerprint(user)
-	user.changeNext_move(CLICK_CD_MELEE)
-	if(iswrench(W))
-		if(anchored)
-			playsound(loc, W.usesound, 100, 1)
-			user.visible_message("[user] starts loosening [src]'s floor casters.", \
-								 					"<span class='notice'>You start loosening [src]'s floor casters...</span>")
-			if(do_after(user, 40 * W.toolspeed, target = src))
-				if(!loc || !anchored)
-					return
-				user.visible_message("[user] loosened [src]'s floor casters.", \
-									 					"<span class='notice'>You loosen [src]'s floor casters.</span>")
-				anchored = FALSE
-		else
-			if(!isfloorturf(loc))
-				user.visible_message("<span class='warning'>A floor must be present to secure [src]!</span>")
-				return
-			playsound(loc, W.usesound, 100, 1)
-			user.visible_message("[user] start securing [src]'s floor casters...", \
-													"<span class='notice'>You start securing [src]'s floor casters...</span>")
-			if(do_after(user, 40 * W.toolspeed, target = src))
-				if(!loc || anchored)
-					return
-				user.visible_message("[user] has secured [src]'s floor casters.", \
-						 								"<span class='notice'>You have secured [src]'s floor casters.</span>")
-				anchored = TRUE
 
 /obj/structure/closet/crate/radiation
 	desc = "A crate with a radiation sign on it."

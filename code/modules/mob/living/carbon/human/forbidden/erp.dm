@@ -164,26 +164,26 @@ mob/living/carbon/human/proc/breast_nude()
  * HAS HELPERS
  */
 /mob/living/carbon/human/proc/has_penis()
-	var/obj/item/organ/external/G = bodyparts_by_name["groin"]
+	var/obj/item/organ/external/G = organs_by_name["groin"]
 	return (species.genitals && gender == MALE && (G && G.is_usable()))
 
 /mob/living/carbon/human/proc/has_vagina()
-	var/obj/item/organ/external/G = bodyparts_by_name["groin"]
+	var/obj/item/organ/external/G = organs_by_name["groin"]
 	return (species.genitals && gender == FEMALE && (G && G.is_usable()))
 
 /mob/living/carbon/human/proc/has_hands()
-	var/obj/item/organ/external/H = bodyparts_by_name["r_hand"]
+	var/obj/item/organ/external/H = organs_by_name["r_hand"]
 	var/hashands = (H && H.is_usable())
 	if(!hashands)
-		H = bodyparts_by_name["l_hand"]
+		H = organs_by_name["l_hand"]
 		hashands = (H && H.is_usable())
 	return hashands
 
 /mob/living/carbon/human/proc/has_foots()
-	var/obj/item/organ/external/F = bodyparts_by_name["r_foot"]
+	var/obj/item/organ/external/F = organs_by_name["r_foot"]
 	var/hashands = (F && F.is_usable())
 	if(!hashands)
-		F = bodyparts_by_name["l_foot"]
+		F = organs_by_name["l_foot"]
 		hashands = (F && F.is_usable())
 	return hashands
 
@@ -273,7 +273,7 @@ mob/living/carbon/human/proc/breast_nude()
 			if("floor")
 				visible_message("<span class='cum'>[src] cums on the floor!</span>")
 				var/obj/effect/decal/cleanable/sex/cum = new /obj/effect/decal/cleanable/sex/semen(loc)
-				cum.transfer_mob_blood_dna(src)
+				cum.add_blood_list(src)
 			if("vagina")
 				visible_message("<span class='cum'>[src] cums into <b>[P]</b>!</span>")
 			if("anus")
@@ -283,7 +283,7 @@ mob/living/carbon/human/proc/breast_nude()
 	else if(has_vagina())
 		visible_message("<span class='cum'>[src] cums!</span>")
 		var/obj/effect/decal/cleanable/sex/cum = new /obj/effect/decal/cleanable/sex/femjuice(loc)
-		cum.transfer_mob_blood_dna(src)
+		cum.add_blood_list(src)
 	else
 		visible_message("<span class='cum'>[src] cums!</span>")
 

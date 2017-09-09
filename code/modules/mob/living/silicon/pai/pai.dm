@@ -82,7 +82,6 @@
 
 	var/current_pda_messaging = null
 	var/custom_sprite = 0
-	var/slowdown = 0
 
 /mob/living/silicon/pai/New(var/obj/item/device/paicard)
 	loc = paicard
@@ -117,12 +116,6 @@
 		var/datum/data/pda/app/chatroom/C = pda.find_program(/datum/data/pda/app/chatroom)
 		C.toff = 1
 	..()
-
-/mob/living/silicon/pai/movement_delay()
-	. = ..()
-	. += slowdown
-	. += 1 //A bit slower than humans, so they're easier to smash
-	. += config.robot_delay
 
 /mob/living/silicon/pai/update_icons()
 	if(stat == DEAD)
@@ -246,7 +239,7 @@
 
 	switch(M.a_intent)
 
-		if(INTENT_HELP)
+		if(I_HELP)
 			for(var/mob/O in viewers(src, null))
 				if((O.client && !( O.blinded )))
 					O.show_message(text("<span class='notice'>[M] caresses [src]'s casing with its scythe like arm.</span>"), 1)
@@ -508,7 +501,7 @@
 /mob/living/silicon/pai/attack_hand(mob/user as mob)
 	if(stat == DEAD)
 		return
-	if(user.a_intent == INTENT_HELP)
+	if(user.a_intent == I_HELP)
 		user.visible_message("<span class='notice'>[user] pets [src].</span>")
 		playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	else
@@ -546,10 +539,10 @@
 	card.forceMove(card.loc)
 	icon_state = "[chassis]"
 
-/mob/living/silicon/pai/Bump()
+/mob/living/silicon/pai/Bump(atom/movable/AM as mob|obj, yes)
 	return
 
-/mob/living/silicon/pai/Bumped()
+/mob/living/silicon/pai/Bumped(AM as mob|obj)
 	return
 
 /mob/living/silicon/pai/start_pulling(var/atom/movable/AM)

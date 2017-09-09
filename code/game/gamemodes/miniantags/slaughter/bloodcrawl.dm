@@ -132,7 +132,8 @@
 	playsound(get_turf(src), 'sound/misc/exit_blood.ogg', 100, 1, -1)
 
 	flick("jauntup",animation)
-	QDEL_NULL(holder)
+	qdel(holder)
+	holder = null
 
 	if(iscarbon(src))
 		var/mob/living/carbon/C = src

@@ -566,12 +566,6 @@
 	name = "Unathi Side Frills"
 	icon_state = "unathi_sidefrills"
 	secondary_theme = "webbing"
-	
-/datum/sprite_accessory/hair/unathi/una_cobra_hood
-    icon = 'icons/mob/human_face.dmi'
-    name = "Unathi Cobra Hood"
-    icon_state = "unathi_cobrahood"
-    secondary_theme = "webbing"
 
 /datum/sprite_accessory/hair/unathi/una_frills_dorsal
 	icon = 'icons/mob/human_face.dmi'
@@ -1987,26 +1981,19 @@
 
 /datum/sprite_accessory/body_markings
 	icon = 'icons/mob/body_accessory.dmi'
-	species_allowed = list("Unathi", "Tajaran", "Vulpkanin", "Machine", "Vox", "Kidan")
+	species_allowed = list("Unathi", "Tajaran", "Vulpkanin", "Machine", "Vox")
 	icon_state = "accessory_none"
 	marking_location = "body"
 
 /datum/sprite_accessory/body_markings/none
 	name = "None"
-	species_allowed = list("Human", "Unathi", "Diona", "Grey", "Machine", "Tajaran", "Vulpkanin", "Skrell", "Slime People", "Skeleton", "Vox", "Kidan")
+	species_allowed = list("Human", "Unathi", "Diona", "Grey", "Machine", "Tajaran", "Vulpkanin", "Skrell", "Slime People", "Skeleton", "Vox")
 	icon_state = "accessory_none"
 
 /datum/sprite_accessory/body_markings/tiger
 	name = "Tiger Body"
 	species_allowed = list("Unathi", "Tajaran", "Vulpkanin")
 	icon_state = "markings_tiger"
-
-/datum/sprite_accessory/body_markings/kidan
-	species_allowed = list("Kidan")
-
-/datum/sprite_accessory/body_markings/kidan/outline_kid
-	name = "Kidan Outline"
-	icon_state = "markings_outline_kid"
 
 /datum/sprite_accessory/body_markings/unathi
 	species_allowed = list("Unathi")
@@ -2095,13 +2082,6 @@
 /datum/sprite_accessory/body_markings/head
 	marking_location = "head"
 	species_allowed = list()
-
-/datum/sprite_accessory/body_markings/head/kidan
-	species_allowed = list("Kidan")
-
-/datum/sprite_accessory/body_markings/head/kidan/outline_head_kid
-	name = "Kidan Outline Head"
-	icon_state = "markings_head_outline_kid"
 
 /datum/sprite_accessory/body_markings/head/tajara
 	species_allowed = list("Tajaran")

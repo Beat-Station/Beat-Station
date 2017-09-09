@@ -185,7 +185,6 @@ var/list/non_simple_animals = typecacheof(list(/mob/living/carbon/human/monkey,/
 		var/obj/structure/filler/filler = V
 		filler.parent = null
 		qdel(filler)
-	fillers.Cut()
 	. = ..()
 
 /obj/machinery/dna_vault/attack_ghost(mob/user)

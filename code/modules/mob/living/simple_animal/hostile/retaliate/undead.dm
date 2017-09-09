@@ -31,7 +31,7 @@
 	response_disarm = "shoves"
 	response_harm = "hits"
 	turns_per_move = 10
-	speed = 0
+	speed = -1
 	maxHealth = 20
 	health = 20
 
@@ -74,7 +74,7 @@
 	response_help = "shakes hands with"
 	response_disarm = "shoves"
 	response_harm = "hits"
-	speed = 0
+	speed = -1
 	maxHealth = 20
 	health = 20
 

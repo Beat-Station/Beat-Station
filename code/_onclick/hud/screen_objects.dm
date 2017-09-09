@@ -70,14 +70,14 @@
 		var/_y = text2num(params2list(params)["icon-y"])
 
 		if(_x<=16 && _y<=16)
-			usr.a_intent_change(INTENT_HARM)
+			usr.a_intent_change(I_HARM)
 		else if(_x<=16 && _y>=17)
-			usr.a_intent_change(INTENT_HELP)
+			usr.a_intent_change(I_HELP)
 		else if(_x>=17 && _y<=16)
-			usr.a_intent_change(INTENT_GRAB)
+			usr.a_intent_change(I_GRAB)
 
 		else if(_x>=17 && _y>=17)
-			usr.a_intent_change(INTENT_DISARM)
+			usr.a_intent_change(I_DISARM)
 
 	else
 		usr.a_intent_change("right")
@@ -108,12 +108,11 @@
 		icon_state = "internal0"
 	else
 		var/no_mask = FALSE
-		if(!C.get_organ_slot("breathing_tube"))
-			if(!C.wear_mask || !(C.wear_mask.flags & AIRTIGHT))
-				if(ishuman(C))
-					var/mob/living/carbon/human/H = C
-					if(!H.head || !(H.head.flags & AIRTIGHT))
-						no_mask = TRUE
+		if(!C.wear_mask || !(C.wear_mask.flags & AIRTIGHT))
+			if(ishuman(C))
+				var/mob/living/carbon/human/H = C
+				if(!H.head || !(H.head.flags & AIRTIGHT))
+					no_mask = TRUE
 
 		if(no_mask)
 			to_chat(C, "<span class='notice'>You are not wearing a suitable mask or helmet.</span>")
@@ -200,15 +199,15 @@
 		var/mob/living/carbon/C = usr
 		if(C.legcuffed)
 			to_chat(C, "<span class='notice'>You are legcuffed! You cannot run until you get [C.legcuffed] removed!</span>")
-			C.m_intent = MOVE_INTENT_WALK	//Just incase
+			C.m_intent = "walk"	//Just incase
 			C.hud_used.move_intent.icon_state = "walking"
 			return 1
 		switch(usr.m_intent)
-			if(MOVE_INTENT_RUN)
-				usr.m_intent = MOVE_INTENT_WALK
+			if("run")
+				usr.m_intent = "walk"
 				usr.hud_used.move_intent.icon_state = "walking"
-			if(MOVE_INTENT_WALK)
-				usr.m_intent = MOVE_INTENT_RUN
+			if("walk")
+				usr.m_intent = "run"
 				usr.hud_used.move_intent.icon_state = "running"
 		if(istype(usr,/mob/living/carbon/alien/humanoid))
 			usr.update_icons()
@@ -347,27 +346,15 @@
 /obj/screen/zone_sel/robot
 	icon = 'icons/mob/screen_robot.dmi'
 
-/obj/screen/craft
+/obj/screen/inventory/craft
 	name = "crafting menu"
 	icon = 'icons/mob/screen_midnight.dmi'
 	icon_state = "craft"
 	screen_loc = ui_crafting
 
-/obj/screen/craft/Click()
+/obj/screen/inventory/craft/Click()
 	var/mob/living/M = usr
 	M.OpenCraftingMenu()
-
-/obj/screen/language_menu
-	name = "language menu"
-	icon = 'icons/mob/screen_midnight.dmi'
-	icon_state = "talk_wheel"
-	screen_loc = ui_language_menu
-
-/obj/screen/language_menu/Click()
-	var/mob/M = usr
-	if(!istype(M))
-		return
-	M.check_languages()
 
 /obj/screen/inventory
 	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.

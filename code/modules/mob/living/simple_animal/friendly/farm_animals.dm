@@ -27,7 +27,6 @@
 	stop_automated_movement_when_pulled = 1
 	var/milk_content = 0
 	can_collar = 1
-	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/simple_animal/hostile/retaliate/goat/handle_automated_movement()
 	..()
@@ -111,7 +110,6 @@
 	var/milk_content = 0
 	can_collar = 1
 	gold_core_spawnable = CHEM_MOB_SPAWN_FRIENDLY
-	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/simple_animal/cow/New()
 	..()
@@ -138,7 +136,7 @@
 		milk_content = min(50, milk_content+rand(5, 10))
 
 /mob/living/simple_animal/cow/attack_hand(mob/living/carbon/M as mob)
-	if(!stat && M.a_intent == INTENT_DISARM && icon_state != icon_dead)
+	if(!stat && M.a_intent == I_DISARM && icon_state != icon_dead)
 		M.visible_message("<span class='warning'>[M] tips over [src].</span>","<span class='notice'>You tip over [src].</span>")
 		Weaken(30)
 		icon_state = icon_dead
@@ -314,7 +312,6 @@ var/global/chicken_count = 0
 	maxHealth = 50
 	can_collar = 1
 	gold_core_spawnable = CHEM_MOB_SPAWN_FRIENDLY
-	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/simple_animal/turkey
 	name = "turkey"
@@ -384,7 +381,6 @@ var/global/chicken_count = 0
 	maxHealth = 50
 	can_collar = 1
 	gold_core_spawnable = CHEM_MOB_SPAWN_FRIENDLY
-	blood_volume = BLOOD_VOLUME_NORMAL
 
 /mob/living/simple_animal/walrus
 	name = "walrus"
@@ -408,4 +404,3 @@ var/global/chicken_count = 0
 	maxHealth = 50
 	can_collar = 1
 	gold_core_spawnable = CHEM_MOB_SPAWN_FRIENDLY
-	blood_volume = BLOOD_VOLUME_NORMAL

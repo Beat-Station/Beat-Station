@@ -37,7 +37,7 @@
 	icon_state = "logs"
 	force = 5
 	throwforce = 5
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	throw_speed = 2
 	throw_range = 3
 	origin_tech = "materials=1"
@@ -50,9 +50,6 @@
 	/obj/item/weapon/reagent_containers/food/snacks/grown/ambrosia/deus,
 	/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)
 
-/obj/item/weapon/grown/log/New()
-	..()
-	accepted = typecacheof(accepted)
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user, params)
 	if(is_sharp(W))
@@ -69,7 +66,7 @@
 			to_chat(user, "<span class='notice'>You add the newly-formed [plank_name] to the stack. It now contains [plank.amount] [plank_name].</span>")
 		qdel(src)
 
-	if(is_type_in_typecache(W, accepted))
+	if(is_type_in_list(W,accepted))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/leaf = W
 		if(leaf.dry)
 			user.show_message("<span class='notice'>You wrap \the [W] around the log, turning it into a torch!</span>")
@@ -141,7 +138,7 @@
 
 /obj/structure/bonfire/proc/CheckOxygen()
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.oxygen > 13)
+	if(G.oxygen > 16)
 		return 1
 	return 0
 

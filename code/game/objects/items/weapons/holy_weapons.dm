@@ -7,7 +7,7 @@
 	throw_speed = 3
 	throw_range = 4
 	throwforce = 10
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	var/reskinned = FALSE
 	var/reskin_selectable = TRUE			//set to FALSE if a subtype is meant to not normally be available as a reskin option (fluff ones will get re-added through their list)
 	var/list/fluff_transformations = list() //does it have any special transformations only accessible to it? Should only be subtypes of /obj/item/weapon/nullrod
@@ -71,7 +71,7 @@
 	item_state = "disintegrate"
 	desc = "This hand of yours glows with an awesome power!"
 	flags = ABSTRACT | NODROP
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = 5
 	hitsound = 'sound/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb = list("punched", "cross countered", "pummeled")
@@ -81,7 +81,7 @@
 	icon_state = "godstaff-red"
 	item_state = "godstaff-red"
 	desc = "It has a mysterious, protective aura."
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = 5
 	force = 5
 	slot_flags = SLOT_BACK
 	block_chance = 50
@@ -96,10 +96,11 @@
 	icon_state = "claymore"
 	item_state = "claymore"
 	desc = "A weapon fit for a crusade!"
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 4
 	slot_flags = SLOT_BACK|SLOT_BELT
 	block_chance = 30
 	sharp = 1
+	edge = 1
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
@@ -182,10 +183,11 @@
 	icon_state = "scythe0"
 	item_state = "scythe0"
 	desc = "Ask not for whom the bell tolls..."
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 4
 	armour_penetration = 35
 	slot_flags = SLOT_BACK
 	sharp = 1
+	edge = 1
 	attack_verb = list("chopped", "sliced", "cut", "reaped")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 
@@ -253,7 +255,7 @@
 	item_state = "hammeron"
 	desc = "This war hammer cost the chaplain fourty thousand space dollars."
 	slot_flags = SLOT_BELT
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = 5
 	attack_verb = list("smashed", "bashed", "hammered", "crunched")
 
 /obj/item/weapon/nullrod/chainsaw
@@ -261,9 +263,10 @@
 	desc = "Good? Bad? You're the guy with the chainsaw hand."
 	icon_state = "chainsaw1"
 	item_state = "mounted_chainsaw"
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = 5
 	flags = NODROP | ABSTRACT
 	sharp = 1
+	edge = 1
 	attack_verb = list("sawed", "torn", "cut", "chopped", "diced")
 	hitsound = 'sound/weapons/chainsaw.ogg'
 
@@ -275,20 +278,17 @@
 	desc = "Used for absolutely hilarious sacrifices."
 	hitsound = 'sound/items/bikehorn.ogg'
 	sharp = 1
+	edge = 1
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut", "honked")
 
 /obj/item/weapon/nullrod/whip
 	name = "holy whip"
-	desc = "What a terrible night to be in spess"
+	desc = "What a terrible night to be on Space Station 13."
 	icon_state = "chain"
 	item_state = "chain"
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed")
 	hitsound = 'sound/weapons/slash.ogg'
-
-/obj/item/weapon/nullrod/whip/New()
-	..()
-	desc = "What a terrible night to be on the [station_name()]."
 
 /obj/item/weapon/nullrod/whip/afterattack(atom/movable/AM, mob/user, proximity)
 	if(!proximity)
@@ -318,8 +318,9 @@
 	icon_state = "arm_blade"
 	item_state = "arm_blade"
 	flags = ABSTRACT | NODROP
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = 5
 	sharp = 1
+	edge = 1
 
 /obj/item/weapon/nullrod/carp
 	name = "carp-sie plushie"
@@ -344,11 +345,12 @@
 /obj/item/weapon/nullrod/claymore/bostaff //May as well make it a "claymore" and inherit the blocking
 	name = "monk's staff"
 	desc = "A long, tall staff made of polished wood. Traditionally used in ancient old-Earth martial arts, now used to harass the clown."
-	w_class = WEIGHT_CLASS_BULKY
+	w_class = 4
 	force = 13
 	block_chance = 40
 	slot_flags = SLOT_BACK
 	sharp = 0
+	edge = 0
 	hitsound = "swing_hit"
 	attack_verb = list("smashed", "slammed", "whacked", "thwacked")
 	icon = 'icons/obj/weapons.dmi'
@@ -359,9 +361,10 @@
 	name = "arrhythmic knife"
 	icon_state = "crysknife"
 	item_state = "crysknife"
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = 5
 	desc = "They say fear is the true mind killer, but stabbing them in the head works too. Honour compels you to not sheathe it once drawn."
 	sharp = 1
+	edge = 1
 	slot_flags = null
 	flags = HANDSLOW
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -382,11 +385,12 @@
 	name = "unholy pitchfork"
 	icon_state = "pitchfork0"
 	item_state = "pitchfork0"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	desc = "Holding this makes you look absolutely devilish."
 	attack_verb = list("poked", "impaled", "pierced", "jabbed")
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	sharp = 1
+	edge = 1
 
 /obj/item/weapon/nullrod/rosary
 	name = "prayer beads"
@@ -510,7 +514,7 @@
 	reskin_selectable = FALSE
 	icon_state = "godstaff-red"
 	item_state = "godstaff-red"
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = 5
 	force = 5
 	slot_flags = SLOT_BACK
 	block_chance = 50

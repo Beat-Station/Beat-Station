@@ -51,13 +51,11 @@
 
 /obj/structure/beebox/Destroy()
 	processing_objects.Remove(src)
-	for(var/mob/living/simple_animal/hostile/poison/bees/B in bees)
-		B.beehome = null
 	bees.Cut()
 	bees = null
-	QDEL_LIST(honeycombs)
-	QDEL_LIST(honey_frames)
-	QDEL_NULL(queen_bee)
+	honeycombs.Cut()
+	honeycombs = null
+	queen_bee = null
 	return ..()
 
 

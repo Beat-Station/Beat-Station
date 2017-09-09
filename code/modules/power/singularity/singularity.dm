@@ -1,3 +1,5 @@
+//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+
 /obj/singularity
 	name = "gravitational singularity"
 	desc = "A gravitational singularity."
@@ -37,10 +39,11 @@
 	processing_objects.Add(src)
 	poi_list |= src
 	singularities += src
-	for(var/obj/machinery/power/singularity_beacon/singubeacon in machines)
+	for(var/obj/machinery/power/singularity_beacon/singubeacon in world)
 		if(singubeacon.active)
 			target = singubeacon
 			break
+	return
 
 /obj/singularity/Destroy()
 	processing_objects.Remove(src)

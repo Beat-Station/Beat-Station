@@ -16,9 +16,11 @@
 	return 0
 
 /mob/living/carbon/human/isSynthetic()
-	if(get_species() == "Machine")
-		return 1
-	return 0
+	// If they are 100% robotic, they count as synthetic.
+	for(var/obj/item/organ/external/E in organs)
+		if(!(E.status & ORGAN_ROBOT))
+			return 0
+	return 1
 
 /mob/proc/get_screen_colour()
 
@@ -242,7 +244,7 @@ proc/slur(phrase, var/list/slurletters = ("'"))//use a different list as an inpu
 	return sanitize(copytext(t,1,MAX_MESSAGE_LEN))
 
 
-/proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
+proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
 	/* Turn text into complete gibberish! */
 	var/returntext = ""
 	for(var/i = 1, i <= length(t), i++)
@@ -317,51 +319,50 @@ proc/muffledspeech(phrase)
 	return 0
 
 //converts intent-strings into numbers and back
-var/list/intents = list(INTENT_HELP,INTENT_DISARM,INTENT_GRAB,INTENT_HARM)
+var/list/intents = list(I_HELP,I_DISARM,I_GRAB,I_HARM)
 /proc/intent_numeric(argument)
 	if(istext(argument))
 		switch(argument)
-			if(INTENT_HELP)		return 0
-			if(INTENT_DISARM)	return 1
-			if(INTENT_GRAB)		return 2
+			if(I_HELP)		return 0
+			if(I_DISARM)	return 1
+			if(I_GRAB)		return 2
 			else			return 3
 	else
 		switch(argument)
-			if(0)			return INTENT_HELP
-			if(1)			return INTENT_DISARM
-			if(2)			return INTENT_GRAB
-			else			return INTENT_HARM
+			if(0)			return I_HELP
+			if(1)			return I_DISARM
+			if(2)			return I_GRAB
+			else			return I_HARM
 
 //change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
 	set hidden = 1
 
-	if(can_change_intents)
-		if(ishuman(src) || isalienadult(src) || isbrain(src))
-			switch(input)
-				if(INTENT_HELP,INTENT_DISARM,INTENT_GRAB,INTENT_HARM)
-					a_intent = input
-				if("right")
-					a_intent = intent_numeric((intent_numeric(a_intent)+1) % 4)
-				if("left")
-					a_intent = intent_numeric((intent_numeric(a_intent)+3) % 4)
-			if(hud_used && hud_used.action_intent)
-				hud_used.action_intent.icon_state = "[a_intent]"
+	if(ishuman(src) || isalienadult(src) || isbrain(src))
+		switch(input)
+			if(I_HELP,I_DISARM,I_GRAB,I_HARM)
+				a_intent = input
+			if("right")
+				a_intent = intent_numeric((intent_numeric(a_intent)+1) % 4)
+			if("left")
+				a_intent = intent_numeric((intent_numeric(a_intent)+3) % 4)
+		if(hud_used && hud_used.action_intent)
+			hud_used.action_intent.icon_state = "[a_intent]"
 
-		else if(isrobot(src) || islarva(src))
-			switch(input)
-				if(INTENT_HELP)
-					a_intent = INTENT_HELP
-				if(INTENT_HARM)
-					a_intent = INTENT_HARM
-				if("right","left")
-					a_intent = intent_numeric(intent_numeric(a_intent) - 3)
-			if(hud_used && hud_used.action_intent)
-				if(a_intent == INTENT_HARM)
-					hud_used.action_intent.icon_state = "harm"
-				else
-					hud_used.action_intent.icon_state = "help"
+	else if(isrobot(src) || islarva(src))
+		switch(input)
+			if(I_HELP)
+				a_intent = I_HELP
+			if(I_HARM)
+				a_intent = I_HARM
+			if("right","left")
+				a_intent = intent_numeric(intent_numeric(a_intent) - 3)
+		if(hud_used && hud_used.action_intent)
+			if(a_intent == I_HARM)
+				hud_used.action_intent.icon_state = "harm"
+			else
+				hud_used.action_intent.icon_state = "help"
 
 
 /mob/living/verb/mob_sleep()

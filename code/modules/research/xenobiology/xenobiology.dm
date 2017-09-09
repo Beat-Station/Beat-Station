@@ -7,7 +7,7 @@
 	icon = 'icons/mob/slimes.dmi'
 	icon_state = "grey slime extract"
 	force = 1
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
@@ -121,7 +121,7 @@
 /obj/item/slimepotion
 	name = "slime potion"
 	desc = "A hard yet gelatinous capsule excreted by a slime, containing mysterious substances."
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	origin_tech = "biotech=4"
 
 /obj/item/slimepotion/afterattack(obj/item/weapon/reagent_containers/target, mob/user, proximity_flag)
@@ -179,7 +179,7 @@
 	desc = "A miraculous chemical mix that can raise the intelligence of creatures to human levels."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle19"
-	origin_tech = "biotech=6"
+	origin_tech = "biotech=5"
 	var/list/not_interested = list()
 	var/being_used = 0
 	var/sentience_type = SENTIENCE_ORGANIC
@@ -350,7 +350,6 @@
 	desc = "A potent chemical mix that will remove the slowdown from any item."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
-	origin_tech = "biotech=5"
 
 /obj/item/slimepotion/speed/afterattack(obj/item/C, mob/user, proximity_flag)
 	if(!proximity_flag)
@@ -372,7 +371,6 @@
 	desc = "A potent chemical mix that will fireproof any article of clothing. Has three uses."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
-	origin_tech = "biotech=5"
 	var/uses = 3
 
 /obj/item/slimepotion/fireproof/afterattack(obj/item/clothing/C, mob/user, proximity_flag)
@@ -554,7 +552,7 @@
 	singular_name = "floor tile"
 	desc = "Through a series of micro-teleports, these tiles let people move at incredible speeds."
 	icon_state = "tile-bluespace"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	force = 6
 	materials = list(MAT_METAL=500)
 	throwforce = 10
@@ -577,7 +575,7 @@
 	singular_name = "floor tile"
 	desc = "Time seems to flow very slowly around these tiles."
 	icon_state = "tile-sepia"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	force = 6
 	materials = list(MAT_METAL=500)
 	throwforce = 10

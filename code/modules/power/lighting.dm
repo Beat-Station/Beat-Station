@@ -122,7 +122,6 @@
 	fixture_type = "bulb"
 	sheets_refunded = 1
 
-
 // the standard tube light fixture
 /obj/machinery/light
 	name = "light fixture"
@@ -150,7 +149,6 @@
 								// this is used to calc the probability the light burns out
 
 	var/rigged = 0				// true if rigged to explode
-	var/lightmaterials = list(MAT_GLASS=100)	//stores the materials the light is made of to stop infinite glass exploit
 
 // the smaller bulb light fixture
 
@@ -307,7 +305,6 @@
 				brightness_range = L.brightness_range
 				brightness_power = L.brightness_power
 				brightness_color = L.brightness_color
-				lightmaterials = L.materials
 				on = has_power()
 				update()
 
@@ -453,7 +450,7 @@
 		else if(TK in user.mutations)
 			to_chat(user, "You telekinetically remove the light [fitting].")
 		else
-			if(user.a_intent == INTENT_DISARM || user.a_intent == INTENT_GRAB)
+			if(user.a_intent == I_DISARM || user.a_intent == I_GRAB)
 				to_chat(user, "You try to remove the light [fitting], but you burn your hand on it!")
 
 				var/obj/item/organ/external/affecting = H.get_organ("[user.hand ? "l" : "r" ]_hand")
@@ -475,7 +472,6 @@
 	L.brightness_range = brightness_range
 	L.brightness_power = brightness_power
 	L.brightness_color = brightness_color
-	L.materials = lightmaterials
 
 	// light item inherits the switchcount, then zero it
 	L.switchcount = switchcount
@@ -504,7 +500,6 @@
 	L.brightness_range = brightness_range
 	L.brightness_power = brightness_power
 	L.brightness_color = brightness_color
-	L.materials = lightmaterials
 
 	// light item inherits the switchcount, then zero it
 	L.switchcount = switchcount
@@ -597,11 +592,11 @@
 	icon = 'icons/obj/lighting.dmi'
 	force = 2
 	throwforce = 5
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	var/status = 0		// LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
 	var/base_state
 	var/switchcount = 0	// number of times switched
-	materials = list(MAT_GLASS=100)
+	materials = list(MAT_METAL=60)
 	var/rigged = 0		// true if rigged to explode
 	var/brightness_range = 2 //how much light it gives off
 	var/brightness_power = 1
@@ -613,10 +608,11 @@
 	icon_state = "ltube"
 	base_state = "ltube"
 	item_state = "c_tube"
+	materials = list(MAT_GLASS=100)
 	brightness_range = 8
 
 /obj/item/weapon/light/tube/large
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	name = "large light tube"
 	brightness_range = 15
 	brightness_power = 2
@@ -627,6 +623,7 @@
 	icon_state = "lbulb"
 	base_state = "lbulb"
 	item_state = "contvapour"
+	materials = list(MAT_GLASS=100)
 	brightness_range = 5
 	brightness_color = "#a0a080"
 
@@ -640,6 +637,7 @@
 	icon_state = "fbulb"
 	base_state = "fbulb"
 	item_state = "egg4"
+	materials = list(MAT_GLASS=100)
 	brightness_range = 5
 
 // update the icon state and description of the light
@@ -696,7 +694,7 @@
 	if(!proximity) return
 	if(istype(target, /obj/machinery/light))
 		return
-	if(user.a_intent != INTENT_HARM)
+	if(user.a_intent != I_HARM)
 		return
 
 	shatter()

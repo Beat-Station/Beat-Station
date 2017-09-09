@@ -102,7 +102,8 @@
 			if(!( A.anchored ))
 				A.forceMove(src)
 		playsound(loc, open_sound, 50, 1)
-		QDEL_NULL(connected)
+		qdel(connected)
+		connected = null
 	else
 		playsound(loc, open_sound, 50, 1)
 		connected = new /obj/structure/m_tray( loc )
@@ -117,7 +118,8 @@
 			connected.icon_state = "morguet"
 			connected.dir = dir
 		else
-			QDEL_NULL(connected)
+			qdel(connected)
+			connected = null
 	add_fingerprint(user)
 	update()
 	return
@@ -153,7 +155,8 @@
 			A.forceMove(connected.loc)
 		connected.icon_state = "morguet"
 	else
-		QDEL_NULL(connected)
+		qdel(connected)
+		connected = null
 	return
 
 /obj/structure/morgue/Destroy()
@@ -180,14 +183,14 @@
  */
 /obj/structure/m_tray
 	name = "morgue tray"
-	desc = "Apply corpse before closing. May float away in no-gravity."
+	desc = "Apply corpse before closing."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morguet"
 	density = 1
 	layer = 2.0
 	var/obj/structure/morgue/connected = null
 	anchored = 1.0
-	pass_flags = LETPASSTHROW
+	throwpass = 1
 
 
 /obj/structure/m_tray/attack_hand(mob/user as mob)
@@ -303,7 +306,8 @@
 			if(!( A.anchored ))
 				A.forceMove(src)
 		playsound(loc, open_sound, 50, 1)
-		QDEL_NULL(connected)
+		qdel(connected)
+		connected = null
 	else if(locked == 0)
 		playsound(loc, open_sound, 50, 1)
 		connected = new /obj/structure/c_tray( loc )
@@ -317,7 +321,8 @@
 				A.forceMove(connected.loc)
 			connected.icon_state = "cremat"
 		else
-			QDEL_NULL(connected)
+			qdel(connected)
+			connected = null
 	add_fingerprint(user)
 	update()
 
@@ -350,7 +355,8 @@
 			A.forceMove(connected.loc)
 		connected.icon_state = "cremat"
 	else
-		QDEL_NULL(connected)
+		qdel(connected)
+		connected = null
 	return
 
 /obj/structure/crematorium/proc/cremate(mob/user as mob)
@@ -426,7 +432,7 @@
 	layer = 2.0
 	var/obj/structure/crematorium/connected = null
 	anchored = 1.0
-	pass_flags = LETPASSTHROW
+	throwpass = 1
 
 /obj/structure/c_tray/attack_hand(mob/user as mob)
 	if(connected)

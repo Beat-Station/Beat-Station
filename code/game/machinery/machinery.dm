@@ -404,6 +404,8 @@ Class Procs:
 	on_deconstruction()
 	spawn_frame()
 	for(var/obj/item/I in component_parts)
+		if(I.reliability != 100 && crit_fail)
+			I.crit_fail = 1
 		I.forceMove(loc)
 	qdel(src)
 

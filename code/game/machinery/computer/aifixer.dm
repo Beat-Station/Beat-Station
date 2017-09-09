@@ -142,12 +142,14 @@
 /obj/machinery/computer/aifixer/Destroy()
 	if(occupant)
 		occupant.ghostize()
-		QDEL_NULL(occupant)
+		qdel(occupant)
+		occupant = null
 	return ..()
 
 /obj/machinery/computer/aifixer/emp_act()
 	if(occupant)
 		occupant.ghostize()
-		QDEL_NULL(occupant)
+		qdel(occupant)
+		occupant = null
 	else
 		..()

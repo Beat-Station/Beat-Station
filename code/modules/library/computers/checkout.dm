@@ -178,7 +178,8 @@
 				M = new manual_type()
 				dat += "<tr><td><A href='?src=[UID()];manual=[manualcount]'>[M.title]</A></td></tr>"
 				manualcount++
-				QDEL_NULL(M)
+				qdel(M)
+				M = null
 			dat += "</table>"
 			dat += "<BR><A href='?src=[UID()];switchscreen=0'>(Return to main menu)</A><BR>"
 

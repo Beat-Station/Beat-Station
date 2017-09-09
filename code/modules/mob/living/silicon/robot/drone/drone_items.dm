@@ -15,9 +15,7 @@
 		/obj/item/weapon/firelock_electronics,
 		/obj/item/weapon/intercom_electronics,
 		/obj/item/weapon/apc_electronics,
-		/obj/item/weapon/tracker_electronics,
 		/obj/item/weapon/stock_parts,
-		/obj/item/weapon/vending_refill,
 		/obj/item/mounted/frame/light_fixture,
 		/obj/item/mounted/frame/apc_frame,
 		/obj/item/mounted/frame/alarm_frame,
@@ -161,8 +159,8 @@
 
 	name = "matter decompiler"
 	desc = "Eating trash, bits of glass, or other debris will replenish your stores."
-	icon = 'icons/obj/toy.dmi'
-	icon_state = "minigibber"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "decompiler"
 
 	//Metal, glass, wood, plastic.
 	var/list/stored_comms = list(
@@ -259,6 +257,10 @@
 			stored_comms["glass"]++
 			stored_comms["glass"]++
 		else if(istype(W,/obj/item/ammo_casing))
+			stored_comms["metal"]++
+		else if(istype(W,/obj/item/weapon/shard/shrapnel))
+			stored_comms["metal"]++
+			stored_comms["metal"]++
 			stored_comms["metal"]++
 		else if(istype(W,/obj/item/weapon/shard))
 			stored_comms["glass"]++

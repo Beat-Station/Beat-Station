@@ -9,7 +9,6 @@
 
 	if(..())
 		. = 1
-		handle_blood()
 		for(var/obj/item/organ/internal/O in internal_organs)
 			O.on_life()
 		handle_changeling()
@@ -55,7 +54,7 @@
 	if(losebreath > 0)
 		AdjustLoseBreath(-1)
 		if(prob(10))
-			emote("gasp")
+			spawn emote("gasp")
 		if(istype(loc, /obj/))
 			var/obj/loc_as_obj = loc
 			loc_as_obj.handle_internal_lifeform(src, 0)
@@ -115,7 +114,8 @@
 	//OXYGEN
 	if(O2_partialpressure < safe_oxy_min) //Not enough oxygen
 		if(prob(20))
-			emote("gasp")
+			spawn(0)
+				emote("gasp")
 		if(O2_partialpressure > 0)
 			var/ratio = safe_oxy_min/O2_partialpressure
 			adjustOxyLoss(min(5*ratio, 3))
@@ -145,7 +145,7 @@
 			if(world.time - co2overloadtime > 300)
 				adjustOxyLoss(8)
 		if(prob(20))
-			emote("cough")
+			spawn(0) emote("cough")
 	else
 		co2overloadtime = 0
 
@@ -168,7 +168,7 @@
 					AdjustSleeping(2, bound_lower = 0, bound_upper = 10)
 			else if(SA_partialpressure > 0.01)
 				if(prob(20))
-					emote(pick("giggle","laugh"))
+					spawn(0) emote(pick("giggle","laugh"))
 
 	//BREATH TEMPERATURE
 	handle_breath_temperature(breath)
@@ -183,10 +183,9 @@
 	if(internal)
 		if(internal.loc != src)
 			internal = null
-		if(!get_organ_slot("breathing_tube"))
-			if(!wear_mask || !(wear_mask.flags & AIRTIGHT)) //not wearing mask or non-breath mask
-				if(!head || !(head.flags & AIRTIGHT)) //not wearing helmet or non-breath helmet
-					internal = null //turn off internals
+		if(!wear_mask || !(wear_mask.flags & AIRTIGHT)) //not wearing mask or non-breath mask
+			if(!head || !(head.flags & AIRTIGHT)) //not wearing helmet or non-breath helmet
+				internal = null //turn off internals
 
 		if(internal)
 			update_internals_hud_icon(1)
@@ -196,18 +195,7 @@
 
 	return
 
-/mob/living/carbon/handle_diseases()
-	for(var/thing in viruses)
-		var/datum/disease/D = thing
-		if(prob(D.infectivity))
-			D.spread()
-
-		if(stat != DEAD)
-			D.stage_act()
-
 //remember to remove the "proc" of the child procs of these.
-/mob/living/carbon/proc/handle_blood()
-	return
 
 /mob/living/carbon/proc/handle_changeling()
 	return
@@ -247,18 +235,21 @@
 		wetlevel = max(wetlevel - 1,0)
 
 /mob/living/carbon/handle_stomach()
-	for(var/mob/living/M in stomach_contents)
-		if(M.loc != src)
-			stomach_contents.Remove(M)
-			continue
-		if(stat != DEAD)
-			if(M.stat == DEAD)
+	spawn(0)
+		for(var/mob/living/M in stomach_contents)
+			if(M.loc != src)
 				stomach_contents.Remove(M)
-				qdel(M)
 				continue
-			if(mob_master.current_cycle%3==1)
-				M.adjustBruteLoss(5)
-				nutrition += 10
+			if(istype(M, /mob/living) && stat != 2)
+				if(M.stat == 2)
+					M.death(1)
+					stomach_contents.Remove(M)
+					qdel(M)
+					continue
+				if(mob_master.current_cycle%3==1)
+					if(!(M.status_flags & GODMODE))
+						M.adjustBruteLoss(5)
+					nutrition += 10
 
 //This updates the health and status of the mob (conscious, unconscious, dead)
 /mob/living/carbon/handle_regular_status_updates()
@@ -355,7 +346,8 @@
 		handle_dreams()
 		adjustStaminaLoss(-10)
 		if(prob(10) && health && hal_screwyhud != SCREWYHUD_CRIT)
-			emote("snore")
+			spawn(0)
+				emote("snore")
 	// Keep SSD people asleep
 	if(player_logged)
 		Sleeping(2)

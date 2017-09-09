@@ -5,7 +5,7 @@
 /obj/item/seeds
 	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed"				// Unknown plant seed - these shouldn't exist in-game.
-	w_class = WEIGHT_CLASS_TINY
+	w_class = 1
 	burn_state = FLAMMABLE
 	var/plantname = "Plants"		// Name of plant when planted.
 	var/product						// A type path. The thing that is created when the plant is harvested.
@@ -69,7 +69,9 @@
 			genes += new /datum/plant_gene/reagent(reag_id, reagents_add[reag_id])
 
 /obj/item/seeds/Destroy()
-	QDEL_LIST(genes)
+	for(var/thing in genes)
+		qdel(thing)
+	genes.Cut()
 	return ..()
 
 /obj/item/seeds/proc/Copy()

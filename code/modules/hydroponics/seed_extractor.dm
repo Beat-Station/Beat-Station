@@ -44,7 +44,7 @@
 	icon_state = "sextractor"
 	density = 1
 	anchored = 1
-	var/list/piles = list()
+	var/piles = list()
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
 
@@ -55,10 +55,6 @@
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	RefreshParts()
-
-/obj/machinery/seed_extractor/Destroy()
-	QDEL_LIST(piles)
-	return ..()
 
 /obj/machinery/seed_extractor/RefreshParts()
 	for(var/obj/item/weapon/stock_parts/matter_bin/B in component_parts)
@@ -102,7 +98,7 @@
 			to_chat(user, "<span class='notice'>You add [O] to [name].</span>")
 			updateUsrDialog()
 		return
-	else if(user.a_intent != INTENT_HARM)
+	else if(user.a_intent != I_HARM)
 		to_chat(user, "<span class='warning'>You can't extract any seeds from \the [O.name]!</span>")
 	else
 		return ..()
@@ -129,14 +125,14 @@
 
 /obj/machinery/seed_extractor/attack_hand(mob/user)
 	interact(user)
-
+	
 /obj/machinery/seed_extractor/attack_ghost(mob/user)
 	interact(user)
 
 /obj/machinery/seed_extractor/interact(mob/user)
 	if(stat)
 		return 0
-
+		
 	add_fingerprint(user)
 	user.set_machine(src)
 

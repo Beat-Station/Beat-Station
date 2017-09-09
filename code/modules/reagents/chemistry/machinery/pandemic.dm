@@ -159,7 +159,7 @@
 		if(archive_diseases[id])
 			var/datum/disease/advance/A = archive_diseases[id]
 			A.AssignName(new_name)
-			for(var/datum/disease/advance/AD in active_diseases)
+			for(var/datum/disease/advance/AD in disease_master.processing)
 				AD.Refresh()
 		updateUsrDialog()
 
@@ -205,8 +205,7 @@
 				var/list/vir = Blood.data["viruses"]
 				if(vir.len)
 					var/i = 0
-					for(var/thing in Blood.data["viruses"])
-						var/datum/disease/D = thing
+					for(var/datum/disease/D in Blood.data["viruses"])
 						i++
 						if(!(D.visibility_flags & HIDDEN_PANDEMIC))
 

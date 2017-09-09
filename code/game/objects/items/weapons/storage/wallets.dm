@@ -4,7 +4,7 @@
 	storage_slots = 10
 	icon = 'icons/obj/wallets.dmi'
 	icon_state = "wallet"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	burn_state = FLAMMABLE
 	can_hold = list(
 		/obj/item/stack/spacecash,

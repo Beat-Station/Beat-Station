@@ -158,7 +158,9 @@ var/global/sent_strike_team = 0
 
 
 	var/obj/item/weapon/implant/mindshield/L = new/obj/item/weapon/implant/mindshield(src)
-	L.implant(src)
+	L.imp_in = src
+	L.implanted = 1
+	sec_hud_set_implants()
 
 	var/obj/item/weapon/card/id/W = new(src)
 	W.name = "[real_name]'s ID Card"

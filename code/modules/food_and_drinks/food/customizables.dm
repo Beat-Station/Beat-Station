@@ -21,7 +21,7 @@
 		..()
 
 
-/obj/item/weapon/reagent_containers/food/snacks/boiledspaghetti/attackby(obj/item/W, mob/user, params)
+/obj/item/weapon/reagent_containers/food/snacks/boiledspagetti/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/reagent_containers/food/snacks) && !(W.flags & NODROP))
 		var/obj/item/weapon/reagent_containers/food/snacks/customizable/pasta/S = new(get_turf(user))
 		S.attackby(W,user, params)
@@ -90,11 +90,11 @@
 	top = 0
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/pasta
-	name = "spaghetti"
+	name = "spagetti"
 	desc = "Noodles. With stuff. Delicious."
 	icon_state = "pasta_bot"
 	baseicon = "pasta_bot"
-	basename = "spaghetti"
+	basename = "spagetti"
 	add_overlays = 0
 	top = 0
 
@@ -372,7 +372,8 @@
 		overlays += T
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/Destroy()
-	QDEL_LIST(ingredients)
+	for(var/obj/item/O in ingredients)
+		qdel(O)
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/customizable/examine(mob/user)

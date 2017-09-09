@@ -38,6 +38,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 /obj/item/organ/internal/vocal_cords //organs that are activated through speech with the :x channel
 	name = "vocal cords"
 	icon_state = "appendix"
+	zone = "mouth"
 	slot = "vocal_cords"
 	parent_organ = "mouth"
 	var/spans = null
@@ -244,7 +245,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 	//BLEED
 	else if((findtext(message, bleed_words)))
 		for(var/mob/living/carbon/human/H in listeners)
-			H.bleed_rate += (5 * power_multiplier)
+			H.drip(100 * power_multiplier)
 		next_command = world.time + cooldown_damage
 
 	//FIRE
@@ -304,8 +305,8 @@ var/static/regex/multispin_words = regex("like a record baby")
 	else if((findtext(message, walk_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
-			if(L.m_intent != MOVE_INTENT_WALK)
-				L.m_intent = MOVE_INTENT_WALK
+			if(L.m_intent != "walk")
+				L.m_intent = "walk"
 				if(L.hud_used)
 					L.hud_used.move_intent.icon_state = "walking"
 		next_command = world.time + cooldown_meme
@@ -314,8 +315,8 @@ var/static/regex/multispin_words = regex("like a record baby")
 	else if((findtext(message, run_words)))
 		for(var/V in listeners)
 			var/mob/living/L = V
-			if(L.m_intent != MOVE_INTENT_RUN)
-				L.m_intent = MOVE_INTENT_RUN
+			if(L.m_intent != "run")
+				L.m_intent = "run"
 				if(L.hud_used)
 					L.hud_used.move_intent.icon_state = "running"
 		next_command = world.time + cooldown_meme
@@ -323,25 +324,25 @@ var/static/regex/multispin_words = regex("like a record baby")
 	//HELP INTENT
 	else if((findtext(message, helpintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
-			H.a_intent_change(INTENT_HELP)
+			H.a_intent_change(I_HELP)
 		next_command = world.time + cooldown_meme
 
 	//DISARM INTENT
 	else if((findtext(message, disarmintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
-			H.a_intent_change(INTENT_DISARM)
+			H.a_intent_change(I_DISARM)
 		next_command = world.time + cooldown_meme
 
 	//GRAB INTENT
 	else if((findtext(message, grabintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
-			H.a_intent_change(INTENT_GRAB)
+			H.a_intent_change(I_GRAB)
 		next_command = world.time + cooldown_meme
 
 	//HARM INTENT
 	else if((findtext(message, harmintent_words)))
 		for(var/mob/living/carbon/human/H in listeners)
-			H.a_intent_change(INTENT_HARM)
+			H.a_intent_change(I_HARM)
 		next_command = world.time + cooldown_meme
 
 	//THROW/CATCH
@@ -435,7 +436,7 @@ var/static/regex/multispin_words = regex("like a record baby")
 			playsound(get_turf(owner), 'sound/items/bikehorn.ogg', 300, 1)
 		if(owner.mind && owner.mind.assigned_role == "Clown")
 			for(var/mob/living/carbon/C in listeners)
-				C.slip("your feet", 0, 7 * power_multiplier)
+				C.slip(0,7 * power_multiplier)
 			next_command = world.time + cooldown_stun
 		else
 			next_command = world.time + cooldown_meme

@@ -35,7 +35,6 @@
 	anchored = 1
 	mob_size = MOB_SIZE_TINY
 	pass_flags = PASSTABLE | PASSGRILLE | PASSMOB
-	speed = 1
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_tox" = 0, "max_tox" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 
 	var/essence = 75 //The resource of revenants. Max health is equal to three times this amount
@@ -318,7 +317,7 @@
 	desc = "A pile of fine blue dust. Small tendrils of violet mist swirl around it."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "revenantEctoplasm"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	var/reforming = 1
 	var/essence = 75 //the maximum essence of the reforming revenant
 	var/inert = 0

@@ -543,46 +543,49 @@ Traitors and the like can also be revived with the previous role mostly intact.
 /client/proc/cmd_admin_create_centcom_report()
 	set category = "Event"
 	set name = "Create Communications Report"
-
+	var/list/MsgType = list("Centcom Report","Enemy Communications")
 	if(!check_rights(R_SERVER|R_EVENT))
 		return
 
-//the stuff on the list is |"report type" = "report title"|, if that makes any sense
-	var/list/MsgType = list("Central Command Report" = "Nanotrasen Update",
-		"Syndicate Communique" = "Syndicate Message",
-		"Space Wizard Federation Message" = "Sorcerous Message",
-		"Enemy Communications" = "Unknown Message",
-		"Custom" = "Cryptic Message")
-
-	var/list/MsgSound = list("Beep" = 'sound/misc/notice2.ogg',
-		"Enemy Communications Intercepted" = 'sound/AI/intercept2.ogg',
-		"New Command Report Created" = 'sound/AI/commandreport.ogg')
-
 	var/type = input(usr, "Pick a type of report to send", "Report Type", "") as anything in MsgType
-
-	if(type == "Custom")
-		type = input(usr, "What would you like the report type to be?", "Report Type", "Encrypted Transmission") as text|null
-
-	var/customname = input(usr, "Pick a title for the report.", "Title", MsgType[type]) as text|null
-	if(!customname)
-		return
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What's the message?") as message|null
+	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
 	if(!input)
 		return
+	var/customname = input(usr, "Pick a title for the report.", "Title") as text|null
+	if(!customname)
+		return
 
-	switch(alert("Should this be announced to the general population?",,"Yes","No", "Cancel"))
-		if("Yes")
-			var/beepsound = input(usr, "What sound should the announcement make?", "Announcement Sound", "") as anything in MsgSound
+	if(type == "Enemy Communications")
+		if(!customname)
+			customname = type
 
-			command_announcement.Announce(input, customname, MsgSound[beepsound], , , type)
-			print_command_report(input, "[command_name()] Update")
-		else if("No")
-			//same thing as the blob stuff - it's not public, so it's classified, dammit
-			command_announcement.Announce("A report has been downloaded and printed out at all communications consoles.", "Incoming Classified Message", 'sound/AI/commandreport.ogg', from = "[command_name()] Update")
-			print_command_report(input, "Classified [command_name()] Update")
-		else
-			return
+		var/from = input(usr, "What kind of report? Example: Syndicate Communique", "From") as text|null
+		if(!from)
+			from = "Syndicate Communique"
+		switch(alert("Should this be announced to the general population?",,"Yes","No", "Cancel"))
+			if("Yes")
+				communications_announcement.Announce(input, customname, , , , from);
+			else if("No")
+				to_chat(world, "<span class='danger'>[from] available at all communications consoles.</span>")
+			else
+				return
 
+		print_command_report(input, from)
+
+	if(type == "Centcom Report")
+		if(!customname)
+			customname = "Nanotrasen Update"
+
+		var/announce = alert("Should this be announced to the general population?",,"Yes","No")
+		switch(announce)
+			if("Yes")
+				command_announcement.Announce(input, customname);
+			if("No")
+				to_chat(world, "<span class='danger'>New Nanotrasen Update available at all communication consoles.</span>")
+
+		print_command_report(input, "[announce == "No" ? "Classified " : ""][command_name()] Update")
+
+//	world << sound('sound/AI/commandreport.ogg')
 	log_admin("[key_name(src)] has created a communications report: [input]")
 	message_admins("[key_name_admin(src)] has created a communications report", 1)
 	feedback_add_details("admin_verb","CCR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -687,7 +690,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	message_admins("[key_name_admin(usr)] has gibbed [key_name_admin(M)]", 1)
 
 	if(istype(M, /mob/dead/observer))
-		gibs(M.loc)
+		gibs(M.loc, M.viruses)
 		return
 
 	M.gib()
@@ -881,48 +884,6 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	log_admin("[key_name(usr)] blanked all telecomms scripts.")
 	message_admins("[key_name_admin(usr)] blanked all telecomms scripts.")
 	feedback_add_details("admin_verb","RAT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/list_ssds()
-	set category = "Admin"
-	set name = "List SSDs"
-	set desc = "Lists SSD players"
-
-	if(!check_rights(R_ADMIN))
-		return
-
-	var/msg = "<html><head><title>SSD Report</title></head><body>"
-	msg += "SSD Players:<BR><TABLE border='1'>"
-	msg += "<TR><TD><B>Key</B></TD><TD><B>Real Name</B></TD><TD><B>Job</B></TD><TD><B>Mins SSD</B></TD><TD><B>Special Role</B></TD><TD><B>Area</B></TD><TD><B>PPN</B></TD><TD><B>Cryo</B></TD></TR>"
-	var/mins_ssd
-	var/job_string
-	var/key_string
-	var/role_string
-	for(var/mob/living/carbon/human/H in living_mob_list)
-		if(!isLivingSSD(H))
-			continue
-		mins_ssd = round((world.time - H.last_logout) / 600)
-		if(H.job)
-			job_string = H.job
-		else
-			job_string = "-"
-		key_string = H.key
-		if(job_string in command_positions)
-			job_string = "<U>" + job_string + "</U>"
-		role_string = "-"
-		if(H.mind)
-			if(H.mind.special_role)
-				role_string = "<U>[H.mind.special_role]</U>"
-			if(!H.key && H.mind.key)
-				key_string = H.mind.key
-		msg += "<TR><TD>[key_string]</TD><TD>[H.real_name]</TD><TD>[job_string]</TD><TD>[mins_ssd]</TD><TD>[role_string]</TD>"
-		msg += "<TD>[get_area(H)]</TD><TD><A HREF='?_src_=holder;adminplayeropts=\ref[H]'>PP</A></TD>"
-		if(istype(H.loc, /obj/machinery/cryopod))
-			msg += "<TD>In Cryo</TD>"
-		else
-			msg += "<TD><A href='?_src_=holder;cryossd=[H.UID()]'>Cryo</A></TD>"
-		msg += "</TR>"
-	msg += "</TABLE></BODY></HTML>"
-	src << browse(msg, "window=Player_ssd_check")
 
 /client/proc/toggle_ert_calling()
 	set category = "Event"

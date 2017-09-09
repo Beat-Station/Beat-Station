@@ -4,7 +4,7 @@ var/turf/T
 /obj/item/weapon/grenade/bananade
 	name = "bananade"
 	desc = "A yellow grenade."
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "banana"
 	item_state = "flashbang"

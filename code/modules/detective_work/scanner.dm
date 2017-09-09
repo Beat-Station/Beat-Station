@@ -7,11 +7,11 @@
 	desc = "Used to remotely scan objects and biomass for DNA and fingerprints. Can print a report of the findings."
 	icon = 'icons/goonstation/objects/objects.dmi'
 	icon_state = "detscanner"
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = 3
 	item_state = "electronic"
 	flags = CONDUCT | NOBLUDGEON
 	slot_flags = SLOT_BELT
-	origin_tech = "engineering=4;biotech=2;programming=5"
+	origin_tech = "magnets=4;biotech=2"
 	var/scanning = 0
 	var/list/log = list()
 	actions_types = list(/datum/action/item_action/print_report)

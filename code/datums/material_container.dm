@@ -42,7 +42,6 @@
 		materials[MAT_TRANQUILLITE] = new /datum/material/tranquillite()
 
 /datum/material_container/Destroy()
-	QDEL_LIST_ASSOC_VAL(materials)
 	owner = null
 	return ..()
 

@@ -4,28 +4,56 @@
 		eyes.update_colour()
 		update_body()
 
-/mob/living/carbon/human/var/list/bodyparts = list()
-/mob/living/carbon/human/var/list/bodyparts_by_name = list() // map organ names to organs
+/mob/living/carbon/human/var/list/organs = list()
+/mob/living/carbon/human/var/list/organs_by_name = list() // map organ names to organs
 
 // Takes care of organ related updates, such as broken and missing limbs
 /mob/living/carbon/human/proc/handle_organs()
+
+	number_wounds = 0
+	var/force_process = 0
+	var/damage_this_tick = getBruteLoss() + getFireLoss() + getToxLoss()
+	if(damage_this_tick > last_dam)
+		force_process = 1
+	last_dam = damage_this_tick
+	if(force_process)
+		bad_external_organs.Cut()
+		for(var/obj/item/organ/external/Ex in organs)
+			bad_external_organs |= Ex
+
 	//processing internal organs is pretty cheap, do that first.
 	for(var/obj/item/organ/internal/I in internal_organs)
 		I.process()
 
-	for(var/obj/item/organ/external/E in bodyparts)
-		E.process()
-
-		if(!lying && world.time - l_move_time < 15)
-		//Moving around with fractured ribs won't do you any good
-			if(E.is_broken() && E.internal_organs && E.internal_organs.len && prob(15))
-				var/obj/item/organ/internal/I = pick(E.internal_organs)
-				custom_pain("You feel broken bones moving in your [E.name]!", 1)
-				I.take_damage(rand(3,5))
-
 	//handle_stance()
 	handle_grasp()
 	handle_stance()
+
+	if(!force_process && !bad_external_organs.len)
+		return
+
+	for(var/obj/item/organ/external/E in bad_external_organs)
+		if(!E)
+			continue
+		if(!E.need_process())
+			bad_external_organs -= E
+			continue
+		else
+			E.process()
+			number_wounds += E.number_wounds
+
+			if(!lying && world.time - l_move_time < 15)
+			//Moving around with fractured ribs won't do you any good
+				if(E.is_broken() && E.internal_organs && E.internal_organs.len && prob(15))
+					var/obj/item/organ/internal/I = pick(E.internal_organs)
+					custom_pain("You feel broken bones moving in your [E.name]!", 1)
+					I.take_damage(rand(3,5))
+
+				//Moving makes open wounds get infected much faster
+				if(E.wounds.len)
+					for(var/datum/wound/W in E.wounds)
+						if(W.infection_check())
+							W.germ_level += 1
 
 
 /mob/living/carbon/human/proc/handle_stance()
@@ -37,13 +65,12 @@
 	stance_damage = 0
 
 	// Buckled to a bed/chair. Stance damage is forced to 0 since they're sitting on something solid
-	// Not standing, so no need to care about stance
-	if(istype(buckled, /obj/structure/stool/bed) || !isturf(loc))
+	if(istype(buckled, /obj/structure/stool/bed))
 		return
 
 	for(var/limb_tag in list("l_leg","r_leg","l_foot","r_foot"))
-		var/obj/item/organ/external/E = bodyparts_by_name[limb_tag]
-		if(!E || (E.status & ORGAN_DEAD) || E.is_malfunctioning())
+		var/obj/item/organ/external/E = organs_by_name[limb_tag]
+		if(!E || (E.status & (ORGAN_DESTROYED|ORGAN_DEAD)) || E.is_malfunctioning())
 			stance_damage += 2 // let it fail even if just foot&leg. Also malfunctioning happens sporadically so it should impact more when it procs
 		else if(E.is_broken() || !E.is_usable())
 			stance_damage += 1
@@ -62,7 +89,7 @@
 	// standing is poor
 	if(stance_damage >= 8)
 		if(!(lying || resting))
-			if(!(NO_PAIN in species.species_traits))
+			if(species && !(species.flags & NO_PAIN))
 				emote("scream")
 			custom_emote(1, "collapses!")
 		Weaken(5) //can't emote while weakened, apparently.
@@ -73,7 +100,7 @@
 	if(!l_hand && !r_hand)
 		return
 
-	for(var/obj/item/organ/external/E in bodyparts)
+	for(var/obj/item/organ/external/E in organs)
 		if(!E || !E.can_grasp || (E.status & ORGAN_SPLINTED))
 			continue
 
@@ -90,7 +117,7 @@
 					continue
 
 			var/emote_scream = pick("screams in pain and ", "lets out a sharp cry and ", "cries out and ")
-			custom_emote(1, "[(NO_PAIN in species.species_traits) ? "" : emote_scream ]drops what they were holding in their [E.name]!")
+			custom_emote(1, "[(species.flags & NO_PAIN) ? "" : emote_scream ]drops what they were holding in their [E.name]!")
 
 		else if(E.is_malfunctioning())
 
@@ -148,7 +175,7 @@
 /mob/living/carbon/human/proc/handle_trace_chems()
 	//New are added for reagents to random organs.
 	for(var/datum/reagent/A in reagents.reagent_list)
-		var/obj/item/organ/internal/O = pick(bodyparts)
+		var/obj/item/organ/internal/O = pick(organs)
 		O.trace_chemicals[A.name] = 100
 
 /*
@@ -159,7 +186,7 @@ old_ue: Set this to a UE string, and this proc will overwrite the dna of organs 
 */
 /mob/living/carbon/human/proc/sync_organ_dna(var/assimilate = 1, var/old_ue = null)
 	var/ue_to_compare = (old_ue) ? old_ue : dna.unique_enzymes
-	var/list/all_bits = internal_organs|bodyparts
+	var/list/all_bits = internal_organs|organs
 	for(var/obj/item/organ/O in all_bits)
 		if(assimilate || O.dna.unique_enzymes == ue_to_compare)
 			O.set_dna(dna)
@@ -177,8 +204,9 @@ I use this to standardize shadowling dethrall code
 
 /mob/living/carbon/human/has_organic_damage()
 	var/odmg = 0
-	for(var/obj/item/organ/external/O in bodyparts)
+	for(var/obj/item/organ/external/O in organs)
 		if(O.status & ORGAN_ROBOT)
 			odmg += O.brute_dam
 			odmg += O.burn_dam
 	return (health < (100 - odmg))
+

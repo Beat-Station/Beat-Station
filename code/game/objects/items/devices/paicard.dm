@@ -3,7 +3,7 @@
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "pai"
 	item_state = "electronic"
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	slot_flags = SLOT_BELT
 	origin_tech = "programming=2"
 	var/request_cooldown = 5 // five seconds
@@ -31,7 +31,8 @@
 /obj/item/device/paicard/Destroy()
 	if(pai)
 		pai.ghostize()
-		QDEL_NULL(pai)
+		qdel(pai)
+		pai = null
 	QDEL_NULL(radio)
 	return ..()
 

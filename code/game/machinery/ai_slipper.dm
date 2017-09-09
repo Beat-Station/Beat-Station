@@ -5,12 +5,12 @@
 	layer = 3
 	anchored = 1.0
 	var/uses = 20
-	var/disabled = TRUE
+	var/disabled = 1
 	var/lethal = 0
-	var/locked = TRUE
+	var/locked = 1
 	var/cooldown_time = 0
 	var/cooldown_timeleft = 0
-	var/cooldown_on = FALSE
+	var/cooldown_on = 0
 	req_access = list(access_ai_upload)
 
 /obj/machinery/ai_slipper/power_change()
@@ -22,7 +22,6 @@
 		else
 			icon_state = "motion0"
 			stat |= NOPOWER
-			disabled = TRUE
 
 /obj/machinery/ai_slipper/proc/setState(var/enabled, var/uses)
 	disabled = disabled
@@ -49,24 +48,6 @@
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 			return
 	return
-
-/obj/machinery/ai_slipper/proc/ToggleOn()
-	if(stat & (NOPOWER|BROKEN))
-		return
-	disabled = !disabled
-	icon_state = disabled? "motion0":"motion3"
-
-/obj/machinery/ai_slipper/proc/Activate()
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(cooldown_on || disabled)
-		return
-	else
-		new /obj/structure/foam(loc)
-		uses--
-		cooldown_on = TRUE
-		cooldown_time = world.timeofday + 100
-		slip_process()
 
 /obj/machinery/ai_slipper/attack_ai(mob/user)
 	return attack_hand(user)
@@ -106,10 +87,18 @@
 		return 1
 
 	if(href_list["toggleOn"])
-		ToggleOn()
-
+		disabled = !disabled
+		icon_state = disabled? "motion0":"motion3"
 	if(href_list["toggleUse"])
-		Activate()
+		if(cooldown_on || disabled)
+			return
+		else
+			new /obj/structure/foam(loc)
+			uses--
+			cooldown_on = 1
+			cooldown_time = world.timeofday + 100
+			slip_process()
+			return
 
 	attack_hand(usr)
 
@@ -126,5 +115,5 @@
 	if(uses <= 0)
 		return
 	if(uses >= 0)
-		cooldown_on = FALSE
+		cooldown_on = 0
 	power_change()

@@ -5,16 +5,15 @@
 	item_state = "balaclava"
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
-	w_class = WEIGHT_CLASS_SMALL
+	w_class = 2
 	actions_types = list(/datum/action/item_action/adjust)
 	adjusted_flags = SLOT_HEAD
-	species_fit = list("Vox", "Unathi", "Tajaran", "Vulpkanin", "Grey")
+	species_fit = list("Vox", "Unathi", "Tajaran", "Vulpkanin")
 	sprite_sheets = list(
 		"Vox" = 'icons/mob/species/vox/mask.dmi',
 		"Unathi" = 'icons/mob/species/unathi/mask.dmi',
 		"Tajaran" = 'icons/mob/species/tajaran/mask.dmi',
 		"Vulpkanin" = 'icons/mob/species/vulpkanin/mask.dmi',
-		"Grey" = 'icons/mob/species/grey/mask.dmi',
 		"Drask" = 'icons/mob/species/drask/mask.dmi'
 		)
 
@@ -28,14 +27,13 @@
 	item_state = "luchag"
 	flags = BLOCKHAIR
 	flags_inv = HIDEFACE
-	w_class = WEIGHT_CLASS_SMALL
-	species_fit = list("Vox", "Unathi", "Tajaran", "Vulpkanin", "Grey")
+	w_class = 2
+	species_fit = list("Vox", "Unathi", "Tajaran", "Vulpkanin")
 	sprite_sheets = list(
 		"Vox" = 'icons/mob/species/vox/mask.dmi',
 		"Unathi" = 'icons/mob/species/unathi/mask.dmi',
 		"Tajaran" = 'icons/mob/species/tajaran/mask.dmi',
 		"Vulpkanin" = 'icons/mob/species/vulpkanin/mask.dmi',
-		"Grey" = 'icons/mob/species/grey/mask.dmi',
 		"Drask" = 'icons/mob/species/drask/mask.dmi'
 		)
 
