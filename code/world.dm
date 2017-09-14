@@ -396,7 +396,7 @@ var/world_topic_spam_protect_time = world.timeofday
 
 	s += "<b>[station_name()]</b>";
 	s += " ("
-	s += "<a href=\"https://github.com/nopm/Beat-Station\">" //Change this to wherever you want the hub to link to.
+	s += "<a href=\"https://github.com/Beat-Station/Beat-Station\">" //Change this to wherever you want the hub to link to.
 	s += "[game_version]"
 	s += "</a>"
 	s += ")"
