@@ -485,7 +485,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list(
 	color = COLOR_RED
 	desc = "A coil of power cable."
 	throwforce = 10
-	w_class = 2
+	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 2
 	throw_range = 5
 	materials = list(MAT_METAL=10, MAT_GLASS=5)
@@ -521,11 +521,11 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list(
 /obj/item/stack/cable_coil/attack(mob/M, mob/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/external/S = H.organs_by_name[user.zone_sel.selecting]
+		var/obj/item/organ/external/S = H.bodyparts_by_name[user.zone_sel.selecting]
 
 		if(!S)
 			return
-		if(!(S.status & ORGAN_ROBOT) || user.a_intent != I_HELP || S.open == 2)
+		if(!(S.status & ORGAN_ROBOT) || user.a_intent != INTENT_HELP || S.open == 2)
 			return ..()
 
 		if(S.burn_dam)
@@ -568,9 +568,9 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list(
 
 /obj/item/stack/cable_coil/proc/update_wclass()
 	if(amount == 1)
-		w_class = 1
+		w_class = WEIGHT_CLASS_TINY
 	else
-		w_class = 2
+		w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/stack/cable_coil/examine(mob/user)
 	if(!..(user, 1))
@@ -715,7 +715,7 @@ var/global/list/datum/stack_recipe/cable_coil_recipes = list(
 			// cable is pointing at us, we're standing on an open tile
 			// so create a stub pointing at the clicked cable on our tile
 
-			place_turf(T, user, turn(dirn, 180))
+			place_turf(U, user, turn(dirn, 180))
 			return
 
 	// exisiting cable doesn't point at our position, so see if it's a stub

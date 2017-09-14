@@ -52,6 +52,9 @@ var/list/karma_spenders = list()
 /mob/proc/can_give_karma()
 	if(!client)
 		return 0
+	if(config.disable_karma)
+		to_chat(src, "<span class='warning'>Karma is disabled.</span>")
+		return 0
 	if(!ticker || !player_list.len || (ticker.current_state == GAME_STATE_PREGAME))
 		to_chat(src, "<span class='warning'>You can't award karma until the game has started.</span>")
 		return 0
@@ -84,7 +87,7 @@ var/list/karma_spenders = list()
 /mob/verb/spend_karma_list()
 	set name = "Award Karma"
 	set desc = "Let the gods know whether someone's been nice. Can only be used once per round."
-	set category = "OOC"
+	set category = "Special Verbs"
 
 	if(!can_give_karma())
 		return
@@ -113,10 +116,13 @@ var/list/karma_spenders = list()
 /mob/verb/spend_karma(var/mob/M)
 	set name = "Award Karma to Player"
 	set desc = "Let the gods know whether someone's been nice. Can only be used once per round."
-	set category = "OOC"
+	set category = "Special Verbs"
 
 	if(!M)
 		to_chat(usr, "Please right click a mob to award karma directly, or use the 'Award Karma' verb to select a player from the player listing.")
+		return
+	if(config.disable_karma) // this is here because someone thought it was a good idea to add an alert box before checking if they can even give a mob karma
+		to_chat(usr, "<span class='warning'>Karma is disabled.</span>")
 		return
 	if(alert("Give [M.name] good karma?", "Karma", "Yes", "No") != "Yes")
 		return
@@ -143,7 +149,11 @@ var/list/karma_spenders = list()
 /client/verb/check_karma()
 	set name = "Check Karma"
 	set desc = "Reports how much karma you have accrued."
-	set category = "OOC"
+	set category = "Special Verbs"
+
+	if(config.disable_karma)
+		to_chat(src, "<span class='warning'>Karma is disabled.</span>")
+		return 0
 
 	var/currentkarma=verify_karma()
 	to_chat(usr, {"<br>You have <b>[currentkarma]</b> available."})
@@ -175,6 +185,10 @@ You've gained <b>[totalkarma]</b> total karma in your time here.<br>"}
 	set name = "karmashop"
 	set desc = "Spend your hard-earned karma here"
 	set hidden = 1
+
+	if(config.disable_karma)
+		to_chat(src, "<span class='warning'>Karma is disabled.</span>")
+		return 0
 
 	karmashopmenu()
 	return

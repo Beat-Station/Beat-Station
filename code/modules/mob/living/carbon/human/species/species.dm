@@ -25,7 +25,6 @@
 	var/unarmed_type = /datum/unarmed_attack
 	var/slowdown = 0              // Passive movement speed malus (or boost, if negative)
 	var/silent_steps = 0          // Stops step noises
-	var/footprints = /obj/effect/decal/cleanable/blood/tracks/footprints
 
 	var/breath_type = "oxygen"   // Non-oxygen gas breathed, if any.
 	var/poison_type = "plasma"   // Poisonous air.
@@ -46,6 +45,7 @@
 	var/reagent_tag                 //Used for metabolizing reagents.
 	var/hunger_drain = HUNGER_FACTOR
 	var/digestion_ratio = 1 //How quickly the species digests/absorbs reagents.
+	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
 
 	var/siemens_coeff = 1 //base electrocution coefficient
 
@@ -77,6 +77,8 @@
 	var/brain_mod = 1    // Brain damage damage reduction/amplification
 	var/stun_mod = 1	 // If a species is more/less impacated by stuns/weakens/paralysis
 
+	var/blood_damage_type = OXY //What type of damage does this species take if it's low on blood?
+
 	var/total_health = 100
 	var/punchdamagelow = 0       //lowest possible punch damage
 	var/punchdamagehigh = 9      //highest possible punch damage
@@ -90,7 +92,8 @@
 
 	var/list/allowed_consumed_mobs = list() //If a species can consume mobs, put the type of mobs it can consume here.
 
-	var/flags = 0       // Various specific features.
+	var/list/species_traits = list()
+
 	var/clothing_flags = 0 // Underwear and socks.
 	var/exotic_blood
 	var/bodyflags = 0
@@ -109,7 +112,6 @@
 	var/icon/icon_template
 	var/is_small
 	var/show_ssd = 1
-	var/virus_immune
 	var/can_revive_by_healing				// Determines whether or not this species can be revived by simply healing them
 	var/has_gender = TRUE
 
@@ -188,20 +190,12 @@
 
 /datum/species/proc/create_organs(var/mob/living/carbon/human/H) //Handles creation of mob organs.
 
-	for(var/obj/item/organ/internal/iorgan in H.internal_organs)
-		if(iorgan in H.internal_organs)
-			qdel(iorgan)
+	QDEL_LIST(H.internal_organs)
+	QDEL_LIST(H.bodyparts)
 
-	for(var/obj/item/organ/organ in H.contents)
-		if(organ in H.organs)
-			qdel(organ)
-
-	if(H.organs)                  H.organs.Cut()
-	if(H.organs_by_name)          H.organs_by_name.Cut()
-
-	H.organs = list()
-	H.internal_organs = list()
-	H.organs_by_name = list()
+	LAZYREINITLIST(H.bodyparts)
+	LAZYREINITLIST(H.bodyparts_by_name)
+	LAZYREINITLIST(H.internal_organs)
 
 	for(var/limb_type in has_limbs)
 		var/list/organ_data = has_limbs[limb_type]
@@ -214,10 +208,10 @@
 		// organ new code calls `insert` on its own
 		new organ(H)
 
-	for(var/name in H.organs_by_name)
-		H.organs |= H.organs_by_name[name]
+	for(var/name in H.bodyparts_by_name)
+		H.bodyparts |= H.bodyparts_by_name[name]
 
-	for(var/obj/item/organ/external/O in H.organs)
+	for(var/obj/item/organ/external/O in H.bodyparts)
 		O.owner = H
 
 /datum/species/proc/handle_breath(var/datum/gas_mixture/breath, var/mob/living/carbon/human/H)
@@ -239,8 +233,7 @@
 
 	if(O2_pp < atmos_requirements["min_oxy"])
 		if(prob(20))
-			spawn(0)
-				H.emote("gasp")
+			H.emote("gasp")
 
 		H.failed_last_breath = 1
 		if(O2_pp > 0)
@@ -262,8 +255,7 @@
 
 	if(N2_pp < atmos_requirements["min_nitro"])
 		if(prob(20))
-			spawn(0)
-				H.emote("gasp")
+			H.emote("gasp")
 
 		H.failed_last_breath = 1
 		if(N2_pp > 0)
@@ -285,8 +277,7 @@
 
 	if(Tox_pp < atmos_requirements["min_tox"])
 		if(prob(20))
-			spawn(0)
-				H.emote("gasp")
+			H.emote("gasp")
 
 		H.failed_last_breath = 1
 		if(Tox_pp > 0)
@@ -309,8 +300,7 @@
 
 	if(CO2_pp < atmos_requirements["min_co2"])
 		if(prob(20))
-			spawn(0)
-				H.emote("gasp")
+			H.emote("gasp")
 
 		H.failed_last_breath = 1
 		if(CO2_pp)
@@ -328,8 +318,7 @@
 			if(world.time - H.co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 				H.adjustOxyLoss(8)
 		if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
-			spawn(0)
-				H.emote("cough")
+			H.emote("cough")
 	else
 		H.clear_alert("co2")
 		H.co2overloadtime = 0
@@ -355,8 +344,7 @@
 					H.AdjustSleeping(8, bound_lower = 0, bound_upper = 10)
 			else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 				if(prob(20))
-					spawn(0)
-						H.emote(pick("giggle", "laugh"))
+					H.emote(pick("giggle", "laugh"))
 
 	handle_temperature(breath, H)
 	return 1
@@ -392,6 +380,69 @@
 			if(heat_level_3_breathe to INFINITY)
 				H.apply_damage(hot_env_multiplier*HEAT_GAS_DAMAGE_LEVEL_3, BURN, "head", used_weapon = "Excessive Heat")
 
+////////////////
+// MOVE SPEED //
+////////////////
+
+/datum/species/proc/movement_delay(mob/living/carbon/human/H)
+	. = 0	//We start at 0.
+	var/flight = 0	//Check for flight and flying items
+	var/ignoreslow = 0
+	var/gravity = 0
+
+	if(H.flying)
+		flight = 1
+
+	if((H.status_flags & IGNORESLOWDOWN) || (RUN in H.mutations))
+		ignoreslow = 1
+
+	if(has_gravity(H))
+		gravity = 1
+
+	if(!ignoreslow && gravity)
+		if(slowdown)
+			. = slowdown
+
+		if(H.wear_suit)
+			. += H.wear_suit.slowdown
+		if(!H.buckled)
+			if(H.shoes)
+				. += H.shoes.slowdown
+		if(H.back)
+			. += H.back.slowdown
+		if(H.l_hand && (H.l_hand.flags & HANDSLOW))
+			. += H.l_hand.slowdown
+		if(H.r_hand && (H.r_hand.flags & HANDSLOW))
+			. += H.r_hand.slowdown
+
+		var/health_deficiency = (H.maxHealth - H.health + H.staminaloss)
+		var/hungry = (500 - H.nutrition)/5 // So overeat would be 100 and default level would be 80
+		if(H.reagents)
+			for(var/datum/reagent/R in H.reagents.reagent_list)
+				if(R.shock_reduction)
+					health_deficiency -= R.shock_reduction
+		if(health_deficiency >= 40)
+			if(flight)
+				. += (health_deficiency / 75)
+			else
+				. += (health_deficiency / 25)
+		if(H.shock_stage >= 10)
+			. += 3
+		. += 2 * H.stance_damage //damaged/missing feet or legs is slow
+
+		if((hungry >= 70) && !flight)
+			. += hungry/50
+		if(FAT in H.mutations)
+			. += (1.5 - flight)
+		if(H.bodytemperature < BODYTEMP_COLD_DAMAGE_LIMIT)
+			. += (BODYTEMP_COLD_DAMAGE_LIMIT - H.bodytemperature) / COLD_SLOWDOWN_FACTOR
+
+		if(H.status_flags & GOTTAGOFAST)
+			. -= 1
+		if(H.status_flags & GOTTAGOREALLYFAST)
+			. -= 2
+	return .
+
 /datum/species/proc/handle_post_spawn(var/mob/living/carbon/C) //Handles anything not already covered by basic species assignment.
 	grant_abilities(C)
 	return
@@ -419,7 +470,11 @@
 // Return 1 if it should do normal processing too
 // Return 0 if it shouldn't deplete and do its normal effect
 // Other return values will cause weird badness
-/datum/species/proc/handle_reagents(var/mob/living/carbon/human/H, var/datum/reagent/R)
+/datum/species/proc/handle_reagents(mob/living/carbon/human/H, datum/reagent/R)
+	if(R.id == exotic_blood)
+		H.blood_volume = min(H.blood_volume + round(R.volume, 0.1), BLOOD_VOLUME_NORMAL)
+		H.reagents.del_reagent(R.id)
+		return 0
 	return 1
 
 // For special snowflake species effects
@@ -465,7 +520,6 @@
 	var/attack_sound = "punch"
 	var/miss_sound = 'sound/weapons/punchmiss.ogg'
 	var/sharp = 0
-	var/edge = 0
 
 /datum/unarmed_attack/punch
 	attack_verb = list("punch")
@@ -481,7 +535,6 @@
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	sharp = 1
-	edge = 1
 
 /datum/unarmed_attack/claws/armalis
 	attack_verb = list("slash", "claw")
@@ -536,7 +589,7 @@
 				if(SCREWYHUD_DEAD)	H.healths.icon_state = "health7"
 				if(SCREWYHUD_HEALTHY)	H.healths.icon_state = "health0"
 				else
-					switch(100 - ((flags & NO_PAIN) ? 0 : H.traumatic_shock) - H.staminaloss)
+					switch(100 - ((NO_PAIN in species_traits) ? 0 : H.traumatic_shock) - H.staminaloss)
 						if(100 to INFINITY)		H.healths.icon_state = "health0"
 						if(80 to 100)			H.healths.icon_state = "health1"
 						if(60 to 80)			H.healths.icon_state = "health2"
@@ -555,7 +608,7 @@
 			var/list/cached_overlays = H.healthdoll.cached_healthdoll_overlays
 			// Use the dead health doll as the base, since we have proper "healthy" overlays now
 			H.healthdoll.icon_state = "healthdoll_DEAD"
-			for(var/obj/item/organ/external/O in H.organs)
+			for(var/obj/item/organ/external/O in H.bodyparts)
 				var/damage = O.burn_dam + O.brute_dam
 				var/comparison = (O.max_damage/5)
 				var/icon_num = 0
@@ -689,3 +742,9 @@ It'll return null if the organ doesn't correspond, so include null checks when u
 
 	if(H.see_override)	//Override all
 		H.see_invisible = H.see_override
+
+/datum/species/proc/water_act(mob/living/carbon/human/M, volume, temperature, source)
+	if(temperature >= 330)
+		M.bodytemperature = M.bodytemperature + (temperature - M.bodytemperature)
+	if(temperature <= 280)
+		M.bodytemperature = M.bodytemperature - (M.bodytemperature - temperature)

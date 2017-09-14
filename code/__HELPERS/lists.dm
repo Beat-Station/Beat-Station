@@ -75,9 +75,23 @@
 //returns a new list with only atoms that are in typecache L
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	. = list()
-	for (var/thing in atoms)
+	for(var/thing in atoms)
 		var/atom/A = thing
 		if(typecache[A.type])
+			. += A
+
+/proc/typecache_filter_list_reverse(list/atoms, list/typecache)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if(!typecache[A.type])
+			. += A
+
+/proc/typecache_filter_multi_list_exclusion(list/atoms, list/typecache_include, list/typecache_exclude)
+	. = list()
+	for(var/thing in atoms)
+		var/atom/A = thing
+		if(typecache_include[A.type] && !typecache_exclude[A.type])
 			. += A
 
 //Like typesof() or subtypesof(), but returns a typecache instead of a list
@@ -653,3 +667,6 @@ proc/dd_sortedObjectList(list/incoming)
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= L.len ? L[I] : null) : L[I]) : null)
 #define LAZYLEN(L) length(L)
 #define LAZYCLEARLIST(L) if(L) L.Cut()
+
+// LAZYING PT 2: THE LAZENING
+#define LAZYREINITLIST(L) LAZYCLEARLIST(L); LAZYINITLIST(L);

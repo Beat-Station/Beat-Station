@@ -265,6 +265,17 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	cost = 1000
 	crate_name = "disabler crate"
 
+/datum/supply_pack/security/forensics
+	name = "Forensics Crate"
+	contains = list(/obj/item/device/detective_scanner,
+					/obj/item/weapon/storage/box/evidence,
+					/obj/item/device/camera,
+					/obj/item/device/taperecorder,
+					/obj/item/toy/crayon/white,
+					/obj/item/clothing/head/det_hat)
+	cost = 2000
+	crate_name = "forensics crate"
+
 ///// Armory stuff
 
 /datum/supply_pack/security/armory
@@ -341,6 +352,17 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /////// Weapons: Specialist
 
 /datum/supply_pack/security/armory/ballistic
+	name = "Riot Shotguns Crate"
+	contains = list(/obj/item/weapon/gun/projectile/shotgun/riot,
+					/obj/item/weapon/gun/projectile/shotgun/riot,
+					/obj/item/weapon/gun/projectile/shotgun/riot,
+					/obj/item/weapon/storage/belt/bandolier,
+					/obj/item/weapon/storage/belt/bandolier,
+					/obj/item/weapon/storage/belt/bandolier)
+	cost = 5000
+	crate_name = "riot shotgun crate"
+
+/datum/supply_pack/security/armory/ballisticauto
 	name = "Combat Shotguns Crate"
 	contains = list(/obj/item/weapon/gun/projectile/shotgun/automatic/combat,
 					/obj/item/weapon/gun/projectile/shotgun/automatic/combat,
@@ -348,8 +370,30 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/storage/belt/bandolier,
 					/obj/item/weapon/storage/belt/bandolier,
 					/obj/item/weapon/storage/belt/bandolier)
-	cost = 2000
+	cost = 8000
 	crate_name = "combat shotgun crate"
+
+/datum/supply_pack/security/armory/buckshotammo
+	name = "Buckshot Ammo Crate"
+	contains = list(/obj/item/ammo_box/shotgun/buck,
+					/obj/item/weapon/storage/box/buck,
+					/obj/item/weapon/storage/box/buck,
+					/obj/item/weapon/storage/box/buck,
+					/obj/item/weapon/storage/box/buck,
+					/obj/item/weapon/storage/box/buck)
+	cost = 4500
+	crate_name = "buckshot ammo crate"
+
+/datum/supply_pack/security/armory/slugammo
+	name = "Slug Ammo Crate"
+	contains = list(/obj/item/ammo_box/shotgun,
+					/obj/item/weapon/storage/box/slug,
+					/obj/item/weapon/storage/box/slug,
+					/obj/item/weapon/storage/box/slug,
+					/obj/item/weapon/storage/box/slug,
+					/obj/item/weapon/storage/box/slug)
+	cost = 4500
+	crate_name = "slug ammo crate"
 
 /datum/supply_pack/security/armory/expenergy
 	name = "Energy Guns Crate"
@@ -877,6 +921,13 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	crate_name = "tank transfer valves crate"
 	access = access_rd
 
+/datum/supply_pack/science/prototype
+	name = "Machine Prototype Crate"
+	contains = list(/obj/item/device/machineprototype)
+	cost = 8000
+	crate_type = /obj/structure/closet/crate/secure/scisec
+	crate_name = "machine prototype crate"
+	access = access_research
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Organic /////////////////////////////////////////
@@ -896,6 +947,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/reagent_containers/food/condiment/soymilk,
 					/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
 					/obj/item/weapon/reagent_containers/food/condiment/peppermill,
+					/obj/item/weapon/kitchen/rollingpin,
 					/obj/item/weapon/storage/fancy/egg_box,
 					/obj/item/weapon/reagent_containers/food/condiment/enzyme,
 					/obj/item/weapon/reagent_containers/food/condiment/sugar,
@@ -912,7 +964,8 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	contains = list(/obj/item/pizzabox/margherita,
 					/obj/item/pizzabox/mushroom,
 					/obj/item/pizzabox/meat,
-					/obj/item/pizzabox/vegetable)
+					/obj/item/pizzabox/vegetable,
+					/obj/item/pizzabox/hawaiian)
 	cost = 6000
 	crate_name = "Pizza crate"
 
@@ -1329,7 +1382,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	/obj/item/weapon/reagent_containers/glass/paint/black,
 	/obj/item/weapon/reagent_containers/glass/paint/white,
 	/obj/item/weapon/reagent_containers/glass/paint/remover,
-	/obj/item/weapon/contraband/poster/legit,
+	/obj/item/weapon/poster/random_official,
 	/obj/item/stack/wrapping_paper,
 	/obj/item/stack/wrapping_paper,
 	/obj/item/stack/wrapping_paper)
@@ -1338,11 +1391,11 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_pack/misc/posters
 	name = "Corporate Posters Crate"
-	contains = list(/obj/item/weapon/contraband/poster/legit,
-					/obj/item/weapon/contraband/poster/legit,
-					/obj/item/weapon/contraband/poster/legit,
-					/obj/item/weapon/contraband/poster/legit,
-					/obj/item/weapon/contraband/poster/legit)
+	contains = list(/obj/item/weapon/poster/random_official,
+					/obj/item/weapon/poster/random_official,
+					/obj/item/weapon/poster/random_official,
+					/obj/item/weapon/poster/random_official,
+					/obj/item/weapon/poster/random_official)
 	cost = 800
 	crate_name = "corporate posters crate"
 
@@ -1413,7 +1466,9 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/clothing/mask/gas/mime,
 					/obj/item/clothing/head/beret,
 					/obj/item/clothing/suit/suspenders,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing)
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofbanana
+					)
 	cost = 1000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "standard costumes"
@@ -1507,10 +1562,26 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 	crate_name = "foam force pistols crate"
 	contraband = 1
 
+/datum/supply_pack/misc/bigband
+	name = "Big band instrument collection"
+	contains = list(/obj/item/device/instrument/violin,
+					/obj/item/device/instrument/guitar,
+					/obj/item/device/instrument/eguitar,
+					/obj/item/device/instrument/glockenspiel,
+					/obj/item/device/instrument/accordion,
+					/obj/item/device/instrument/saxophone,
+					/obj/item/device/instrument/trombone,
+					/obj/item/device/instrument/recorder,
+					/obj/item/device/instrument/harmonica,
+					/obj/item/device/instrument/xylophone,
+					/obj/structure/piano)
+	cost = 5000
+	crate_name = "Big band musical instruments collection"
+
 /datum/supply_pack/misc/randomised/contraband
 	num_contained = 5
 	contains = list(/obj/item/weapon/storage/pill_bottle/random_drug_bottle,
-					/obj/item/weapon/contraband/poster,
+					/obj/item/weapon/poster/random_contraband,
 					/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,
 					/obj/item/weapon/storage/fancy/cigarettes/cigpack_shadyjims)
 	name = "Contraband Crate"

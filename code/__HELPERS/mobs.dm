@@ -466,3 +466,7 @@ Proc for attack log creation, because really why not
 	set hidden = 1
 	set name = ".mouse"
 	LogMouseMacro(".mouse", params)
+
+/proc/update_all_mob_security_hud()
+	for(var/mob/living/carbon/human/H in mob_list)
+		H.sec_hud_set_security_status()
