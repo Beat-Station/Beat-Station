@@ -243,7 +243,7 @@
 		gear = params2list(query.item[51])
 		autohiss_mode = text2num(query.item[52])
 
-		var/forbidden = params2list(query.item[66])
+		var/forbidden = params2list(query.item[53])
 		virgin = forbidden["virgin"]
 		anal_virgin = forbidden["anal_virgin"]
 
