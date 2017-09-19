@@ -49,6 +49,7 @@
 	//Default styles for created mobs.
 	default_hair = "Antennae"
 
+	genitals = 1
 	anus = 1
 
 /datum/species/wryn/handle_death(var/mob/living/carbon/human/H)
@@ -115,6 +116,9 @@
 		"resonant crystal" = /obj/item/organ/internal/nucleation/resonant_crystal
 		)
 	vision_organ = /obj/item/organ/internal/eyes/luminescent_crystal
+
+	genitals = 1
+	anus = 1
 
 /datum/species/nucleation/handle_post_spawn(var/mob/living/carbon/human/H)
 	H.light_color = "#1C1C00"
