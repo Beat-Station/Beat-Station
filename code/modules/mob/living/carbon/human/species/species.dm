@@ -172,8 +172,8 @@
 		)
 	var/list/proc/species_abilities = list()
 
-	var/genitals = 0
-	var/anus = 0
+	var/genitals = 1
+	var/anus = 1
 
 /datum/species/New()
 	//If the species has eyes, they are the default vision organ
