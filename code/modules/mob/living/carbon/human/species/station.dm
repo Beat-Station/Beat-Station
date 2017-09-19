@@ -355,7 +355,10 @@
 		"is twisting their own neck!",
 		"is holding their breath!",
 		"is deeply inhaling oxygen!")
-
+	
+	genitals = 1
+	anus = 1
+	
 /datum/species/vox/handle_death(var/mob/living/carbon/human/H)
 	H.stop_tail_wagging(1)
 
@@ -489,6 +492,9 @@
 		"is holding their breath!",
 		"is huffing oxygen!")
 
+	genitals = 1
+	anus = 1
+	
 /datum/species/vox/armalis/handle_reagents() //Skip the Vox oxygen reagent toxicity. Armalis are above such things.
 	return 1
 
@@ -536,6 +542,7 @@
 		"is stabbing themselves with their mandibles!",
 		"is holding their breath!")
 
+	genitals = 1
 	anus = 1
 
 /datum/species/slime
@@ -579,6 +586,9 @@
 		"is melting into a puddle!",
 		"is ripping out their own core!",
 		"is turning a dull, brown color and melting into a puddle!")
+
+	genitals = 1
+	anus = 1
 
 	var/list/mob/living/carbon/human/recolor_list = list()
 
@@ -777,6 +787,9 @@
 	if(speech_pref)
 		H.mind.speech_span = "wingdings"
 
+	genitals = 1
+	anus = 1
+
 /datum/species/diona
 	name = "Diona"
 	name_plural = "Dionaea"
@@ -852,6 +865,9 @@
 		"is losing branches!",
 		"pulls out a secret stash of herbicide and takes a hearty swig!",
 		"is pulling themselves apart!")
+
+	genitals = 1
+	anus = 1
 
 /datum/species/diona/can_understand(var/mob/other)
 	if(istype(other, /mob/living/simple_animal/diona))
@@ -971,6 +987,9 @@
 		"is frying their own circuits!",
 		"is blocking their ventilation port!")
 
+	genitals = 1
+	anus = 1
+
 	species_abilities = list(
 		/mob/living/carbon/human/proc/change_monitor
 		)
@@ -1020,6 +1039,9 @@
 		"is jamming fingers through their big eyes!",
 		"is sucking in warm air!",
 		"is holding their breath!")
+
+	genitals = 1
+	anus = 1
 
 	flags = IS_WHITELISTED | HAS_LIPS
 	clothing_flags = HAS_UNDERWEAR | HAS_UNDERSHIRT
