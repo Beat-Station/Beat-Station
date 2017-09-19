@@ -172,7 +172,7 @@
 		)
 	var/list/proc/species_abilities = list()
 
-	var/genitals = 1
+	var/genitals = 1  //vai adiantar o processo inteiro de não ter que colocar em todos as species
 	var/anus = 1
 
 /datum/species/New()
