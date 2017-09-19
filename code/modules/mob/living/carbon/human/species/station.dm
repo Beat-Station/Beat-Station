@@ -935,6 +935,8 @@
 	tox_mod = 0
 	clone_mod = 0
 	oxy_mod = 0
+	warning_low_pressure = -1  //ajustes massa bicho
+	hazard_low_pressure = -1
 	death_message = "gives one shrill beep before falling limp, their monitor flashing blue before completely shutting off..."
 
 	flags = IS_WHITELISTED | NO_BREATHE | NO_SCAN | NO_BLOOD | NO_PAIN | NO_DNA | RADIMMUNE | ALL_RPARTS| NOTRANSSTING
