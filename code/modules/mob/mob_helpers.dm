@@ -576,9 +576,6 @@ var/list/intents = list(INTENT_HELP,INTENT_DISARM,INTENT_GRAB,INTENT_HARM)
 
 		rename_character(oldname, newname)
 
-/mob/proc/get_footprint()//returns the typepath of the footprint/bloodt trail decal that the mob currently uses
-	return null
-
 /proc/cultslur(n) // Inflicted on victims of a stun talisman
 	var/phrase = html_decode(n)
 	var/leng = lentext(phrase)

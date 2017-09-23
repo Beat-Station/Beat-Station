@@ -61,8 +61,8 @@
 
 		if(ishuman(A))
 			var/mob/living/carbon/human/M = A
-			/*if(M.lying)
-				return 1*/
+			if(M.lying)
+				return 1
 
 			if(M.flying)
 				return ..()
