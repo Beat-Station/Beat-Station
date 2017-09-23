@@ -55,9 +55,6 @@
 /mob/living/proc/can_stand()
 	return !(weakened || paralysis || stat || (status_flags & FAKEDEATH))
 
-/mob/living/proc/can_crawl()
-	return !(weakened || paralysis || stat || stunned || (status_flags & FAKEDEATH) || buckled)
-
 // Whether the mob is capable of actions or not
 /mob/living/incapacitated(ignore_restraints = FALSE, ignore_grab = FALSE, ignore_lying = FALSE)
 	if(stat || paralysis || stunned || weakened || (!ignore_restraints && restrained()) || (!ignore_lying && lying))
@@ -69,26 +66,21 @@
 	return eye_blurry
 
 //Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
-/mob/living/update_canmove(delay_action_updates = 0, force_lying_update = 0)
+/mob/living/update_canmove(delay_action_updates = 0)
 	var/fall_over = !can_stand()
-	var/can_crawl = can_crawl()
 	var/buckle_lying = !(buckled && !buckled.buckle_lying)
 	if(fall_over || resting || stunned)
 		drop_r_hand()
 		drop_l_hand()
 	else
 		lying = 0
+		canmove = 1
 	if(buckled)
 		lying = 90 * buckle_lying
 	else if((fall_over || resting) && !lying)
 		fall(fall_over)
-	else if(can_crawl && lying && force_lying_update)//crawling direction update. God save us.
-		if(dir == EAST && lying != 90)
-			lying = 90
-		else if(dir == WEST && lying != 270)
-			lying = 270
 
-	canmove = can_crawl
+	canmove = !(fall_over || resting || stunned || buckled)
 	density = !lying
 	if(lying)
 		if(layer == initial(layer))
