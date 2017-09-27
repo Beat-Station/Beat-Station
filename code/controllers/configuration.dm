@@ -189,6 +189,8 @@
 
 	var/disable_karma = 0 // Disable all karma functions and unlock karma jobs by default
 
+	var/forbidden_active = 0
+
 /datum/configuration/New()
 	var/list/L = subtypesof(/datum/game_mode)
 	for(var/T in L)
@@ -593,6 +595,9 @@
 
 				if("disable_karma")
 					disable_karma = 1
+
+				if("forbidden_active")
+					forbidden_active = 1
 
 				else
 					diary << "Unknown setting in configuration: '[name]'"

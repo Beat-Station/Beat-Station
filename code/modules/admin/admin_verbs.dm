@@ -143,7 +143,8 @@ var/list/admin_verbs_server = list(
 	/client/proc/set_ooc,
 	/client/proc/reset_ooc,
 	/client/proc/toggle_civilians,
-	/client/proc/toggle_joblimit
+	/client/proc/toggle_joblimit,
+	/client/proc/toggle_forbidden
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/cmd_admin_list_open_jobs,
@@ -900,6 +901,17 @@ var/list/admin_verbs_snpc = list(
 	config.job_limit = !config.job_limit
 	log_admin("[key_name(usr)] has [config.job_limit  ? "enabled" : "disabled"] joblimit.")
 	message_admins("[key_name_admin(usr)] has [config.job_limit  ? "enabled" : "disabled"] joblimit.")
+
+/client/proc/toggle_forbidden()
+	set name = "Toggle FF"
+	set category = "Server"
+
+	if(!check_rights(R_SERVER))
+		return
+
+	config.forbidden_active = !config.forbidden_active
+	log_admin("[key_name(usr)] has [config.forbidden_active  ? "enabled" : "disabled"] FF.")
+	message_admins("[key_name_admin(usr)] has [config.forbidden_active  ? "enabled" : "disabled"] FF.")
 
 /client/proc/toggle_civilians()
 	set name = "Toggle Civilians entry"
