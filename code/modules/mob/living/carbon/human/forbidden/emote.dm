@@ -3,7 +3,7 @@
  */
 
 /mob/living/carbon/human/proc/actionEmote(mob/living/carbon/human/P, datum/forbidden/emote/emote)
-	if(!istype(P) || !istype(emote) || !check_forbidden_cooldown())
+	if(!istype(P) || !istype(emote) || !check_forbidden_cooldown() || !config.forbidden_active)
 		return 0
 
 	if(!emote.conditions(src, P))

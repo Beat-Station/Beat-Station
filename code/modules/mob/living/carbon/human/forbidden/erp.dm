@@ -33,6 +33,8 @@
 	return ..()
 
 /mob/living/carbon/human/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = not_restrained_state)
+	if(!config.forbidden_active) return
+
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "erp.tmpl", "Forbidden Fruits", 450, 550, state = state)
@@ -100,7 +102,7 @@
 	return data
 
 /mob/living/carbon/human/proc/process_erp_href(href_list, mob/living/carbon/human/user)
-	if(user.restrained())
+	if(user.restrained() || !config.forbidden_active)
 		return 1
 
 	if(href_list["action"])
@@ -221,7 +223,7 @@ mob/living/carbon/human/proc/breast_nude()
  */
 
 /mob/living/carbon/human/proc/fuck(mob/living/carbon/human/P, datum/forbidden/action/action)
-	if(!istype(P) || !istype(action) || !check_forbidden_cooldown())
+	if(!istype(P) || !istype(action) || !check_forbidden_cooldown() || !config.forbidden_active)
 		return 0
 
 	if(!action.conditions(src, P))
@@ -320,7 +322,7 @@ mob/living/carbon/human/proc/breast_nude()
 	set category = "IC"
 	set src in view(1)
 
-	if(!ishuman(usr))
+	if(!ishuman(usr) || !config.forbidden_active)
 		return
 	if(usr.incapacitated(ignore_lying = TRUE))
 		return
