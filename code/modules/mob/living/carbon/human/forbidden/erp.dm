@@ -27,14 +27,12 @@
 
 /mob/living/carbon/human/MouseDrop_T(mob/living/carbon/human/target, mob/living/carbon/human/user)
 	// User drag himself to [src]
-	if(istype(target) && istype(user))
+	if(istype(target) && istype(user) && config.forbidden_active)
 		if(user == target && get_dist(user, src) <= 1)
 			ui_interact(user)
 	return ..()
 
 /mob/living/carbon/human/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/topic_state/state = not_restrained_state)
-	if(!config.forbidden_active) return
-
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
 		ui = new(user, src, ui_key, "erp.tmpl", "Forbidden Fruits", 450, 550, state = state)
@@ -103,7 +101,7 @@
 
 /mob/living/carbon/human/proc/process_erp_href(href_list, mob/living/carbon/human/user)
 	if(user.restrained() || !config.forbidden_active)
-		return 1
+		return 0
 
 	if(href_list["action"])
 		if(!(href_list["action"] in forbidden_actions))
