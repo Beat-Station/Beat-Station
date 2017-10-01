@@ -509,6 +509,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							g2g = 0
 							break
 						switch(M)
+							if(MAT_METAL)
+								linked_imprinter.m_amount = max(0, (linked_imprinter.m_amount-being_built.materials[M]/coeff))
 							if(MAT_GLASS)
 								linked_imprinter.g_amount = max(0, (linked_imprinter.g_amount-being_built.materials[M]/coeff))
 							if(MAT_GOLD)
@@ -563,6 +565,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			desired_num_sheets = text2num(href_list["imprinter_ejectsheet_amt"])
 		var/res_amount, type
 		switch(href_list["imprinter_ejectsheet"])
+			if(MAT_METAL)
+				type = /obj/item/stack/sheet/metal
+				res_amount = "m_amount"
 			if(MAT_GLASS)
 				type = /obj/item/stack/sheet/glass
 				res_amount = "g_amount"
@@ -848,6 +853,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		if(submenu == 2)
 			var/list/materials_list = list()
 			data["loaded_materials"] = materials_list
+			materials_list[++materials_list.len] = list("name" = "Metal", "id" = MAT_METAL, "amount" = linked_imprinter.m_amount)
 			materials_list[++materials_list.len] = list("name" = "Glass", "id" = MAT_GLASS, "amount" = linked_imprinter.g_amount)
 			materials_list[++materials_list.len] = list("name" = "Gold", "id" = MAT_GOLD, "amount" = linked_imprinter.gold_amount)
 			materials_list[++materials_list.len] = list("name" = "Diamond", "id" = MAT_DIAMOND, "amount" = linked_imprinter.diamond_amount)
