@@ -39,22 +39,20 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 		if(9)
 			return "Vending"
 
-
 /datum/supply_pack
 	var/name = "Crate"
-	var/amount = null
-	var/cost = null
-	var/crate_name = "crate"
-	var/crate_type = /obj/structure/closet/crate
-	var/access = null
-	var/access_any = FALSE
+	var/group = supply_misc
 	var/hidden = FALSE
 	var/contraband = FALSE
-	var/group = supply_misc
+	var/cost = 700
+	var/access = FALSE
+	var/access_any = FALSE
 	var/list/contains = list()
-	var/list/announce_beacons = list() // Particular beacons that we'll notify the relevant department when we reach
+	var/crate_name = "crate"
+	var/crate_type = /obj/structure/closet/crate
 	var/special = FALSE //Event/Station Goals/Admin enabled packs
 	var/special_enabled = FALSE
+	var/list/announce_beacons = list() // Particular beacons that we'll notify the relevant department when we reach
 
 
 /datum/supply_pack/proc/printout()
@@ -1218,58 +1216,50 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 /datum/supply_pack/materials/metal50
 	name = "50 Metal Sheets Crate"
-	contains = list(/obj/item/stack/sheet/metal)
-	amount = 50
+	contains = list(/obj/item/stack/sheet/metal/fifty)
 	cost = 1000
 	crate_name = "metal sheets crate"
 
 /datum/supply_pack/materials/plasteel20
 	name = "20 Plasteel Sheets Crate"
-	contains = list(/obj/item/stack/sheet/plasteel)
-	amount = 20
+	contains = list(/obj/item/stack/sheet/plasteel/twenty)
 	cost = 3000
 	crate_name = "plasteel sheets crate"
 
 /datum/supply_pack/materials/plasteel50
 	name = "50 Plasteel Sheets Crate"
-	contains = list(/obj/item/stack/sheet/plasteel)
-	amount = 50
+	contains = list(/obj/item/stack/sheet/plasteel/fifty)
 	cost = 5000
 	crate_name = "plasteel sheets crate"
 
 /datum/supply_pack/materials/glass50
 	name = "50 Glass Sheets Crate"
-	contains = list(/obj/item/stack/sheet/glass)
-	amount = 50
+	contains = list(/obj/item/stack/sheet/glass/fifty)
 	cost = 1000
 	crate_name = "glass sheets crate"
 
 /datum/supply_pack/materials/wood30
 	name = "30 Wood Planks Crate"
-	contains = list(/obj/item/stack/sheet/wood)
-	amount = 30
+	contains = list(/obj/item/stack/sheet/wood/thirty)
 	cost = 1500
 	crate_name = "wood planks crate"
 
 /datum/supply_pack/materials/cardboard50
 	name = "50 Cardboard Sheets Crate"
-	contains = list(/obj/item/stack/sheet/cardboard)
-	amount = 50
+	contains = list(/obj/item/stack/sheet/cardboard/fifty)
 	cost = 1000
 	crate_name = "cardboard sheets crate"
 
 /datum/supply_pack/materials/sandstone30
 	name = "30 Sandstone Blocks Crate"
-	contains = list(/obj/item/stack/sheet/mineral/sandstone)
-	amount = 30
+	contains = list(/obj/item/stack/sheet/mineral/sandstone/thirty)
 	cost = 2000
 	crate_name = "sandstone blocks crate"
 
 
 /datum/supply_pack/materials/plastic30
 	name = "30 Plastic Sheets Crate"
-	contains = list(/obj/item/stack/sheet/plastic)
-	amount = 30
+	contains = list(/obj/item/stack/sheet/plastic/thirty)
 	cost = 2500
 	crate_name = "plastic sheets crate"
 

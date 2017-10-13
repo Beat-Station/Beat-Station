@@ -162,7 +162,7 @@
 /obj/item/weapon/defibrillator/proc/remove_paddles(mob/user)
 	var/mob/living/carbon/human/M = user
 	if(paddles in get_both_hands(M))
-		M.unEquip(paddles)
+		M.unEquip(paddles, TRUE)
 	update_icon()
 	return
 
@@ -251,6 +251,8 @@
 	throwforce = 6
 	w_class = WEIGHT_CLASS_BULKY
 	toolspeed = 1
+
+	flags = NODROP
 
 	var/revivecost = 1000
 	var/cooldown = 0
