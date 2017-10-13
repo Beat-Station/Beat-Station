@@ -255,9 +255,6 @@
 		destroy()
 		return
 
-	if(istype(W, /obj/item/weapon/twohanded/shockpaddles))
-		return
-
 	if(!(W.flags & ABSTRACT))
 		if(user.drop_item())
 			W.Move(loc)
@@ -632,8 +629,6 @@
 		qdel(src)
 		return
 	if(isrobot(user))
-		return
-	if(istype(W, /obj/item/weapon/twohanded/shockpaddles))
 		return
 	if(!(W.flags & ABSTRACT))
 		if(user.drop_item())

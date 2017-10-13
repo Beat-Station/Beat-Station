@@ -52,7 +52,7 @@
 		var/datum/supply_pack/pack = shuttle_master.supply_packs[set_name]
 		if(!pack.contraband && !pack.hidden && !pack.special && pack.group == cat)
 			// 0/1 after the pack name (set_name) is a boolean for ordering multiple crates
-			packs_list.Add(list(list("name" = pack.name, "amount" = pack.amount, "cost" = pack.cost, "command1" = list("doorder" = "[set_name]0"), "command2" = list("doorder" = "[set_name]1"), "command3" = list("contents" = set_name))))
+			packs_list.Add(list(list("name" = pack.name, "cost" = pack.cost, "command1" = list("doorder" = "[set_name]0"), "command2" = list("doorder" = "[set_name]1"), "command3" = list("contents" = set_name))))
 
 	data["supply_packs"] = packs_list
 	if(content_pack)
@@ -202,7 +202,7 @@
 		if((pack.hidden && emagged) || (pack.contraband && contraband) || (pack.special && pack.special_enabled) || (!pack.contraband && !pack.hidden && !pack.special))
 			if(pack.group == cat)
 				// 0/1 after the pack name (set_name) is a boolean for ordering multiple crates
-				packs_list.Add(list(list("name" = pack.name, "amount" = pack.amount, "cost" = pack.cost, "command1" = list("doorder" = "[set_name]0"), "command2" = list("doorder" = "[set_name]1"), "command3" = list("contents" = set_name))))
+				packs_list.Add(list(list("name" = pack.name, "cost" = pack.cost, "command1" = list("doorder" = "[set_name]0"), "command2" = list("doorder" = "[set_name]1"), "command3" = list("contents" = set_name))))
 
 	data["supply_packs"] = packs_list
 	if(content_pack)

@@ -122,6 +122,9 @@ var/global/list/datum/stack_recipe/abductor_recipes = list ( \
 	sheettype = "sandstone"
 	materials = list(MAT_GLASS=MINERAL_MATERIAL_AMOUNT)
 
+/obj/item/stack/sheet/mineral/sandstone/thirty
+	amount = 30
+
 /obj/item/stack/sheet/mineral/sandstone/New()
 	..()
 	recipes = sandstone_recipes
