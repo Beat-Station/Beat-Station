@@ -198,6 +198,10 @@ var/datum/announcement/minor/captain_announcement = new(do_newscast = 0)
 	satchel = /obj/item/weapon/storage/backpack/satchel_sec
 	dufflebag = /obj/item/weapon/storage/backpack/duffel/security
 
+/datum/outfit/job/blueshield/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	. = ..()
+	var/datum/martial_art/cqc/D = new
+	D.teach(H)
 
 /datum/job/judge
 	title = "Magistrate"

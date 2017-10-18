@@ -38,7 +38,10 @@
 
 	backpack = /obj/item/weapon/storage/backpack/satchel
 
-
+/datum/outfit/job/ntnavyofficer/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	. = ..()
+	var/datum/martial_art/adminfu/F = new
+	F.teach(H)
 
 // CC Officials who lead ERTs, Death Squads, etc.
 /datum/job/ntspecops
