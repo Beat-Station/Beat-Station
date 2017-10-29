@@ -492,10 +492,10 @@ var/global/list/multiverse = list()
 				M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
 				M.equip_to_slot_or_del(sword, slot_r_hand)
 
-			if("animu")
+			if("animu") // CANCER, TOTAL CANCER
 				M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(M), slot_shoes)
 				M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_l_ear)
-				M.equip_to_slot_or_del(new /obj/item/clothing/head/kitty(M), slot_head)
+				//M.equip_to_slot_or_del(new /obj/item/clothing/head/kitty(M), slot_head)
 				M.equip_to_slot_or_del(new /obj/item/clothing/under/schoolgirl(M), slot_w_uniform)
 				M.equip_to_slot_or_del(sword, slot_r_hand)
 
@@ -703,9 +703,9 @@ var/global/list/multiverse = list()
 			H.equip_to_slot_or_del(new /obj/item/weapon/claymore(H), slot_r_hand)
 			H.equip_to_slot_or_del(new /obj/item/weapon/twohanded/spear(H), slot_back)
 			H.equip_to_slot_or_del(new /obj/item/weapon/shield/riot/roman(H), slot_l_hand)
-		if("yand")//mine is an evil laugh
+		if("yand")//mine is an evil laugh, thats cancer too
 			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes)
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/kitty(H), slot_head)
+			//H.equip_to_slot_or_del(new /obj/item/clothing/head/kitty(H), slot_head)
 			H.equip_to_slot_or_del(new /obj/item/clothing/under/schoolgirl(H), slot_w_uniform)
 			H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H),  slot_wear_suit)
 			H.equip_to_slot_or_del(new /obj/item/weapon/katana(H), slot_r_hand)
@@ -741,7 +741,7 @@ var/global/list/multiverse = list()
 	H.revive()
 
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/clothing/head/kitty(H), slot_head)
+	//H.equip_to_slot_or_del(new /obj/item/clothing/head/kitty(H), slot_head)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/schoolgirl(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(H),  slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/weapon/katana(H), slot_r_hand)
