@@ -251,13 +251,13 @@
 				desc = "Probably better than the last captain."
 				valid = 1
 
-			if(/obj/item/clothing/head/kitty, /obj/item/clothing/head/collectable/kitty)
+			/*if(/obj/item/clothing/head/kitty, /obj/item/clothing/head/collectable/kitty)
 				name = "Runtime"
 				emote_see = list("coughs up a furball", "stretches")
 				emote_hear = list("purrs")
 				speak = list("Purrr", "Meow!", "MAOOOOOW!", "HISSSSS", "MEEEEEEW")
 				desc = "It's a cute little kitty-cat! ... wait ... what the hell?"
-				valid = 1
+				valid = 1*/
 
 			if(/obj/item/clothing/head/rabbitears, /obj/item/clothing/head/collectable/rabbitears)
 				name = "Hoppy"

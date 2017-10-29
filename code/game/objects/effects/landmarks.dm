@@ -145,9 +145,9 @@
 	new /obj/item/clothing/shoes/jackboots(src.loc)
 	qdel(src)
 
-/obj/effect/landmark/costume/nyangirl/New()
+/obj/effect/landmark/costume/nyangirl/New() // CANCER
 	new /obj/item/clothing/under/schoolgirl(src.loc)
-	new /obj/item/clothing/head/kitty(src.loc)
+	//new /obj/item/clothing/head/kitty(src.loc)
 	qdel(src)
 
 /obj/effect/landmark/costume/maid/New()
@@ -199,8 +199,8 @@
 
 /obj/effect/landmark/costume/waiter/New()
 	new /obj/item/clothing/under/waiter(src.loc)
-	var/CHOICE= pick( /obj/item/clothing/head/kitty, /obj/item/clothing/head/rabbitears)
-	new CHOICE(src.loc)
+	//var/CHOICE= pick( /obj/item/clothing/head/kitty, /obj/item/clothing/head/rabbitears)
+	//new CHOICE(src.loc)
 	new /obj/item/clothing/suit/apron(src.loc)
 	qdel(src)
 

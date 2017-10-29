@@ -171,8 +171,9 @@
 
 
 /*
- * Kitty ears
+ * Kitty CANCER
  */
+/*
 /obj/item/clothing/head/kitty
 	name = "kitty ears"
 	desc = "A pair of kitty ears. Meow!"
@@ -211,7 +212,7 @@
 	var/icon/earbit = new/icon("icon" = 'icons/mob/head.dmi', "icon_state" = "mouseyinner")
 	mob.Blend(earbit, ICON_OVERLAY)
 
-	icon_override = mob
+	icon_override = mob*/
 
 /obj/item/clothing/head/cardborg
 	name = "cardborg helmet"

@@ -77,9 +77,10 @@
 	display_name = "Fur Cap"
 	path = /obj/item/clothing/head/furcap
 
-/datum/gear/donor/mouse
+/*/datum/gear/donor/mouse
 	display_name = "Mouse Headband"
-	path = /obj/item/clothing/head/kitty/mouse
+	path = /obj/item/clothing/head/kitty/mouse //CANCER DA PORRA, PAU NO SEU CU
+*/
 
 /datum/gear/donor/fawkes
 	display_name = "Guy Fawkes mask"
