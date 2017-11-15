@@ -359,6 +359,17 @@
 				break
 	. = dense_object_backup
 
+/atom/movable/proc/transfer_prints_to(atom/movable/target = null, overwrite = FALSE)
+	if(!target)
+		return
+	if(overwrite)
+		target.fingerprints = fingerprints
+		target.fingerprintshidden = fingerprintshidden
+	else
+		target.fingerprints += fingerprints
+		target.fingerprintshidden += fingerprintshidden
+	target.fingerprintslast = fingerprintslast
+
 /atom/movable/proc/do_bounce_anim_dir(direction, wait, strength=8, easein=0, easeout=0, end_pixel_y)
 	var/pixel_x_diff = 0
 	var/pixel_y_diff = 0
