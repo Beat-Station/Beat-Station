@@ -1281,7 +1281,7 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 /datum/supply_pack/misc/watertank
 	name = "Water Tank Crate"
 	contains = list(/obj/structure/reagent_dispensers/watertank)
-	cost = 600
+	cost = 800
 	crate_type = /obj/structure/closet/crate/large
 	crate_name = "water tank crate"
 
@@ -1700,6 +1700,26 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 					/obj/item/weapon/circuitboard/computer/sat_control
 					)
 	crate_name = "shield control board crate"
+
+///////////// Bathroom Fixtures
+
+/datum/supply_pack/misc/toilet
+	name = "Lavatory Crate"
+	cost = 1000
+	contains = list(
+					/obj/item/weapon/bathroom_parts,
+					/obj/item/weapon/bathroom_parts/urinal
+					)
+	crate_name = "lavatory crate"
+
+/datum/supply_pack/misc/hygiene
+	name = "Hygiene Station Crate"
+	cost = 1000
+	contains = list(
+					/obj/item/weapon/bathroom_parts/sink,
+					/obj/item/mounted/shower
+					)
+	crate_name = "hygiene station crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Vending /////////////////////////////////////////
