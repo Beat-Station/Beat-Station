@@ -1703,23 +1703,23 @@ var/list/all_supply_groups = list(supply_emergency,supply_security,supply_engine
 
 ///////////// Bathroom Fixtures
 
-/datum/supply_packs/misc/toilet
+/datum/supply_pack/misc/toilet
 	name = "Lavatory Crate"
-	cost = 10
+	cost = 1000
 	contains = list(
 					/obj/item/weapon/bathroom_parts,
 					/obj/item/weapon/bathroom_parts/urinal
 					)
-	containername = "lavatory crate"
+	crate_name = "lavatory crate"
 
-/datum/supply_packs/misc/hygiene
+/datum/supply_pack/misc/hygiene
 	name = "Hygiene Station Crate"
-	cost = 10
+	cost = 1000
 	contains = list(
 					/obj/item/weapon/bathroom_parts/sink,
 					/obj/item/mounted/shower
 					)
-	containername = "hygiene station crate"
+	crate_name = "hygiene station crate"
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Vending /////////////////////////////////////////
