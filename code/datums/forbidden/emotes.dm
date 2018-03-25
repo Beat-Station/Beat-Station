@@ -29,7 +29,7 @@ var/global/list/forbidden_emotes = list()	// stores /datum/forbidden/action/emot
 
 /datum/forbidden/emote/proc/logAction(mob/living/carbon/human/H, mob/living/carbon/human/P, text = null)
 	if(text)
-		add_logs(P, H, text)
+		add_logs(H, P, text)
 
 /datum/forbidden/emote/proc/doAction(mob/living/carbon/human/H, mob/living/carbon/human/P, begins = 0)
 	return
