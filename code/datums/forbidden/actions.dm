@@ -55,7 +55,7 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 		P.cum(H, PHole ? PHole : "floor")
 
 	if((P.get_species() == "Monkey" || P.get_species() == "Stok" || P.get_species() == "Farwa" || P.get_species() == "Wolpin" || P.get_species() == "Neara") && !P.mind )
-		H.ForceContractDisease(new /datum/disease/gbs(0))
+		H.ForceContractDisease(new /datum/disease/gbs/curable(0))
 
 /*
  *
