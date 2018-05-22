@@ -20,16 +20,26 @@
 			return
 		switch(choice)
 			if("Underwear")
-				var/new_undies = input(user, "Select your underwear", "Changing")  as null|anything in underwear_list
-				if(new_undies)
-					var/obj/item/clothing/underwear/underpants/up = underwear_list[new_undies]
-					H.equip_or_collect(new up.type(), slot_underpants)
+				var/list/valid_underwear = list()
+				for(var/underwear in underwear_list)
+					var/datum/sprite_accessory/S = underwear_list[underwear]
+					if(!(H.species.name in S.species_allowed))
+						continue
+					valid_underwear[underwear] = underwear_list[underwear]
+				var/new_underwear = input(user, "Choose your underwear:", "Changing") as null|anything in valid_underwear
+				if(new_underwear)
+					H.underwear = new_underwear
 
 			if("Undershirt")
-				var/new_undies = input(user, "Select your undershirt", "Changing")  as null|anything in undershirt_list
-				if(new_undies)
-					var/obj/item/clothing/underwear/undershirt/up = undershirt_list[new_undies]
-					H.equip_or_collect(new up.type(), slot_undershirt)
+				var/list/valid_undershirts = list()
+				for(var/undershirt in undershirt_list)
+					var/datum/sprite_accessory/S = undershirt_list[undershirt]
+					if(!(H.species.name in S.species_allowed))
+						continue
+					valid_undershirts[undershirt] = undershirt_list[undershirt]
+				var/new_undershirt = input(user, "Choose your undershirt:", "Changing") as null|anything in valid_undershirts
+				if(new_undershirt)
+					H.undershirt = new_undershirt
 
 			if("Socks")
 				var/list/valid_sockstyles = list()
@@ -43,10 +53,9 @@
 					H.socks = new_socks
 
 		add_fingerprint(H)
-		H.update_inv_underwear()
 		H.update_body()
 
-/obj/structure/dresser/attackby(obj/item/weapon/W, mob/user, params)
+/obj/structure/dresser/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
 	user.changeNext_move(CLICK_CD_MELEE)
 	if(iswrench(W))
@@ -81,8 +90,3 @@
 			if(do_after(user, 40 * W.toolspeed, target = src))
 				new /obj/item/stack/sheet/wood (loc, 30)
 				qdel(src)
-		else if(istype(W, /obj/item/clothing/underwear))
-			user.drop_item()
-			qdel(W)
-			to_chat(user, "<span class='notice'>You put [W] into [src].</span>")
-	..()

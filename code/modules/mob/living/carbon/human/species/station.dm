@@ -10,7 +10,6 @@
 	clothing_flags = HAS_UNDERWEAR | HAS_UNDERSHIRT | HAS_SOCKS
 	bodyflags = HAS_SKIN_TONE | HAS_BODY_MARKINGS
 	dietflags = DIET_OMNI
-	unarmed_type = /datum/unarmed_attack/punch
 	blurb = "Humanity originated in the Sol system, and over the last five centuries has spread \
 	colonies across a wide swathe of space. They hold a wide range of forms and creeds.<br/><br/> \
 	While the central Sol government maintains control of its far-flung people, powerful corporate \
@@ -19,9 +18,6 @@
 
 	reagent_tag = PROCESS_ORG
 	//Has standard darksight of 2.
-
-	genitals = 1
-	anus = 1
 
 /datum/species/unathi
 	name = "Unathi"
@@ -61,6 +57,7 @@
 	default_headacc = "Simple"
 	default_headacc_colour = "#404040"
 	butt_sprite = "unathi"
+	brute_mod = 1.05
 
 	has_organ = list(
 		"heart" =    /obj/item/organ/internal/heart,
@@ -81,8 +78,37 @@
 		"is twisting their own neck!",
 		"is holding their breath!")
 
-	genitals = 1
-	anus = 1
+	var/datum/action/innate/tail_lash/lash = new()
+
+
+/datum/species/unathi/handle_post_spawn(var/mob/living/carbon/human/H)
+	lash.Grant(H)
+	..()
+
+/datum/action/innate/tail_lash
+	name = "Tail lash"
+	icon_icon = 'icons/effects/effects.dmi'
+	button_icon_state = "tail"
+
+/datum/action/innate/tail_lash/Activate()
+	var/mob/living/carbon/human/user = owner
+	if(!user.restrained() || !user.buckled)
+		to_chat(user, "<span class='warning'>You need freedom of movement to tail lash!</span>")
+		return
+	if(user.getStaminaLoss() >= 50)
+		to_chat(user, "<span class='warning'>Rest before tail lashing again!</span>")
+		return
+	for(var/mob/living/carbon/human/C in orange(1))
+		var/obj/item/organ/external/E = C.get_organ(pick("l_leg", "r_leg", "l_foot", "r_foot", "groin"))
+		if(E)
+			user.changeNext_move(CLICK_CD_MELEE)
+			user.visible_message("<span class='danger'>[src] smacks [C] in [E] with their tail! </span>", "<span class='danger'>You hit [C] in [E] with your tail!</span>")
+			user.adjustStaminaLoss(15)
+			C.apply_damage(5, BRUTE, E)
+			user.spin(20, 1)
+			playsound(user.loc, 'sound/weapons/slash.ogg', 50, 0)
+
+
 
 /datum/species/unathi/handle_death(var/mob/living/carbon/human/H)
 	H.stop_tail_wagging(1)
@@ -144,9 +170,6 @@
 		"is twisting their own neck!",
 		"is holding their breath!")
 
-	genitals = 1
-	anus = 1
-
 /datum/species/tajaran/handle_death(var/mob/living/carbon/human/H)
 	H.stop_tail_wagging(1)
 
@@ -172,6 +195,7 @@
 	clothing_flags = HAS_UNDERWEAR | HAS_UNDERSHIRT | HAS_SOCKS
 	bodyflags = HAS_TAIL | TAIL_WAGGING | TAIL_OVERLAPPED | HAS_HEAD_ACCESSORY | HAS_MARKINGS | HAS_SKIN_COLOR
 	dietflags = DIET_OMNI
+	hunger_drain = 0.11
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
 	reagent_tag = PROCESS_ORG
 	flesh_color = "#966464"
@@ -200,9 +224,6 @@
 		"is twisting their own neck!",
 		"is holding their breath!")
 
-	genitals = 1
-	anus = 1
-
 /datum/species/vulpkanin/handle_death(var/mob/living/carbon/human/H)
 	H.stop_tail_wagging(1)
 
@@ -215,7 +236,6 @@
 	default_language = "Galactic Common"
 	language = "Skrellian"
 	primitive_form = "Neara"
-	unarmed_type = /datum/unarmed_attack/punch
 
 	blurb = "An amphibious species, Skrell come from the star system known as Qerr'Vallis, which translates to 'Star of \
 	the royals' or 'Light of the Crown'.<br/><br/>Skrell are a highly advanced and logical race who live under the rule \
@@ -255,9 +275,6 @@
 		"is twisting their own neck!",
 		"makes like a fish and suffocates!",
 		"is strangling themselves with their own tendrils!")
-
-	genitals = 1
-	anus = 1
 
 /datum/species/vox
 	name = "Vox"
@@ -362,9 +379,9 @@
 	H.equip_or_collect(new /obj/item/clothing/mask/breath/vox(H), slot_wear_mask)
 	var/tank_pref = H.client && H.client.prefs ? H.client.prefs.speciesprefs : null
 	if(tank_pref)//Diseasel, here you go
-		H.equip_or_collect(new /obj/item/weapon/tank/nitrogen(H), slot_l_hand)
+		H.equip_or_collect(new /obj/item/tank/nitrogen(H), slot_l_hand)
 	else
-		H.equip_or_collect(new /obj/item/weapon/tank/emergency_oxygen/vox(H), slot_l_hand)
+		H.equip_or_collect(new /obj/item/tank/emergency_oxygen/vox(H), slot_l_hand)
 	to_chat(H, "<span class='notice'>You are now running on nitrogen internals from the [H.l_hand] in your hand. Your species finds oxygen toxic, so you must breathe nitrogen only.</span>")
 	H.internal = H.l_hand
 	H.update_action_buttons_icon()
@@ -438,7 +455,8 @@
 	heat_level_2 = 3000
 	heat_level_3 = 4000
 
-	brute_mod = 1.2
+	brute_mod = 0.2
+	burn_mod = 0.2
 
 	eyes = "blank_eyes"
 
@@ -518,8 +536,6 @@
 		"is stabbing themselves with their mandibles!",
 		"is holding their breath!")
 
-	anus = 1
-
 /datum/species/slime
 	name = "Slime People"
 	name_plural = "Slime People"
@@ -528,7 +544,6 @@
 	icobase = 'icons/mob/human_races/r_slime.dmi'
 	deform = 'icons/mob/human_races/r_slime.dmi'
 	path = /mob/living/carbon/human/slime
-	unarmed_type = /datum/unarmed_attack/punch
 	remains_type = /obj/effect/decal/remains/slime
 
 	// More sensitive to the cold
@@ -567,10 +582,26 @@
 
 	var/list/mob/living/carbon/human/recolor_list = list()
 
+	var/datum/action/innate/regrow/grow = new()
+
 	species_abilities = list(
 		/mob/living/carbon/human/verb/toggle_recolor_verb,
 		/mob/living/carbon/human/proc/regrow_limbs
 		)
+
+/datum/species/slime/handle_post_spawn(var/mob/living/carbon/human/H)
+	grow.Grant(H)
+	..()
+
+/datum/action/innate/regrow
+	name = "Regrow limbs"
+	icon_icon = 'icons/effects/effects.dmi'
+	button_icon_state = "greenglow"
+
+/datum/action/innate/regrow/Activate()
+	var/mob/living/carbon/human/user = owner
+	user.regrow_limbs()
+
 
 /datum/species/slime/handle_life(var/mob/living/carbon/human/H)
 //This is allegedly for code "style". Like a plaid sweater?
@@ -715,7 +746,6 @@
 	deform = 'icons/mob/human_races/r_def_grey.dmi'
 	default_language = "Galactic Common"
 	language = "Psionic Communication"
-	unarmed_type = /datum/unarmed_attack/punch
 	eyes = "grey_eyes_s"
 	butt_sprite = "grey"
 
@@ -760,6 +790,12 @@
 	if(speech_pref)
 		H.mind.speech_span = "wingdings"
 
+/datum/species/grey/handle_reagents(mob/living/carbon/human/H, datum/reagent/R)
+	if(R.id == "sacid")
+		H.reagents.del_reagent(R.id)
+		return 0
+	return ..()
+
 /datum/species/diona
 	name = "Diona"
 	name_plural = "Dionaea"
@@ -797,7 +833,8 @@
 
 	species_traits = list(NO_BREATHE, RADIMMUNE, IS_PLANT, NO_BLOOD, NO_PAIN)
 	clothing_flags = HAS_SOCKS
-	dietflags = 0		//Diona regenerate nutrition in light, no diet necessary
+	default_hair_colour = "#000000"
+	dietflags = 0		//Diona regenerate nutrition in light and water, no diet necessary
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 
 	oxy_mod = 0
@@ -890,7 +927,6 @@
 	path = /mob/living/carbon/human/machine
 	default_language = "Galactic Common"
 	language = "Trinary"
-	unarmed_type = /datum/unarmed_attack/punch
 	remains_type = /obj/effect/decal/remains/robot
 
 	eyes = "blank_eyes"
@@ -957,6 +993,8 @@
 
 /datum/species/machine/handle_death(var/mob/living/carbon/human/H)
 	var/obj/item/organ/external/head/head_organ = H.get_organ("head")
+	if(!head_organ)
+		return
 	head_organ.h_style = "Bald"
 	head_organ.f_style = "Shaved"
 	spawn(100)
@@ -972,17 +1010,16 @@
 	path = /mob/living/carbon/human/drask
 	default_language = "Galactic Common"
 	language = "Orluum"
-	unarmed_type = /datum/unarmed_attack/punch
 	eyes = "drask_eyes_s"
 
 	speech_sounds = list('sound/voice/DraskTalk.ogg')
 	speech_chance = 20
 	male_scream_sound = 'sound/voice/DraskTalk2.ogg'
 	female_scream_sound = 'sound/voice/DraskTalk2.ogg'
-	male_cough_sounds = null      //whale cough when
-	female_cough_sounds = null
-	male_sneeze_sound = null
-	female_sneeze_sound = null
+	male_cough_sounds = 'sound/voice/DraskCough.ogg'
+	female_cough_sounds = 'sound/voice/DraskCough.ogg'
+	male_sneeze_sound = 'sound/voice/DraskSneeze.ogg'
+	female_sneeze_sound = 'sound/voice/DraskSneeze.ogg'
 
 	burn_mod = 2
 	//exotic_blood = "cryoxadone"
