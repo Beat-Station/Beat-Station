@@ -15,6 +15,7 @@
 		handle_heartbeat()
 		handle_heartattack()
 		handle_drunk()
+		handle_lust()
 		species.handle_life(src)
 
 		if(!client)

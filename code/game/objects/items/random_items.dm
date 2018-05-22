@@ -261,7 +261,7 @@
 //       If you didn't run, pray.
 // -------------------------------------
 
-/obj/structure/largecrate/evil
+/obj/structure/closet/crate/large/evil
 	name = "\improper Mysterious Crate"
 	desc = "What could it be?"
 
@@ -292,7 +292,7 @@
 //
 //
 
-/obj/structure/largecrate/schrodinger
+/obj/structure/closet/crate/large/schrodinger
 	name = "Schrodinger's Crate"
 	desc = "What happens if you open it?"
 

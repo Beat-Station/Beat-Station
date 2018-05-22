@@ -2,17 +2,20 @@
 	set category = "Admin"
 	set name = "Asay" //Gave this shit a shorter name so you only have to time out "asay" rather than "admin say" to use it --NeoFite
 	set hidden = 1
-	if(!check_rights(R_ADMIN))	return
+
+	if(!check_rights(R_ADMIN|R_MOD|R_MENTOR))
+		return
 
 	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
-	if(!msg)	return
+
+	if(!msg)
+		return
 
 	log_adminsay(msg, src)
 
-	if(check_rights(R_ADMIN,0))
-		for(var/client/C in admins)
-			if(R_ADMIN & C.holder.rights)
-				to_chat(C, "<span class='admin_channel'>ADMIN: <span class='name'>[key_name(usr, 1)]</span> ([admin_jump_link(mob)]): <span class='message'>[msg]</span></span>")
+	for(var/client/C in admins)
+		if(check_rights(R_ADMIN|R_MOD|R_MENTOR, 0, C.mob))
+			to_chat(C, "<span class='admin_channel'>ADMIN: <span class='name'>[key_name(usr, 1)]</span> ([admin_jump_link(mob)]): <span class='message'>[msg]</span></span>")
 
 	feedback_add_details("admin_verb","M") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

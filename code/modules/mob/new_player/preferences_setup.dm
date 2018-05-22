@@ -14,8 +14,8 @@
 		gender = gender_override
 	else
 		gender = pick(MALE, FEMALE)
-	underwear = random_underwear(gender, species)
-	undershirt = random_undershirt(gender, species)
+	underwear = random_underwear(species)
+	undershirt = random_undershirt(species)
 	socks = random_socks(gender, species)
 	if(body_accessory_by_species[species])
 		body_accessory = random_body_accessory(species)
@@ -382,16 +382,16 @@
 		face_s.Blend(facial_s, ICON_OVERLAY)
 
 	var/icon/underwear_s = null
-	if(underwear && (current_species.clothing_flags & HAS_UNDERWEAR))
-		var/datum/sprite_accessory/underwear/U = underwear_list[underwear]
+	if(underwear && underwear != "Nude" && (current_species.clothing_flags & HAS_UNDERWEAR))
+		var/obj/item/U = underwear_list[underwear]
 		if(U)
-			underwear_s = new/icon(U.icon, "uw_[U.icon_state]_s", ICON_OVERLAY)
+			underwear_s = new/icon('icons/mob/underwear.dmi', U.icon_state, ICON_OVERLAY)
 
 	var/icon/undershirt_s = null
-	if(undershirt && (current_species.clothing_flags & HAS_UNDERSHIRT))
-		var/datum/sprite_accessory/undershirt/U2 = undershirt_list[undershirt]
+	if(undershirt && undershirt != "Nude" && (current_species.clothing_flags & HAS_UNDERSHIRT))
+		var/obj/item/U2 = undershirt_list[undershirt]
 		if(U2)
-			undershirt_s = new/icon(U2.icon, "us_[U2.icon_state]_s", ICON_OVERLAY)
+			undershirt_s = new/icon('icons/mob/underwear.dmi', U2.icon_state, ICON_OVERLAY)
 
 	var/icon/socks_s = null
 	if(socks && (current_species.clothing_flags & HAS_SOCKS))

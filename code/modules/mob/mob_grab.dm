@@ -106,6 +106,13 @@
 		assailant.client.screen -= hud
 		assailant.client.screen += hud
 
+	if(ishuman(affecting) && ishuman(assailant))
+		var/mob/living/carbon/human/A = assailant //Attacker
+		var/mob/living/carbon/human/D = affecting //Defender
+		var/datum/martial_art/attacker_style = A.martial_art
+		if(attacker_style && attacker_style.grab_process(src, A, D))
+			return 0
+
 	var/hit_zone = assailant.zone_sel.selecting
 	last_hit_zone = hit_zone
 
@@ -244,6 +251,12 @@
 	if(!assailant.canmove || assailant.lying)
 		qdel(src)
 		return
+	if(ishuman(affecting) && ishuman(assailant))
+		var/mob/living/carbon/human/A = assailant //Attacker
+		var/mob/living/carbon/human/D = affecting //Defender
+		var/datum/martial_art/attacker_style = A.martial_art
+		if(attacker_style && attacker_style.grab_reinforce_act(src,A,D))
+			return
 
 	last_upgrade = world.time
 
@@ -316,6 +329,9 @@
 		if(ishuman(M) && ishuman(assailant))
 			var/mob/living/carbon/human/affected = affecting
 			var/mob/living/carbon/human/attacker = assailant
+			var/datum/martial_art/attacker_style = attacker.martial_art
+			if(attacker_style && attacker_style.grab_attack_act(src, attacker, affected))
+				return 0
 			switch(assailant.a_intent)
 				if(INTENT_HELP)
 					/*if(force_down)

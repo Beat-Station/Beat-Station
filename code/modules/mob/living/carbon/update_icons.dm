@@ -7,6 +7,7 @@
 	var/final_pixel_y = pixel_y
 	var/final_dir = dir
 	var/changed = 0
+
 	if(lying != lying_prev)
 		changed++
 		ntransform.TurnTo(lying_prev,lying)
@@ -18,7 +19,6 @@
 				final_pixel_y = get_standard_pixel_y_offset(lying)
 				if(dir & (EAST|WEST)) //Facing east or west
 					final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
-
 		lying_prev = lying	//so we don't try to animate until there's been another change.
 
 	if(resize != RESIZE_DEFAULT_SIZE)

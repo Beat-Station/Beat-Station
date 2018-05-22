@@ -158,6 +158,9 @@
 		)
 	var/list/proc/species_abilities = list()
 
+	var/genitals = 0
+	var/anus = 0
+
 /datum/species/New()
 	//If the species has eyes, they are the default vision organ
 	if(!vision_organ && has_organ["eyes"])
@@ -525,7 +528,7 @@
 
 /datum/unarmed_attack/claws/armalis
 	attack_verb = list("slash", "claw")
-	damage = 6
+	damage = 0.5
 
 /datum/species/proc/handle_can_equip(obj/item/I, slot, disable_warning = 0, mob/living/carbon/human/user)
 	return 0

@@ -47,6 +47,7 @@ There are several things that need to be remembered:
 		update_inv_wear_suit()
 		update_inv_gloves()
 		update_inv_shoes()
+		update_inv_underwear()
 		update_inv_w_uniform()
 		update_inv_glasse()
 		update_inv_l_hand()
@@ -312,30 +313,6 @@ var/global/list/damage_icon_parts = list()
 	else
 		overlays_standing[LIMBS_LAYER] = null // So we don't get the old species' sprite splatted on top of the new one's
 
-	//Underwear
-	overlays_standing[UNDERWEAR_LAYER]	= null
-	var/icon/underwear_standing = new/icon('icons/mob/underwear.dmi',"nude")
-
-	if(underwear && species.clothing_flags & HAS_UNDERWEAR)
-		var/datum/sprite_accessory/underwear/U = underwear_list[underwear]
-		if(U)
-			underwear_standing.Blend(new /icon(U.icon, "uw_[U.icon_state]_s"), ICON_OVERLAY)
-
-	if(undershirt && species.clothing_flags & HAS_UNDERSHIRT)
-		var/datum/sprite_accessory/undershirt/U2 = undershirt_list[undershirt]
-		if(U2)
-			underwear_standing.Blend(new /icon(U2.icon, "us_[U2.icon_state]_s"), ICON_OVERLAY)
-
-
-	if(socks && species.clothing_flags & HAS_SOCKS)
-		var/datum/sprite_accessory/socks/U3 = socks_list[socks]
-		if(U3)
-			underwear_standing.Blend(new /icon(U3.icon, "sk_[U3.icon_state]_s"), ICON_OVERLAY)
-
-	if(underwear_standing)
-		overlays_standing[UNDERWEAR_LAYER]	= image(underwear_standing)
-
-
 	if(update_icons)
 		update_icons()
 
@@ -354,6 +331,8 @@ var/global/list/damage_icon_parts = list()
 	//hair
 	update_hair(0)
 	update_fhair(0)
+	//underwear
+	update_inv_underwear(0)
 
 
 //MARKINGS OVERLAY
@@ -588,6 +567,7 @@ var/global/list/damage_icon_parts = list()
 	update_head_accessory(0)
 	update_fhair(0)
 	update_mutantrace(0)
+	update_inv_underwear(0)
 	update_inv_w_uniform(0,0)
 	update_inv_wear_id(0)
 	update_inv_gloves(0,0)
@@ -700,6 +680,47 @@ var/global/list/damage_icon_parts = list()
 		overlays_standing[ID_LAYER]	= null
 
 	if(update_icons)   update_icons()
+
+/mob/living/carbon/human/update_inv_underwear(var/update_icons=1)
+	if(client && hud_used)
+		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_underpants]
+		if(inv)
+			inv.update_icon()
+
+	if(client && hud_used)
+		var/obj/screen/inventory/inv = hud_used.inv_slots[slot_undershirt]
+		if(inv)
+			inv.update_icon()
+
+	var/icon/underwear_standing = new/icon('icons/mob/underwear.dmi', "nude")
+
+	if(socks && species.clothing_flags & HAS_SOCKS)
+		var/datum/sprite_accessory/socks/U = socks_list[socks]
+		if(U)
+			underwear_standing.Blend(new /icon(U.icon, "sk_[U.icon_state]_s"), ICON_OVERLAY)
+
+	if(underpants || undershirt)
+		if(underpants)
+			if(client && hud_used && hud_used.hud_shown)
+				if(hud_used.inventory_shown)
+					underpants.screen_loc = ui_underpants
+				client.screen += underpants
+
+			if(istype(underpants))
+				underwear_standing.Blend(new /icon('icons/mob/underwear.dmi', underpants.icon_state), ICON_OVERLAY)
+		if(undershirt)
+			if(client && hud_used && hud_used.hud_shown)
+				if(hud_used.inventory_shown)
+					undershirt.screen_loc = ui_undershirt
+				client.screen += undershirt
+
+			if(istype(undershirt))
+				underwear_standing.Blend(new /icon('icons/mob/underwear.dmi', undershirt.icon_state), ICON_OVERLAY)
+
+	overlays_standing[UNDERWEAR_LAYER] = image(underwear_standing)
+
+	if(update_icons)
+		update_icons()
 
 /mob/living/carbon/human/update_inv_gloves(var/update_icons=1)
 

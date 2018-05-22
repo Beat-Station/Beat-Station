@@ -48,6 +48,7 @@
 	//Default styles for created mobs.
 	default_hair = "Antennae"
 
+	anus = 1
 
 /datum/species/wryn/handle_death(var/mob/living/carbon/human/H)
 	for(var/mob/living/carbon/C in living_mob_list)

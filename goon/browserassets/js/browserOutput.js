@@ -65,10 +65,7 @@ var opts = {
 	'clientData': [],
 
 	// List of macros in the 'hotkeymode' macro set.
-	'macros': {},
-
-	// Emoji toggle
-	'enableEmoji': true
+	'macros': {}
 };
 
 function outerHTML(el) {
@@ -103,32 +100,6 @@ function linkify(text) {
 	});
 }
 
-function emojiparse(el) {
-
-	if ((typeof UNICODE_9_EMOJI === 'undefined') || (typeof twemoji === 'undefined')) {
-		return; //something didn't load right, probably IE8
-	}
-
-	var $el = $(el);
-
-	var $emojiZone = $el.find(".emoji_enabled");
-
-	if ($emojiZone.length) {
-		$emojiZone.each(function () {
-			var html = $(this).html();
-			html = html.replace(/\:(.*?)\:/g, function (match, p1, offset, s) {
-				var unicode_entity = UNICODE_9_EMOJI[p1];
-				if (unicode_entity) {
-					return unicode_entity;
-				}
-				return match;
-			});
-			html = $.parseHTML(twemoji.parse(html, {size: "svg", ext: ".svg"}));
-			$(this).html(html);
-		});
-	}
-}
-
 // Colorizes the highlight spans
 function setHighlightColor(match) {
 	match.style.background = opts.highlightColor
@@ -158,12 +129,6 @@ function output(message, flag) {
 
 	if (flag !== 'internal')
 		opts.lastPang = Date.now();
-
-	// Basically we url_encode twice server side so we can manually read the encoded version and actually do UTF-8.
-	// The replace for + is because FOR SOME REASON, BYOND replaces spaces with a + instead of %20, and a plus with %2b.
-	// Marvelous.
-	message = message.replace(/\+/g, "%20");
-	message = decoder(message);
 
 	//The behemoth of filter-code (for Admin message filters)
 	//Note: This is proooobably hella inefficient
@@ -266,11 +231,6 @@ function output(message, flag) {
 
 	entry.innerHTML = message;
 
-	// emoji!
-	if (opts.enableEmoji) {
-		emojiparse(entry);
-	}
-
 	if (opts.hideSpam && entry.innerHTML === opts.previousMessage) {
 		opts.previousMessageCount++;
 		var lastIndex = $messages[0].children.length - 1;
@@ -306,7 +266,7 @@ function output(message, flag) {
 
 function internalOutput(message, flag)
 {
-	output(escaper(message), flag);
+	output(message, flag);
 }
 
 //Runs a route within byond, client or server side. Consider this "ehjax" for byond.

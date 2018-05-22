@@ -59,7 +59,6 @@ var/const/PILOT				=(1<<7)
 var/list/assistant_occupations = list(
 )
 
-
 var/list/command_positions = list(
 	"Captain",
 	"Head of Personnel",
@@ -69,7 +68,6 @@ var/list/command_positions = list(
 	"Chief Medical Officer",
 	"Nanotrasen Representative"
 )
-
 
 var/list/engineering_positions = list(
 	"Chief Engineer",

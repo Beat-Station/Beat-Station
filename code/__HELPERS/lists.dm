@@ -192,6 +192,22 @@
  * Sorting
  */
 
+//replaces reverseList ~Carnie
+/proc/reverseRange(list/L, start=1, end=0)
+	if(L.len)
+		start = start % L.len
+		end = end % (L.len+1)
+		if(start <= 0)
+			start += L.len
+		if(end <= 0)
+			end += L.len + 1
+
+		--end
+		while(start < end)
+			L.Swap(start++,end--)
+
+	return L
+
 //Reverses the order of items in the list
 /proc/reverselist(list/L)
 	var/list/output = list()

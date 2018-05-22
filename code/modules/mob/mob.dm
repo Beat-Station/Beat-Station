@@ -268,6 +268,8 @@ var/list/slot_equipment_priority = list( \
 		slot_wear_pda,\
 		slot_wear_id,\
 		slot_w_uniform,\
+		slot_underpants,\
+		slot_undershirt,\
 		slot_wear_suit,\
 		slot_wear_mask,\
 		slot_head,\
@@ -422,6 +424,18 @@ var/list/slot_equipment_priority = list( \
 						return 2
 					else
 						return 0
+				return 1
+			if(slot_underpants)
+				if(H.underpants)
+					return 0
+				if(!istype(src, /obj/item/clothing/underwear/underpants))
+					return 0
+				return 1
+			if(slot_undershirt)
+				if(H.undershirt)
+					return 0
+				if(!istype(src, /obj/item/clothing/underwear/undershirt))
+					return 0
 				return 1
 			if(slot_wear_id)
 				if(!H.w_uniform)

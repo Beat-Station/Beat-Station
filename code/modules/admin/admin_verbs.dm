@@ -46,7 +46,6 @@ var/list/admin_verbs_admin = list(
 	/datum/admins/proc/togglelooc,		/*toggles looc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
 	/datum/admins/proc/toggledsay,		/*toggles dsay on/off for everyone*/
-	/datum/admins/proc/toggleemoji,     /*toggles using emoji in ooc for everyone*/
 	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
 	/datum/admins/proc/PlayerNotes,
@@ -140,7 +139,10 @@ var/list/admin_verbs_server = list(
 	/client/proc/toggle_antagHUD_use,
 	/client/proc/toggle_antagHUD_restrictions,
 	/client/proc/set_ooc,
-	/client/proc/reset_ooc
+	/client/proc/reset_ooc,
+	/client/proc/toggle_civilians,
+	/client/proc/toggle_joblimit,
+	/client/proc/toggle_forbidden
 	)
 var/list/admin_verbs_debug = list(
 	/client/proc/cmd_admin_list_open_jobs,
@@ -196,14 +198,14 @@ var/list/admin_verbs_mod = list(
 	/client/proc/dsay,
 	/datum/admins/proc/show_player_panel,
 	/client/proc/jobbans,
-	/client/proc/debug_variables		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
+	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
+	/client/proc/cmd_admin_say
 )
 var/list/admin_verbs_mentor = list(
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/cmd_admin_pm_by_key_panel,	/*admin-pm list by key*/
-	/client/proc/cmd_mentor_say	/* mentor say*/
-	// cmd_mentor_say is added/removed by the toggle_mentor_chat verb
+	/client/proc/cmd_admin_say
 )
 var/list/admin_verbs_proccall = list(
 	/client/proc/callproc,
@@ -894,6 +896,39 @@ var/list/admin_verbs_ticket = list(
 		job_master.FreeRole(job)
 		log_admin("[key_name(usr)] has freed a job slot for [job].")
 		message_admins("[key_name_admin(usr)] has freed a job slot for [job].")
+
+/client/proc/toggle_joblimit()
+	set name = "Toggle Joblimit"
+	set category = "Server"
+
+	if(!check_rights(R_SERVER))
+		return
+
+	config.job_limit = !config.job_limit
+	log_admin("[key_name(usr)] has [config.job_limit  ? "enabled" : "disabled"] joblimit.")
+	message_admins("[key_name_admin(usr)] has [config.job_limit  ? "enabled" : "disabled"] joblimit.")
+
+/client/proc/toggle_forbidden()
+	set name = "Toggle FF"
+	set category = "Server"
+
+	if(!check_rights(R_SERVER))
+		return
+
+	config.forbidden_active = !config.forbidden_active
+	log_admin("[key_name(usr)] has [config.forbidden_active  ? "enabled" : "disabled"] FF.")
+	message_admins("[key_name_admin(usr)] has [config.forbidden_active  ? "enabled" : "disabled"] FF.")
+
+/client/proc/toggle_civilians()
+	set name = "Toggle Civilians entry"
+	set category = "Server"
+
+	if(!check_rights(R_SERVER))
+		return
+
+	config.civilian_allowed = !config.civilian_allowed
+	log_admin("[key_name(usr)] has [config.civilian_allowed  ? "enabled" : "disabled"] civilians.")
+	message_admins("[key_name_admin(usr)] has [config.civilian_allowed  ? "enabled" : "disabled"] civilians.")
 
 /client/proc/toggleattacklogs()
 	set name = "Toggle Attack Log Messages"

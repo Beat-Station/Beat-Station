@@ -391,6 +391,14 @@ var/global/list/multiverse = list()
 		if(uniform)
 			M.equip_to_slot_or_del(new uniform.type(M), slot_w_uniform)
 
+		var/obj/underpants = H.get_item_by_slot(slot_underpants)
+		if(underpants)
+			M.equip_to_slot_or_del(new underpants.type(M), slot_underpants)
+
+		var/obj/undershirt = H.get_item_by_slot(slot_undershirt)
+		if(underpants)
+			M.equip_to_slot_or_del(new undershirt.type(M), slot_undershirt)
+
 		var/obj/suit = H.get_item_by_slot(slot_wear_suit)
 		if(suit)
 			M.equip_to_slot_or_del(new suit.type(M), slot_wear_suit)

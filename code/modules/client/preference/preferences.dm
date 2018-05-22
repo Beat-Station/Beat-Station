@@ -137,6 +137,9 @@ var/global/list/special_role_times = list( //minimum age (in days) for accounts 
 	var/language = "None"				//Secondary language
 	var/autohiss_mode = AUTOHISS_OFF	//Species autohiss level. OFF, BASIC, FULL.
 
+	var/virgin = 1
+	var/anal_virgin = 1
+
 	var/body_accessory = null
 
 	var/speciesprefs = 0//I hate having to do this, I really do (Using this for oldvox code, making names universal I guess
@@ -417,6 +420,10 @@ var/global/list/special_role_times = list( //minimum age (in days) for accounts 
 			if(S.clothing_flags & HAS_SOCKS)
 				dat += "<b>Socks:</b> <a href ='?_src_=prefs;preference=socks;task=input'>[socks]</a><BR>"
 			dat += "<b>Backpack Type:</b> <a href ='?_src_=prefs;preference=bag;task=input'>[backbag]</a><br>"
+
+			dat += "<h2>Forbidden fruits</h2>"
+			dat += "<b>Virgin:</b> <a href ='?_src_=prefs;preference=virgin;task=normal'>[virgin ? "Yes" : "No"]</a><BR>"
+			dat += "<b>Anal Virgin:</b> <a href ='?_src_=prefs;preference=virgin;task=anal'>[anal_virgin ? "Yes" : "No"]</a><BR>"
 
 			dat += "</td></tr></table>"
 
@@ -1127,6 +1134,12 @@ var/global/list/special_role_times = list( //minimum age (in days) for accounts 
 				gen_record = genmsg
 				SetRecords(user)
 
+	else if(href_list["preference"] == "virgin")
+		if(href_list["task"] == "normal")
+			virgin = !virgin
+		else if(href_list["task"] == "anal")
+			anal_virgin = !anal_virgin
+
 	if(href_list["preference"] == "gear")
 		if(href_list["toggle_gear"])
 			var/datum/gear/TG = gear_datums[href_list["toggle_gear"]]
@@ -1223,10 +1236,10 @@ var/global/list/special_role_times = list( //minimum age (in days) for accounts 
 					if(S.bodyflags & HAS_TAIL_MARKINGS) //Species with tail markings.
 						m_colours["tail"] = rand_hex_color()
 				if("underwear")
-					underwear = random_underwear(gender, species)
+					underwear = random_underwear(species)
 					ShowChoices(user)
 				if("undershirt")
-					undershirt = random_undershirt(gender, species)
+					undershirt = random_undershirt(species)
 					ShowChoices(user)
 				if("socks")
 					socks = random_socks(gender, species)
@@ -1322,15 +1335,15 @@ var/global/list/special_role_times = list( //minimum age (in days) for accounts 
 							m_colours["tail"] = "#000000"
 
 						// Don't wear another species' underwear!
-						var/datum/sprite_accessory/SA = underwear_list[underwear]
-						if(!SA || !(species in SA.species_allowed))
-							underwear = random_underwear(gender, species)
+						var/obj/item/clothing/C = underwear_list[underwear]
+						if(!C || !(species in C.species_restricted))
+							underwear = random_underwear(species)
 
-						SA = undershirt_list[undershirt]
-						if(!SA || !(species in SA.species_allowed))
-							undershirt = random_undershirt(gender, species)
+						C = undershirt_list[undershirt]
+						if(!C || !(species in C.species_restricted))
+							undershirt = random_undershirt(species)
 
-						SA = socks_list[socks]
+						var/datum/sprite_accessory/SA = socks_list[socks]
 						if(!SA || !(species in SA.species_allowed))
 							socks = random_socks(gender, species)
 
@@ -1644,32 +1657,12 @@ var/global/list/special_role_times = list( //minimum age (in days) for accounts 
 						f_style = new_f_style
 
 				if("underwear")
-					var/list/valid_underwear = list()
-					for(var/underwear in underwear_list)
-						var/datum/sprite_accessory/SA = underwear_list[underwear]
-						if(gender == MALE && SA.gender == FEMALE)
-							continue
-						if(gender == FEMALE && SA.gender == MALE)
-							continue
-						if(!(species in SA.species_allowed))
-							continue
-						valid_underwear[underwear] = underwear_list[underwear]
-					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference") as null|anything in valid_underwear
+					var/new_underwear = input(user, "Choose your character's underwear:", "Character Preference") as null|anything in underwear_list
 					ShowChoices(user)
 					if(new_underwear)
 						underwear = new_underwear
 				if("undershirt")
-					var/list/valid_undershirts = list()
-					for(var/undershirt in undershirt_list)
-						var/datum/sprite_accessory/SA = undershirt_list[undershirt]
-						if(gender == MALE && SA.gender == FEMALE)
-							continue
-						if(gender == FEMALE && SA.gender == MALE)
-							continue
-						if(!(species in SA.species_allowed))
-							continue
-						valid_undershirts[undershirt] = undershirt_list[undershirt]
-					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in valid_undershirts
+					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_list
 					ShowChoices(user)
 					if(new_undershirt)
 						undershirt = new_undershirt
@@ -2151,8 +2144,16 @@ var/global/list/special_role_times = list( //minimum age (in days) for accounts 
 		W.buckled_mob = character
 		W.add_fingerprint(character)
 
-	character.underwear = underwear
-	character.undershirt = undershirt
+	// Underwear
+	if(underwear && underwear != "Nude")
+		var/obj/item/clothing/uw = underwear_list[underwear]
+		if(uw)
+			character.equip_or_collect(new uw.type(), slot_underpants)
+
+	if(undershirt && undershirt != "Nude")
+		var/obj/item/clothing/uw1 = undershirt_list[undershirt]
+		if(uw1)
+			character.equip_or_collect(new uw1.type(), slot_undershirt)
 	character.socks = socks
 
 	if(character.species.bodyflags & HAS_HEAD_ACCESSORY)
@@ -2166,6 +2167,9 @@ var/global/list/special_role_times = list( //minimum age (in days) for accounts 
 		character.body_accessory = body_accessory_by_name["[body_accessory]"]
 
 	character.backbag = backbag
+
+	character.virgin = virgin
+	character.anal_virgin = anal_virgin
 
 	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
 	if(S.has_gender && (character.gender in list(PLURAL, NEUTER)))

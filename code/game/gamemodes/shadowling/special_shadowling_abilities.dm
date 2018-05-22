@@ -79,8 +79,12 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				for(var/obj/structure/alien/weeds/node/N in shadowturf)
 					qdel(N)
 				H.visible_message("<span class='warning'>The chrysalis explodes in a shower of purple flesh and fluid!</span>")
-				H.underwear = "None"
-				H.undershirt = "None"
+				if(H.underpants)
+					H.unEquip(H.underpants)
+					qdel(H.underpants)
+				if(H.undershirt)
+					H.unEquip(H.undershirt)
+					qdel(H.undershirt)
 				H.socks = "None"
 				H.faction |= "faithless"
 

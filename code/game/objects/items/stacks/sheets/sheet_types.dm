@@ -150,6 +150,12 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list(
 	origin_tech = "materials=2"
 	merge_type = /obj/item/stack/sheet/plasteel
 
+/obj/item/stack/sheet/plasteel/twenty
+	amount = 20
+
+/obj/item/stack/sheet/plasteel/fifty
+	amount = 50
+
 /obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
 	recipes = plasteel_recipes
 	return ..()
@@ -186,6 +192,9 @@ var/global/list/datum/stack_recipe/wood_recipes = list(
 	origin_tech = "materials=1;biotech=1"
 	burn_state = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/wood
+
+/obj/item/stack/sheet/wood/thirty
+	amount = 30
 
 /obj/item/stack/sheet/wood/New(var/loc, var/amount=null)
 	recipes = wood_recipes
@@ -258,6 +267,9 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list (
 	origin_tech = "materials=1"
 	burn_state = FLAMMABLE
 	merge_type = /obj/item/stack/sheet/cardboard
+
+/obj/item/stack/sheet/cardboard/fifty
+	amount = 50
 
 /obj/item/stack/sheet/cardboard/New(var/loc, var/amt = null)
 	recipes = cardboard_recipes
@@ -401,6 +413,9 @@ GLOBAL_LIST_INIT(plastic_recipes, list(
 
 /obj/item/stack/sheet/plastic/fifty
 	amount = 50
+
+/obj/item/stack/sheet/plastic/thirty
+	amount = 30
 
 /obj/item/stack/sheet/plastic/five
 	amount = 5

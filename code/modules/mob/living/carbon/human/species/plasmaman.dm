@@ -27,6 +27,7 @@
 		"realizes the existential problem of being made out of plasma!",
 		"shows their true colors, which happens to be the color of plasma!")
 
+	anus = 1
 	has_organ = list(
 		"heart" =    /obj/item/organ/internal/heart,
 		"lungs" =    /obj/item/organ/internal/lungs/plasmaman,
