@@ -63,6 +63,7 @@
 #define ui_drop_throw "EAST-1:28,SOUTH+1:7"
 #define ui_pull_resist "EAST-2:26,SOUTH+1:7"
 #define ui_acti "EAST-2:26,SOUTH:5"
+#define ui_combo "EAST-4:24,SOUTH+1:7"
 #define ui_movi "EAST-3:24,SOUTH:5"
 #define ui_zonesel "EAST-1:28,SOUTH:5"
 #define ui_acti_alt "EAST-1:28,SOUTH:5" //alternative intent switcher for when the interface is hidden (F12)
@@ -115,19 +116,21 @@
 #define ui_construct_health "EAST,CENTER:15" //same height as humans, hugging the right border
 
 //Pop-up inventory
-#define ui_shoes "WEST+1:8,SOUTH:5"
+#define ui_shoes		"WEST+1:8,SOUTH:5"
 
-#define ui_iclothing "WEST:6,SOUTH+1:7"
-#define ui_oclothing "WEST+1:8,SOUTH+1:7"
-#define ui_gloves "WEST+2:10,SOUTH+1:7"
+#define ui_underpants	"WEST:6,SOUTH+1:7"
+#define ui_undershirt	"WEST:6,SOUTH+2:9"
+#define ui_iclothing	"WEST:6,SOUTH+3:11"
+#define ui_oclothing	"WEST+1:8,SOUTH+1:7"
+#define ui_gloves		"WEST+2:10,SOUTH+1:7"
 
 
-#define ui_glasses "WEST:6,SOUTH+2:9"
-#define ui_mask "WEST+1:8,SOUTH+2:9"
-#define ui_l_ear "WEST+2:10,SOUTH+2:9"
-#define ui_r_ear "WEST+2:10,SOUTH+3:11"
+#define ui_glasses		"WEST+1:8,SOUTH+3:11"
+#define ui_mask			"WEST+1:8,SOUTH+2:9"
+#define ui_l_ear		"WEST+2:10,SOUTH+2:9"
+#define ui_r_ear		"WEST+2:10,SOUTH+3:11"
 
-#define ui_head "WEST+1:8,SOUTH+3:11"
+#define ui_head			"WEST+1:8,SOUTH+4:13"
 
 // AI
 

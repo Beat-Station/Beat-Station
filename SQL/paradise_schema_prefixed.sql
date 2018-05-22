@@ -75,6 +75,7 @@ CREATE TABLE `SS13_characters` (
   `body_accessory` mediumtext NOT NULL,
   `gear` mediumtext NOT NULL,
   `autohiss` tinyint(1) NOT NULL,
+  `forbidden` mediumtext NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18747 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

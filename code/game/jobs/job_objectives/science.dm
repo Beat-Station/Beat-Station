@@ -13,8 +13,9 @@
 	return desc
 
 /datum/job_objective/maximize_research/check_for_completion()
-	for(var/tech in shuttle_master.techLevels)
-		if(shuttle_master.techLevels[tech] > 0)
+	var/datum/export/tech/T = exports_list[/datum/export/tech]
+	for(var/tech in T.techLevels)
+		if(T.techLevels[tech] > 0)
 			return 1
 	return 0
 

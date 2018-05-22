@@ -166,7 +166,8 @@
 					socks,
 					body_accessory,
 					gear,
-					autohiss
+					autohiss,
+					forbidden
 				 	FROM [format_table_name("characters")] WHERE ckey='[C.ckey]' AND slot='[slot]'"})
 	if(!query.Execute())
 		var/err = query.ErrorMsg()
@@ -246,6 +247,10 @@
 		gear = params2list(query.item[51])
 		autohiss_mode = text2num(query.item[52])
 
+		var/forbidden = params2list(query.item[53])
+		virgin = forbidden["virgin"]
+		anal_virgin = forbidden["anal_virgin"]
+
 	//Sanitize
 	var/datum/species/SP = all_species[species]
 	metadata		= sanitize_text(metadata, initial(metadata))
@@ -298,6 +303,9 @@
 	socks			= sanitize_text(socks, initial(socks))
 	body_accessory	= sanitize_text(body_accessory, initial(body_accessory))
 
+	virgin = sanitize_integer(virgin, 0, 1, initial(virgin))
+	anal_virgin = sanitize_integer(anal_virgin, 0, 1, initial(anal_virgin))
+
 //	if(isnull(disabilities)) disabilities = 0
 	if(!player_alt_titles) player_alt_titles = new()
 	if(!organ_data) src.organ_data = list()
@@ -311,6 +319,7 @@
 	var/rlimblist
 	var/playertitlelist
 	var/gearlist
+	var/forbidden = list2params(list("virgin" = virgin, "anal_virgin" = anal_virgin))
 
 	var/markingcolourslist = list2params(m_colours)
 	var/markingstyleslist = list2params(m_styles)
@@ -378,7 +387,8 @@
 												socks='[socks]',
 												body_accessory='[body_accessory]',
 												gear='[gearlist]',
-												autohiss='[autohiss_mode]'
+												autohiss='[autohiss_mode]',
+												forbidden='[forbidden]'
 												WHERE ckey='[C.ckey]'
 												AND slot='[default_slot]'"}
 												)
@@ -416,7 +426,7 @@
 											gen_record,
 											player_alt_titles,
 											disabilities, organ_data, rlimb_data, nanotrasen_relation, speciesprefs,
-											socks, body_accessory, gear, autohiss)
+											socks, body_accessory, gear, autohiss, forbidden)
 
 					VALUES
 											('[C.ckey]', '[default_slot]', '[sanitizeSQL(metadata)]', '[sanitizeSQL(real_name)]', '[be_random_name]','[gender]',
@@ -444,7 +454,7 @@
 											'[sanitizeSQL(gen_record)]',
 											'[playertitlelist]',
 											'[disabilities]', '[organlist]', '[rlimblist]', '[nanotrasen_relation]', '[speciesprefs]',
-											'[socks]', '[body_accessory]', '[gearlist]', '[autohiss_mode]')
+											'[socks]', '[body_accessory]', '[gearlist]', '[autohiss_mode]', '[forbidden]')
 
 "}
 )

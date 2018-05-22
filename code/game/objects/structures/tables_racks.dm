@@ -186,6 +186,11 @@
 			return 0
 		if(!G.confirm())
 			return 0
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/datum/martial_art/attacker_style = H.martial_art
+			if(attacker_style && attacker_style.tablepush_act(user, G.affecting, G, src))
+				return 0
 		G.affecting.forceMove(get_turf(src))
 		G.affecting.Weaken(2)
 		G.affecting.visible_message("<span class='danger'>[G.assailant] pushes [G.affecting] onto [src].</span>", \

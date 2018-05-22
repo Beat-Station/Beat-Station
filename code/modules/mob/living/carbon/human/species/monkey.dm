@@ -34,6 +34,9 @@
 	brute_mod = 1.5
 	burn_mod = 1.5
 
+	genitals = 1
+	anus = 1
+
 /datum/species/monkey/handle_npc(var/mob/living/carbon/human/H)
 	if(H.stat != CONSCIOUS)
 		return

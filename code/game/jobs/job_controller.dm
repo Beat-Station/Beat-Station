@@ -1,4 +1,3 @@
-
 var/global/datum/controller/occupations/job_master
 
 #define GET_RANDOM_JOB 0
@@ -73,6 +72,11 @@ var/global/datum/controller/occupations/job_master
 		if(job.barred_by_disability(player.client))
 			return 0
 		if(!is_job_whitelisted(player, rank))
+			return 0
+		
+		if(!config.civilian_allowed && rank == "Civilian")
+			return 0
+		if(config.job_limit && !job_master.JobLimitConditions(rank))
 			return 0
 
 		var/position_limit = job.total_positions
@@ -614,3 +618,53 @@ var/global/datum/controller/occupations/job_master
 
 	spawn(0)
 		to_chat(H, "<span class='boldnotice'>Your account number is: [M.account_number], your account pin is: [M.remote_access_pin]</span>")
+
+/datum/controller/occupations/proc/JobLimitConditions(rank)
+	if(rank in nonhuman_positions)
+		return 1
+	if(rank in list("Nanotrasen Navy Officer", "Special Operations Officer"))
+		return 1
+
+	var/list/step_1 = command_positions + security_positions + supply_positions
+	var/list/step_2 = engineering_positions + medical_positions + science_positions + list("Blueshield", "Nanotrasen Representative")
+
+	if(rank in step_1)
+		return 1
+	else
+		for(var/j in step_1)
+			var/datum/job/job = GetJob(j)
+			if(j in command_positions)
+				if(!HasXPeople(j, job.spawn_positions))
+					return 0
+			if(j in security_positions)
+				if(!HasXPeople(j, job.spawn_positions) && job.flag != OFFICER)
+					return 0
+			if(j in supply_positions)
+				switch(job.flag)
+					if(QUARTERMASTER)
+						if(!HasXPeople(j, 1))
+							return 0
+					if(CARGOTECH)
+						if(!HasXPeople(j, 1))
+							return 0
+					if(MINER)
+						if(!HasXPeople(j, 2))
+							return 0
+
+		if(rank in step_2)
+			return 1
+		else
+			for(var/j in step_2)
+				if(!HasXPeople(j, 2) && !(j in command_positions))
+					return 0
+				else if(j in command_positions)
+					if(!HasXPeople(j, 1))
+						return 0
+
+	return 1
+
+/datum/controller/occupations/proc/HasXPeople(rank, number)
+	var/datum/job/job = GetJob(rank)
+	if(job.current_positions >= number)
+		return 1
+	return 0

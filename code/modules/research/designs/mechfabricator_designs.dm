@@ -1157,3 +1157,12 @@
 	construction_time = 100
 	build_path = /obj/item/flash/synthetic
 	category = list("Misc")
+
+/datum/design/ipc_body
+	name = "IPC Complete Body"
+	id = "ipc_body"
+	build_type = MECHFAB
+	build_path = /mob/living/carbon/human/machine
+	materials = list(MAT_METAL=20000, MAT_GLASS=5000)
+	construction_time = 500
+	category = list("Misc")

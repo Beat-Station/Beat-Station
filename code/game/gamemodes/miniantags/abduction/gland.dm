@@ -231,7 +231,7 @@
 		qdel(I)
 
 	//There's no define for this / get all items ?
-	var/list/slots = list(slot_back,slot_w_uniform,slot_wear_suit,\
+	var/list/slots = list(slot_back,slot_w_uniform,slot_wear_suit,slot_underpants,slot_undershirt,\
 	slot_wear_mask,slot_head,slot_shoes,slot_gloves,slot_l_ear,slot_r_ear,\
 	slot_glasses,slot_belt,slot_s_store,slot_l_store,slot_r_store,slot_wear_id,slot_wear_pda)
 
