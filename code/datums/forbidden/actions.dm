@@ -54,6 +54,9 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 	if(P.pleasure >= MAX_PLEASURE)
 		P.cum(H, PHole ? PHole : "floor")
 
+	if((P.get_species() == "Monkey" || P.get_species() == "Stok" || P.get_species() == "Farwa" || P.get_species() == "Wolpin" || P.get_species() == "Neara") && !P.mind )
+		H.ForceContractDisease(new /datum/disease/gbs/curable(0))
+
 /*
  *
  * ACTIONS
@@ -192,7 +195,6 @@ var/global/list/forbidden_actions = list()	// stores /datum/forbidden/action ind
 			. = -1
 		else if(P.lastreceived != H && istype(P.lraction, type))
 			. = -1
-
 // Anal
 /datum/forbidden/action/fuck/anal
 	name = "anal"
