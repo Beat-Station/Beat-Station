@@ -7,8 +7,7 @@
 	opened = 0
 	locked = 1
 	broken = 0
-	var/panel_open = 0
-	var/l_hacking = 0
+	armor = list(melee = 30, bullet = 50, laser = 50, energy = 100, bomb = 0, bio = 0, rad = 0)
 	var/large = 1
 	icon_closed = "secure"
 	var/icon_locked = "secure1"
@@ -68,12 +67,12 @@
 	else
 		to_chat(user, "<span class='notice'>Access Denied</span>")
 
-/obj/structure/closet/secure_closet/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/rcs))
+/obj/structure/closet/secure_closet/attackby(obj/item/W, mob/user, params)
+	if(istype(W, /obj/item/rcs))
 		return ..()
 
 	if(opened)
-		if(istype(W, /obj/item/weapon/grab))
+		if(istype(W, /obj/item/grab))
 			if(large)
 				MouseDrop_T(W:affecting, user)	//act like they were dragged onto the closet
 			else
@@ -85,25 +84,10 @@
 			return
 		if(W)
 			W.forceMove(loc)
-	else if((istype(W, /obj/item/weapon/card/emag) || istype(W, /obj/item/weapon/melee/energy/blade)) && !broken)
+	else if((istype(W, /obj/item/card/emag)||istype(W, /obj/item/melee/energy/blade)) && !broken)
 		emag_act(user)
-	else if(istype(W,/obj/item/stack/packageWrap) || istype(W,/obj/item/weapon/weldingtool))
+	else if(istype(W,/obj/item/stack/packageWrap) || istype(W,/obj/item/weldingtool))
 		return ..(W,user)
-	else if(istype(W, /obj/item/weapon/screwdriver))
-		panel_open = !panel_open
-		to_chat(user, "<span class='notice'>You [panel_open ? "open" : "close"] the service panel.</span>")
-	else if(istype(W, /obj/item/device/multitool) && panel_open && !l_hacking)
-		to_chat(user, "<span class='danger'>Now attempting to reset internal memory, please hold.</span>")
-		l_hacking = 1
-		if(do_after(user, 100, target = src))
-			if(prob(40))
-				to_chat(user, "<span class='danger'>Internal memory reset.  Please give it a few seconds to reinitialize.</span>")
-				sleep(rand(40, 80))
-				locked = 0
-				update_icon()
-			else
-				to_chat(user, "<span class='danger'>Unable to reset internal memory.</span>")
-		l_hacking = 0
 	else
 		togglelock(user)
 
@@ -122,15 +106,6 @@
 		togglelock(user)
 	else
 		toggle(user)
-
-/obj/structure/closet/secure_closet/AltClick(mob/user)
-	if(!Adjacent(user))
-		return
-	if(user.incapacitated() || user.stat || !user.canmove || user.restrained())
-		to_chat(user, "<span class='warning'>You can't do that right now!</span>")
-		return
-	if(ishuman(user))
-		togglelock(user)
 
 /obj/structure/closet/secure_closet/verb/verb_togglelock()
 	set src in oview(1) // One square distance
@@ -158,7 +133,7 @@
 	else
 		icon_state = icon_opened
 
-/obj/structure/closet/secure_closet/container_resist(mob/living/L)
+/obj/structure/closet/secure_closet/container_resist(var/mob/living/L)
 	var/breakout_time = 2 //2 minutes by default
 	if(opened)
 		if(L.loc == src)

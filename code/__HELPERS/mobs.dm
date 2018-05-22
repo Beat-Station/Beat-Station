@@ -1,4 +1,4 @@
-/proc/GetOppositeDir(var/dir)
+proc/GetOppositeDir(var/dir)
 	switch(dir)
 		if(NORTH)     return SOUTH
 		if(SOUTH)     return NORTH
@@ -10,13 +10,23 @@
 		if(SOUTHEAST) return NORTHWEST
 	return 0
 
-/proc/random_underwear(species = "Human")
-	return pick_species_allowed_underwear_obj(underwear_list, species)
+proc/random_underwear(gender, species = "Human")
+	var/list/pick_list = list()
+	switch(gender)
+		if(MALE)	pick_list = underwear_m
+		if(FEMALE)	pick_list = underwear_f
+		else		pick_list = underwear_list
+	return pick_species_allowed_underwear(pick_list, species)
 
-/proc/random_undershirt(species = "Human")
-	return pick_species_allowed_underwear_obj(underwear_list, species)
+proc/random_undershirt(gender, species = "Human")
+	var/list/pick_list = list()
+	switch(gender)
+		if(MALE)	pick_list = undershirt_m
+		if(FEMALE)	pick_list = undershirt_f
+		else		pick_list = undershirt_list
+	return pick_species_allowed_underwear(pick_list, species)
 
-/proc/random_socks(gender, species = "Human")
+proc/random_socks(gender, species = "Human")
 	var/list/pick_list = list()
 	switch(gender)
 		if(MALE)	pick_list = socks_m
@@ -24,19 +34,7 @@
 		else		pick_list = socks_list
 	return pick_species_allowed_underwear(pick_list, species)
 
-proc/pick_species_allowed_underwear_obj(list/all_picks, species)
-	var/list/valid_picks = list()
-	for(var/test in all_picks)
-		var/obj/item/clothing/O = all_picks[test]
-		if(!O.species_restricted || !O.species_restricted.len || species in O.species_restricted)
-			valid_picks += O.name
-
-	if(!valid_picks.len)
-		valid_picks += "Nude"
-
-	return pick(valid_picks)
-
-/proc/pick_species_allowed_underwear(list/all_picks, species)
+proc/pick_species_allowed_underwear(list/all_picks, species)
 	var/list/valid_picks = list()
 	for(var/test in all_picks)
 		var/datum/sprite_accessory/S = all_picks[test]
@@ -48,7 +46,7 @@ proc/pick_species_allowed_underwear_obj(list/all_picks, species)
 
 	return pick(valid_picks)
 
-/proc/random_hair_style(var/gender, species = "Human", var/datum/robolimb/robohead)
+proc/random_hair_style(var/gender, species = "Human", var/datum/robolimb/robohead)
 	var/h_style = "Bald"
 	var/list/valid_hairstyles = list()
 	for(var/hairstyle in hair_styles_public_list)
@@ -77,7 +75,7 @@ proc/pick_species_allowed_underwear_obj(list/all_picks, species)
 
 	return h_style
 
-/proc/random_facial_hair_style(var/gender, species = "Human", var/datum/robolimb/robohead)
+proc/random_facial_hair_style(var/gender, species = "Human", var/datum/robolimb/robohead)
 	var/f_style = "Shaved"
 	var/list/valid_facial_hairstyles = list()
 	for(var/facialhairstyle in facial_hair_styles_list)
@@ -106,7 +104,7 @@ proc/pick_species_allowed_underwear_obj(list/all_picks, species)
 
 	return f_style
 
-/proc/random_head_accessory(species = "Human")
+proc/random_head_accessory(species = "Human")
 	var/ha_style = "None"
 	var/list/valid_head_accessories = list()
 	for(var/head_accessory in head_accessory_styles_list)
@@ -121,7 +119,7 @@ proc/pick_species_allowed_underwear_obj(list/all_picks, species)
 
 	return ha_style
 
-/proc/random_marking_style(var/location = "body", species = "Human", var/datum/robolimb/robohead, var/body_accessory, var/alt_head)
+proc/random_marking_style(var/location = "body", species = "Human", var/datum/robolimb/robohead, var/body_accessory, var/alt_head)
 	var/m_style = "None"
 	var/list/valid_markings = list()
 	for(var/marking in marking_styles_list)
@@ -160,7 +158,7 @@ proc/pick_species_allowed_underwear_obj(list/all_picks, species)
 
 	return m_style
 
-/proc/random_body_accessory(species = "Vulpkanin")
+proc/random_body_accessory(species = "Vulpkanin")
 	var/body_accessory = null
 	var/list/valid_body_accessories = list()
 	for(var/B in body_accessory_by_name)
@@ -176,7 +174,7 @@ proc/pick_species_allowed_underwear_obj(list/all_picks, species)
 
 	return body_accessory
 
-/proc/random_name(gender, species = "Human")
+proc/random_name(gender, species = "Human")
 
 	var/datum/species/current_species
 	if(species)
@@ -190,7 +188,7 @@ proc/pick_species_allowed_underwear_obj(list/all_picks, species)
 	else
 		return current_species.get_random_name(gender)
 
-/proc/random_skin_tone(species = "Human")
+proc/random_skin_tone(species = "Human")
 	if(species == "Human" || species == "Drask")
 		switch(pick(60;"caucasian", 15;"afroamerican", 10;"african", 10;"latino", 5;"albino"))
 			if("caucasian")		. = -10
@@ -204,7 +202,7 @@ proc/pick_species_allowed_underwear_obj(list/all_picks, species)
 		. = rand(1, 6)
 		return .
 
-/proc/skintone2racedescription(tone, species = "Human")
+proc/skintone2racedescription(tone, species = "Human")
 	if(species == "Human")
 		switch(tone)
 			if(30 to INFINITY)		return "albino"
@@ -227,7 +225,7 @@ proc/pick_species_allowed_underwear_obj(list/all_picks, species)
 	else
 		return "unknown"
 
-/proc/age2agedescription(age)
+proc/age2agedescription(age)
 	switch(age)
 		if(0 to 1)			return "infant"
 		if(1 to 3)			return "toddler"
@@ -245,32 +243,30 @@ proc/pick_species_allowed_underwear_obj(list/all_picks, species)
 Proc for attack log creation, because really why not
 1 argument is the actor
 2 argument is the target of action
-3 is the description of action(like punched, throwed, or any other verb)
-4 is the tool with which the action was made(usually item)
-5 is additional information, anything that needs to be added
-6 is whether the attack should be logged to the log file and shown to admins
+3 is the full description of the action
+4 is whether or not to message admins
+This is always put in the attack log.
 */
 
-/proc/add_logs(mob/user, mob/target, what_done, var/object=null, var/addition=null, var/admin=1, var/print_attack_log = 1)//print_attack_log notifies admins with attack logs on
-	var/list/ignore=list("shaked", "CPRed", "grabbed", "disarmed")
-	if(!user)
+/proc/add_attack_logs(mob/user, mob/target, what_done, admin_notify = TRUE)
+	if(islist(target)) // Multi-victim adding
+		var/list/targets = target
+		for(var/mob/M in targets)
+			add_attack_logs(user, M, what_done, admin_notify)
 		return
-	if(ismob(user))
-		user.create_attack_log("<font color='red'>Has [what_done] [key_name(target)][object ? " with [object]" : " "][addition]</font>")
-	if(ismob(target))
-		target.create_attack_log("<font color='orange'>Has been [what_done] by [key_name(user)][object ? " with [object]" : " "][addition]</font>")
-	if(admin)
-		log_attack("[key_name(user, include_link = FALSE)] [what_done] [key_name(target, include_link = FALSE)][object ? " with [object]" : " "][addition]")
-	if(istype(target) && (target.key))
-		if(what_done in ignore)
-			return
-		if(target == user)
-			return
-		if(!print_attack_log)
-			return
-		msg_admin_attack("[key_name_admin(user)] [what_done] [key_name_admin(target)][object ? " with [object]" : " "][addition]")
 
-/proc/do_mob(var/mob/user, var/mob/target, var/time = 30, var/uninterruptible = 0, progress = 1)
+	var/user_str = key_name(user)
+	var/target_str = key_name(target)
+
+	if(istype(user))
+		user.create_attack_log("<font color='red'>Attacked [target_str]: [what_done]</font>")
+	if(istype(target))
+		target.create_attack_log("<font color='orange'>Attacked by [user_str]: [what_done]</font>")
+	log_attack(user_str, target_str, what_done)
+	if(admin_notify)
+		msg_admin_attack("[key_name_admin(user)] vs [key_name_admin(target)]: [what_done]")
+
+/proc/do_mob(var/mob/user, var/mob/target, var/time = 30, var/uninterruptible = 0, progress = 1, datum/callback/extra_checks = null)
 	if(!user || !target)
 		return 0
 	var/user_loc = user.loc
@@ -303,13 +299,13 @@ Proc for attack log creation, because really why not
 			drifting = 0
 			user_loc = user.loc
 
-		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying )
+		if((!drifting && user.loc != user_loc) || target.loc != target_loc || user.get_active_hand() != holding || user.incapacitated() || user.lying || (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 	if(progress)
 		qdel(progbar)
 
-/proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1)
+/proc/do_after(mob/user, delay, needhand = 1, atom/target = null, progress = 1, datum/callback/extra_checks = null)
 	if(!user)
 		return 0
 	var/atom/Tloc = null
@@ -344,7 +340,7 @@ Proc for attack log creation, because really why not
 			drifting = 0
 			Uloc = user.loc
 
-		if(!user || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc))
+		if(!user || user.stat || user.weakened || user.stunned  || (!drifting && user.loc != Uloc)|| (extra_checks && !extra_checks.Invoke()))
 			. = 0
 			break
 
@@ -371,6 +367,19 @@ Proc for attack log creation, because really why not
 		var/mob/living/carbon/human/H = A
 		if(H.get_species() == species_name)
 			. = TRUE
+
+/proc/spawn_atom_to_turf(spawn_type, target, amount, admin_spawn=FALSE, list/extra_args)
+	var/turf/T = get_turf(target)
+	if(!T)
+		CRASH("attempt to spawn atom type: [spawn_type] in nullspace")
+
+	var/list/new_args = list(T)
+	if(extra_args)
+		new_args += extra_args
+
+	for(var/j in 1 to amount)
+		var/atom/X = new spawn_type(arglist(new_args))
+		X.admin_spawned = admin_spawn
 
 /proc/admin_mob_info(mob/M, mob/user = usr)
 	if(!ismob(M))

@@ -32,7 +32,7 @@
 /mob/living/simple_animal/hostile/guardian/healer/New()
 	..()
 
-/mob/living/simple_animal/hostile/guardian/healer/Life()
+/mob/living/simple_animal/hostile/guardian/healer/Life(seconds, times_fired)
 	..()
 	var/datum/atom_hud/medsensor = huds[DATA_HUD_MEDICAL_ADVANCED]
 	medsensor.add_hud_to(src)
@@ -52,6 +52,9 @@
 				C.adjustOxyLoss(-5)
 				C.adjustToxLoss(-5)
 				heal_cooldown = world.time + 20
+				if(C == summoner)
+					med_hud_set_health()
+					med_hud_set_status()
 
 /mob/living/simple_animal/hostile/guardian/healer/ToggleMode()
 	if(loc == summoner)

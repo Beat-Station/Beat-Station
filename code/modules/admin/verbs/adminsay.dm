@@ -11,7 +11,7 @@
 	if(!msg)
 		return
 
-	log_admin("[key_name(src)] : [msg]")
+	log_adminsay(msg, src)
 
 	for(var/client/C in admins)
 		if(check_rights(R_ADMIN|R_MOD|R_MENTOR, 0, C.mob))
@@ -28,7 +28,7 @@
 		return
 
 	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
-	log_admin("MENTOR: [key_name(src)] : [msg]")
+	log_mentorsay(msg, src)
 
 	if(!msg)
 		return
